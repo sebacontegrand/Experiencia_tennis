@@ -25,15 +25,23 @@ npm run lint && npm run typecheck && npm test && npm run build
 
 ## Deploy (Vercel + Neon)
 
-Variables de entorno en Vercel (ver `.env.example`):
+1. **Vercel → Add New → Project**, importar el repo y poner **Root Directory = `web`**.
+2. **Storage → Create Database → Neon** (Marketplace). Región: São Paulo si está disponible (la más cercana a Argentina).
+3. **Connect Project**: marcar Development, Preview y Production. En *Create database branch for deployment* marcar **Preview** (cada preview usa su propia rama de la base). Sin prefijo.
+   Esto carga `DATABASE_URL` (con pool) y `DATABASE_URL_UNPOOLED` (directa).
+4. **Settings → Environment Variables**, agregar:
 
 | Variable | Valor |
 |---|---|
-| `DATABASE_URL` | URL de Neon (con `?sslmode=require`) |
 | `NEXT_PUBLIC_SITE_URL` | URL del deploy, sin barra final |
-| `RESEND_API_KEY` | API key de Resend |
+| `RATE_LIMIT_SALT` | String aleatorio largo (`openssl rand -hex 24`) |
+| `RESEND_API_KEY` | API key de Resend (sin ella los emails solo se loguean) |
 | `EMAIL_FROM` | Remitente verificado en Resend |
 | `ADMIN_NOTIFY_EMAIL` | Casilla(s) para avisos, separadas por coma |
-| `RATE_LIMIT_SALT` | String aleatorio largo |
 
-Las migraciones en producción se aplican con `npx prisma migrate deploy` (y una vez `npx prisma db seed`) apuntando a la base de Neon.
+5. Redeploy. El script `vercel-build` corre `prisma migrate deploy` antes del build, así que las tablas se crean solas.
+6. **Una sola vez**, cargar los datos iniciales en producción desde tu máquina:
+
+```bash
+DATABASE_URL="<DATABASE_URL_UNPOOLED de Neon>" npx prisma db seed
+```
