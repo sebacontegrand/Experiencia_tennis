@@ -8,6 +8,7 @@
 import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
+import type { Itinerary } from "../src/lib/itinerary";
 
 const db = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
 
@@ -63,7 +64,8 @@ async function main() {
   }
   const black = await db.experienceFormat.findUniqueOrThrow({ where: { slug: "black" } });
 
-  // Aliados. Solo Wilson es visible en el sitio; el hotel queda interno (no se muestra hasta nuevo aviso).
+  // Aliados. Solo Wilson aparece en la franja "Nos acompañan".
+  // Hotel y club: se nombran dentro de la experiencia de Villa Gesell (autorizado 11/11), sin logos ni franja.
   const wilson = await db.partner.findFirst({ where: { name: "Wilson" } });
   if (!wilson) {
     await db.partner.create({ data: { type: "SPONSOR", name: "Wilson", isPublic: true, sortOrder: 1 } });
@@ -75,33 +77,76 @@ async function main() {
       name: "Tequendama Spa & Resort",
       city: "Villa Gesell",
       isPublic: false,
-      internalNotes: "Marca no autorizada para mostrar en el sitio. Bloqueo de habitaciones hasta el 25/11/2026.",
+      internalNotes: "Se puede nombrar en la experiencia de Villa Gesell (sin logo). Bloqueo de habitaciones hasta el 25/11/2026.",
+    },
+  });
+  let club = await db.partner.findFirst({ where: { name: "Villa Gesell Golf Club" } });
+  club ??= await db.partner.create({
+    data: {
+      type: "CLUB",
+      name: "Villa Gesell Golf Club",
+      city: "Villa Gesell",
+      isPublic: false,
+      internalNotes: "Sede del torneo de Villa Gesell (sábado 12/12). Se puede nombrar en la experiencia, sin logo.",
     },
   });
 
   const slug = "villa-gesell-diciembre-2026";
+  // Fuente: flyers de Gabriela del 11/11 (cronograma del fin de semana).
+  const itinerary: Itinerary = [
+    {
+      day: "Viernes 11",
+      title: "Llegada y descanso",
+      items: [
+        { time: "Desde 13:00", text: "Check-in en Tequendama Spa & Resort y entrega del kit de bienvenida." },
+        {
+          time: "Tarde libre",
+          text: "Piscina cubierta climatizada, spa, gimnasio o playa. El hotel cuenta con reposeras para la playa, estacionamiento y wifi.",
+        },
+      ],
+    },
+    {
+      day: "Sábado 12",
+      title: "Torneo y premiación",
+      items: [
+        { time: "8:00 a 9:30", text: "Desayuno americano en el hotel." },
+        { time: "9:45", text: "Encuentro en el Villa Gesell Golf Club." },
+        { time: "10:00", text: "Inicio del torneo." },
+        { time: "12:00", text: "Pausa y almuerzo incluido en el bufé del club." },
+        { time: "14:00", text: "Se reanuda el torneo." },
+        { time: "19:00", text: "Fin del torneo y regreso al hotel." },
+        { time: "21:00", text: "Cena, premiación, juegos y cierre." },
+      ],
+    },
+    {
+      day: "Domingo 13",
+      title: "Desayuno y despedida",
+      items: [
+        { time: "8:00 a 10:00", text: "Desayuno en el hotel." },
+        { time: "13:00", text: "Check-out." },
+      ],
+    },
+  ];
+
   const villaGesell = {
-    title: "Villa Gesell",
+    title: "Experiencia Tenis Gesell",
     destination: "Villa Gesell, Buenos Aires",
     // 11 al 13 de diciembre de 2026 (mediodía en Buenos Aires, para evitar corrimientos de día)
     startDate: new Date("2026-12-11T15:00:00Z"),
     endDate: new Date("2026-12-13T15:00:00Z"),
     capacity: 25,
-    summary: "Dos noches de tenis, descanso y encuentro frente al mar.",
+    summary: "Un torneo, una escapada a la costa y gente que disfruta el tenis tanto como vos.",
     description:
-      "Una experiencia Black de dos noches en Villa Gesell: jornadas de tenis organizadas por nivel, alojamiento en resort con spa, cena grupal y el kit de bienvenida de Experiencia Tenis.",
-    // TODO(negocio): itinerario detallado por día
-    itinerary: [
-      { day: "Viernes 11/12", items: ["Llegada y check-in", "Entrega del kit de bienvenida"] },
-      { day: "Sábado 12/12", items: ["Jornada de tenis", "Cena grupal"] },
-      { day: "Domingo 13/12", items: ["Jornada de tenis", "Cierre y check-out"] },
-    ],
+      "Un fin de semana Black en Villa Gesell: dos noches en Tequendama Spa & Resort y un torneo el sábado en el Villa Gesell Golf Club, con almuerzo en el club y una cena de cierre con premiación y juegos. El viernes es para llegar y descansar: piscina cubierta climatizada, spa, gimnasio o playa.",
+    itinerary,
     includes: [
-      "Dos noches de alojamiento",
-      "Jornadas de tenis organizadas por nivel",
-      "Cena grupal del sábado 12/12 con elección de menú",
-      "Kit de bienvenida: bolsa, botella, toalla, pelota, snack y tarjeta",
-      "Coordinación deportiva y atención durante toda la experiencia",
+      "Dos noches en Tequendama Spa & Resort",
+      "Desayuno del sábado y del domingo en el hotel",
+      "Torneo en el Villa Gesell Golf Club, organizado por nivel",
+      "Almuerzo del sábado en el bufé del club",
+      "Cena del sábado con premiación, juegos y cierre",
+      "Kit de bienvenida: bolsa, botella, toalla, pelota Wilson, snack y tarjeta",
+      "Coordinación deportiva y atención durante todo el fin de semana",
     ],
     excludes: [] as string[], // TODO(negocio): qué no incluye (traslados, otras comidas, etc.)
     rainPlan: "Si llueve, las actividades se trasladan a un salón de usos múltiples.",
@@ -109,12 +154,17 @@ async function main() {
     menuOptions: [] as string[],
     formatId: black.id,
     hotelId: hotel.id,
+    venueId: club.id,
   };
 
   const existing = await db.experience.findUnique({ where: { slug } });
-  if (existing) {
-    // No pisamos el estado ni lo que el admin haya editado: solo aseguramos que exista.
-    console.log(`Experiencia "${slug}" ya existe (estado ${existing.status}); no se modifica.`);
+  if (existing?.status === "BORRADOR") {
+    // Hasta que exista el admin (Fase 3), el seed es la fuente del contenido del borrador.
+    // Nunca toca el estado ni las opciones de precio.
+    await db.experience.update({ where: { slug }, data: villaGesell });
+    console.log(`Experiencia "${slug}" (BORRADOR): contenido actualizado.`);
+  } else if (existing) {
+    console.log(`Experiencia "${slug}" ya está en ${existing.status}; no se modifica.`);
   } else {
     await db.experience.create({
       data: {

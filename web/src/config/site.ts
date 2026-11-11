@@ -34,8 +34,7 @@ export const siteConfig = {
     whatsappDisplay: "+54 9 11 2390 2736",
     whatsappDefaultMessage: "¡Hola! Quiero saber más sobre Experiencia Tenis.",
     email: "gabrielabrunotenis@gmail.com",
-    // TODO(negocio): usuario de Instagram (PENDIENTES #3)
-    instagramUser: null as string | null,
+    instagramUser: "gabibruno_todotenis" as string | null,
   },
 
   payments: {
