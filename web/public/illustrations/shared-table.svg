@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <rect width="800" height="600" fill="#0A1F3A"/>
+  <g stroke="#D4B07A" stroke-width="1.5" opacity="0.5">
+    <path d="M120 80c20 30 40 30 60 0s40-30 60 0 40 30 60 0 40-30 60 0 40 30 60 0 40-30 60 0 40 30 60 0 40-30 60 0"/>
+  </g>
+  <g fill="#D4B07A"><circle cx="150" cy="95" r="5"/><circle cx="270" cy="95" r="5"/><circle cx="390" cy="95" r="5"/><circle cx="510" cy="95" r="5"/><circle cx="630" cy="95" r="5"/></g>
+  <ellipse cx="400" cy="400" rx="330" ry="120" fill="#F7F3EC"/>
+  <ellipse cx="400" cy="400" rx="330" ry="120" stroke="#B98C4A" stroke-width="2"/>
+  <g stroke="#041224" stroke-width="2.5">
+    <ellipse cx="250" cy="390" rx="46" ry="16"/><ellipse cx="400" cy="420" rx="46" ry="16"/><ellipse cx="550" cy="390" rx="46" ry="16"/>
+    <ellipse cx="320" cy="340" rx="40" ry="13"/><ellipse cx="480" cy="340" rx="40" ry="13"/>
+  </g>
+  <g stroke="#041224" stroke-width="2.5" fill="none">
+    <path d="M190 330c0 22 10 30 20 30s20-8 20-30zM210 360v24"/>
+    <path d="M590 330c0 22 10 30 20 30s20-8 20-30zM610 360v24"/>
+    <path d="M380 290c0 22 10 30 20 30s20-8 20-30zM400 320v24"/>
+  </g>
+  <g fill="#B5532F" opacity="0.85"><path d="M192 338h36c-2 14-8 20-18 20s-16-6-18-20z"/><path d="M592 338h36c-2 14-8 20-18 20s-16-6-18-20z"/><path d="M382 298h36c-2 14-8 20-18 20s-16-6-18-20z"/></g>
+  <g fill="#B98C4A"><rect x="395" y="372" width="10" height="22"/><path d="M400 356c-4 6-4 12 0 16 4-4 4-10 0-16z"/></g>
+</svg>
