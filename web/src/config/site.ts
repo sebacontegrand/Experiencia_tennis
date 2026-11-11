@@ -3,7 +3,20 @@
  * Los datos faltantes del negocio quedan en null con TODO(negocio) — ver docs/PENDIENTES.md.
  */
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+/**
+ * URL base: NEXT_PUBLIC_SITE_URL si está definida (dominio propio, cuando exista);
+ * si no, en Vercel la URL de producción que inyecta la plataforma; en local, localhost.
+ * Los previews también apuntan a producción: es la URL canónica para SEO y Open Graph.
+ */
+function resolveSiteUrl() {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit;
+  const vercelProd = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (vercelProd) return `https://${vercelProd}`;
+  return "http://localhost:3000";
+}
+
+const siteUrl = resolveSiteUrl().replace(/\/$/, "");
 
 export const siteConfig = {
   name: "Experiencia Tenis",

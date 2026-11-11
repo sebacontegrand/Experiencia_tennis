@@ -33,7 +33,7 @@ npm run lint && npm run typecheck && npm test && npm run build
 
 | Variable | Valor |
 |---|---|
-| `NEXT_PUBLIC_SITE_URL` | URL del deploy, sin barra final |
+| `NEXT_PUBLIC_SITE_URL` | Opcional: solo cuando haya dominio propio (si falta, se usa la URL de producción de Vercel) |
 | `RATE_LIMIT_SALT` | String aleatorio largo (`openssl rand -hex 24`) |
 | `RESEND_API_KEY` | API key de Resend (sin ella los emails solo se loguean) |
 | `EMAIL_FROM` | Remitente verificado en Resend |
