@@ -1,0 +1,10 @@
+# Material de referencia del negocio (presupuestos de proveedores, dossiers).
+# Nunca se publica ni se sube al repositorio.
+_material/
+
+# Variables de entorno
+.env*
+!.env.example
+
+# Sistema
+.DS_Store
