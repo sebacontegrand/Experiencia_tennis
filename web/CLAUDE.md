@@ -27,10 +27,10 @@ Sitio y panel admin de **Experiencia Tenis** (Gabriela Bruno). Brief completo: [
 npm run dev          # servidor de desarrollo
 npm run build        # build de producción
 npm run lint         # ESLint
-npm run typecheck    # tsc --noEmit
+npm run typecheck    # next typegen + tsc --noEmit
 npm test             # tests (Vitest)
 npx prisma migrate dev   # aplicar/crear migraciones en local
-npx prisma db seed       # cargar datos iniciales (formatos, Villa Gesell en BORRADOR)
+npx prisma db seed       # cargar datos iniciales (formatos, Villa Gesell en BORRADOR); idempotente
 npx prisma studio        # explorar la base
 ```
 
@@ -60,3 +60,12 @@ npx prisma studio        # explorar la base
 - Accesibilidad: contraste AA (dorado nunca en texto chico sobre blanco), foco visible, formularios con labels.
 - Tests para la lógica de cupos, lista de espera y estados de pago.
 - Al final de cada fase: `lint`, `typecheck` y `build` sin errores.
+
+## Notas técnicas
+
+- **Prisma 7**: la URL de la base está en `prisma.config.ts`; el cliente se genera en `src/generated/prisma` (gitignored, lo regenera `postinstall`/`build`). Importar desde `@/generated/prisma/client`; usar siempre `db` de `@/lib/db`.
+- **Cache Components** activo: las lecturas públicas están en `src/lib/data/public.ts` con `"use cache"` + `cacheTag` (`formats`, `experiences`, `partners`). Al mutar desde el admin, invalidar con `updateTag(...)`. Las APIs de request (`searchParams`, `headers`) van dentro de `<Suspense>`.
+- **Formularios**: Server Action + `useActionState`; errores con `formError()` (`src/lib/form-state.ts`) para que el formulario se remonte con lo enviado. Anti-spam: honeypot + `checkRateLimit()` (tabla `RateLimitHit`).
+- **Emails**: `sendEmail()` dentro de `after()`; sin `RESEND_API_KEY` se loguean en consola.
+- El header no usa `backdrop-filter`: rompería el menú móvil (`position: fixed`).
+

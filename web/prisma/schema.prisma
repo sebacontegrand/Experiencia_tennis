@@ -1,0 +1,358 @@
+// Experiencia Tenis — modelo de datos
+// Prisma 7: la URL de conexión vive en prisma.config.ts (DATABASE_URL).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Administradores ────────────────────────────────────────────────
+
+enum UserRole {
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  role          UserRole  @default(EDITOR)
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+}
+
+// Tablas de Auth.js (Fase 3)
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+// ─── Comunidad ──────────────────────────────────────────────────────
+
+enum Gender {
+  FEMENINO
+  MASCULINO
+  OTRO
+  PREFIERO_NO_DECIR
+}
+
+enum PlayerSource {
+  COMUNIDAD
+  INSCRIPCION
+  CONTACTO
+  ADMIN
+}
+
+model Player {
+  id                  String        @id @default(cuid())
+  firstName           String
+  lastName            String
+  email               String        @unique
+  whatsapp            String?
+  city                String?
+  club                String?
+  level               String?
+  gender              Gender?
+  referralSource      String? // cómo nos conoció
+  source              PlayerSource  @default(COMUNIDAD) // por dónde entró a la base
+  marketingConsent    Boolean       @default(false)
+  marketingConsentAt  DateTime?
+  internalNotes       String?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  registrations Registration[]
+
+  @@index([city])
+  @@index([club])
+  @@index([level])
+}
+
+// ─── Experiencias ───────────────────────────────────────────────────
+
+model ExperienceFormat {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  tagline     String // bajada
+  description String
+  benefits    String[]
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  experiences Experience[]
+}
+
+enum ExperienceStatus {
+  BORRADOR
+  PUBLICADA
+  CUPO_COMPLETO
+  FINALIZADA
+  CANCELADA
+}
+
+model Experience {
+  id                   String           @id @default(cuid())
+  slug                 String           @unique
+  title                String
+  status               ExperienceStatus @default(BORRADOR)
+  startDate            DateTime
+  endDate              DateTime
+  destination          String
+  capacity             Int
+  summary              String? // bajada corta para tarjetas
+  description          String
+  // [{ day: "Viernes 11/12", items: ["Check-in", "..."] }]
+  itinerary            Json?
+  includes             String[]
+  excludes             String[]
+  rainPlan             String?
+  registrationDeadline DateTime?
+  coverImage           String?
+  // Opciones de menú para la cena grupal (vacío = no se pregunta)
+  menuOptions          String[]
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  formatId String
+  format   ExperienceFormat @relation(fields: [formatId], references: [id])
+  venueId  String?
+  venue    Partner?         @relation("ExperienceVenue", fields: [venueId], references: [id])
+  hotelId  String?
+  hotel    Partner?         @relation("ExperienceHotel", fields: [hotelId], references: [id])
+
+  priceOptions  PriceOption[]
+  registrations Registration[]
+  testimonials  Testimonial[]
+  gallery       GalleryImage[]
+
+  @@index([status, startDate])
+}
+
+model PriceOption {
+  id        String   @id @default(cuid())
+  label     String // "Base doble – Suite Resort", "Sin alojamiento"
+  price     Int? // ARS, entero; null = "Consultar"
+  currency  String   @default("ARS")
+  capacity  Int? // cupo propio de la opción (opcional)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  experienceId  String
+  experience    Experience     @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  registrations Registration[]
+
+  @@index([experienceId])
+}
+
+// ─── Inscripciones y pagos ──────────────────────────────────────────
+
+enum RegistrationStatus {
+  PENDIENTE
+  SENADA // "SEÑADA" (los identificadores no admiten Ñ)
+  CONFIRMADA
+  LISTA_ESPERA
+  CANCELADA
+}
+
+model Registration {
+  id              String             @id @default(cuid())
+  status          RegistrationStatus @default(PENDIENTE)
+  doublesPartner  String?
+  roommate        String?
+  menuChoice      String?
+  companions      Int                @default(0)
+  notes           String?
+  internalNotes   String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  playerId      String
+  player        Player       @relation(fields: [playerId], references: [id])
+  experienceId  String
+  experience    Experience   @relation(fields: [experienceId], references: [id])
+  priceOptionId String?
+  priceOption   PriceOption? @relation(fields: [priceOptionId], references: [id])
+
+  payments Payment[]
+
+  @@unique([playerId, experienceId])
+  @@index([experienceId, status])
+}
+
+enum PaymentMethod {
+  TRANSFERENCIA
+  EFECTIVO
+  MERCADO_PAGO
+}
+
+enum PaymentStatus {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+  REINTEGRADO
+}
+
+model Payment {
+  id          String        @id @default(cuid())
+  amount      Int // ARS, entero
+  method      PaymentMethod
+  status      PaymentStatus @default(PENDIENTE)
+  externalRef String?       @unique // id de Mercado Pago
+  receiptUrl  String? // comprobante
+  paidAt      DateTime?
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  registrationId String
+  registration   Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+
+  @@index([registrationId])
+}
+
+// ─── Aliados y contactos B2B ────────────────────────────────────────
+
+enum PartnerType {
+  CLUB
+  BARRIO
+  HOTEL
+  SPONSOR
+  GASTRONOMIA
+  BIENESTAR
+  AGENCIA
+}
+
+model Partner {
+  id            String      @id @default(cuid())
+  type          PartnerType
+  name          String
+  logo          String?
+  website       String?
+  city          String?
+  isPublic      Boolean     @default(false) // visible en el sitio
+  sortOrder     Int         @default(0)
+  internalNotes String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  venueFor Experience[] @relation("ExperienceVenue")
+  hotelFor Experience[] @relation("ExperienceHotel")
+}
+
+enum LeadType {
+  CLUB
+  BARRIO
+  HOTEL
+  EMPRESA
+  SPONSOR
+  OTRO
+}
+
+enum LeadStatus {
+  NUEVO
+  CONTACTADO
+  EN_CONVERSACION
+  CERRADO
+}
+
+model Lead {
+  id            String     @id @default(cuid())
+  type          LeadType
+  status        LeadStatus @default(NUEVO)
+  name          String
+  organization  String?
+  email         String
+  whatsapp      String?
+  message       String
+  consent       Boolean    @default(false)
+  internalNotes String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@index([status, type])
+}
+
+// ─── Contenido post-evento ──────────────────────────────────────────
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  authorName String
+  authorInfo String? // "Jugadora de Club X"
+  quote      String
+  isPublic   Boolean  @default(false)
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  experienceId String?
+  experience   Experience? @relation(fields: [experienceId], references: [id], onDelete: SetNull)
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String
+  isPublic  Boolean  @default(false)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  experienceId String?
+  experience   Experience? @relation(fields: [experienceId], references: [id], onDelete: SetNull)
+}
+
+// ─── Anti-spam ──────────────────────────────────────────────────────
+
+// Límite de envíos por IP y formulario (funciona en serverless, sin Redis)
+model RateLimitHit {
+  id        String   @id @default(cuid())
+  key       String // "<form>:<ip-hash>"
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}
