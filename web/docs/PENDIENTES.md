@@ -16,3 +16,5 @@ No se inventan: hasta que lleguen, el sitio muestra un marcador neutro o "Consul
 | 9 | Responsable de la base de datos para la política de privacidad (nombre/razón social, CUIT, domicilio) e inscripción ante la AAIP | `/privacidad` | Pendiente |
 | 10 | Fotos reales de experiencias | `src/content/images.ts` | Pendiente |
 | 11 | Email remitente y dominio verificado en Resend | Variables `EMAIL_FROM`, `RESEND_API_KEY` | Pendiente |
+| 12 | Itinerario detallado por día de Villa Gesell, qué **no** incluye (traslados, otras comidas…) y opciones exactas del menú de la cena | `prisma/seed.ts` / admin (Fase 3) | Pendiente |
+| 13 | Casilla que recibe los avisos de nuevas altas y consultas | Variable `ADMIN_NOTIFY_EMAIL` | Pendiente |
