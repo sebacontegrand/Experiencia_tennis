@@ -56,11 +56,11 @@ export const images = {
     credit: "Matthieu Joannon / Unsplash (6ciLddToTgM)",
   },
   footwork: {
-    src: "/photos/clay-footwork.jpg",
+    src: "/photos/clay-footwork-wide.jpg",
     alt: "Pies de un jugador deslizándose sobre el polvo de ladrillo",
     width: 1600,
-    height: 1067,
-    position: "50% 100%",
+    height: 760,
+    position: "60% 100%",
     credit: "Gonzalo Facello / Unsplash (w6OlsN11hLk)",
   },
 } satisfies Record<string, SiteImage>;

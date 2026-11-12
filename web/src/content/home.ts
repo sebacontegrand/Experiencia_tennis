@@ -89,8 +89,8 @@ export const homeCopy = {
     text:
       "Diseñamos, convocamos y coordinamos experiencias para clubes, barrios privados y hoteles: más actividad para tus socios o huéspedes, comunidad y nuevos visitantes con ingreso organizado.",
     ctas: [
-      { href: "/contacto?motivo=CLUB", label: "Soy de un club o barrio" },
-      { href: "/contacto?motivo=HOTEL", label: "Represento a un hotel" },
+      { href: "/clubes-y-barrios", label: "Soy de un club o barrio" },
+      { href: "/hoteles", label: "Represento a un hotel" },
     ],
   },
 

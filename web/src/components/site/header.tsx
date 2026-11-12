@@ -17,7 +17,7 @@ export function SiteHeader() {
       </a>
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-5 sm:h-20 sm:px-8">
         <Logo priority />
-        <nav aria-label="Principal" className="hidden md:block">
+        <nav aria-label="Principal" className="hidden lg:block">
           <ul className="flex items-center gap-8">
             {mainNav.map((item) => (
               <li key={item.href}>
@@ -39,7 +39,7 @@ export function SiteHeader() {
             </li>
           </ul>
         </nav>
-        <div className="flex items-center gap-1 md:-mr-2">
+        <div className="flex items-center gap-1 lg:-mr-2">
           <MobileMenu items={mainNav} cta={headerCta} />
           <Link
             href={adminLink.href}

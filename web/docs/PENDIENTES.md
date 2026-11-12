@@ -11,7 +11,7 @@ No se inventan: hasta que lleguen, el sitio muestra un marcador neutro o "Consul
 | 4 | Alias o CBU para transferencias (y titular) | `src/config/site.ts`, email de inscripción, pantalla de confirmación | Pendiente |
 | 5 | Logo vectorial (SVG) o PNG de alta resolución | `public/brand/`, componente `<Logo />`. El actual mide 195×79 px | Pendiente |
 | 6 | Confirmar que el email (gabrielabrunotenis@gmail.com) es el de esta web. WhatsApp: +54 9 11 5736 4407 (de Gabriela, confirmado 12/11) | `src/config/site.ts` | Email pendiente |
-| 7 | Texto de "Quiénes somos" y foto de Gabriela | `/nosotros` | Pendiente |
+| 7 | Texto más personal de "Quiénes somos" y foto de Gabriela | `/nosotros` (hoy usa la bio del dossier de hoteles) · `src/content/b2b.ts` | Pendiente |
 | 8 | Condiciones de inscripción, seña y cancelación | Detalle de experiencia, inscripción, emails | Pendiente |
 | 9 | Responsable de la base de datos para la política de privacidad (nombre/razón social, CUIT, domicilio) e inscripción ante la AAIP | `/privacidad` | Pendiente |
 | 10 | Fotos reales de experiencias | `src/content/images.ts` | Pendiente |
@@ -20,3 +20,5 @@ No se inventan: hasta que lleguen, el sitio muestra un marcador neutro o "Consul
 | 13 | Casilla que recibe los avisos de nuevas altas y consultas | Variable `ADMIN_NOTIFY_EMAIL` | Pendiente |
 | 14 | Emails de Google de quienes administran el panel | `npm run admin:add` contra la base de producción | ✅ Sebastián y Gabriela (12/11) |
 | 15 | Villa Gesell: montos de los costos sin cifra en el presupuesto del 12/11 (seguro de accidente, profes, sonido, trofeos, banners y gota, tubos de pelotas, página web, Instagram) | Panel → Costos y ganancia. Mientras falten, el precio sugerido queda corto | Pendiente |
+| 16 | Qué se ofrece concretamente a marcas y sponsors (paquetes, visibilidad) y, si se quiere mostrar, el tamaño de la comunidad | `/sponsors` · `src/content/b2b.ts` | Pendiente |
+| 17 | Condiciones para clubes, barrios y hoteles (canon por jornada, tarifas de grupo) | Se acuerdan caso por caso; las páginas no muestran cifras | Pendiente |

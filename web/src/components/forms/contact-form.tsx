@@ -17,7 +17,23 @@ import {
 } from "@/components/forms/fields";
 import { useFocusFirstError } from "@/components/forms/use-focus-first-error";
 
-export function ContactForm({ defaultTopic }: { defaultTopic?: string }) {
+/**
+ * Formulario de contacto. En /contacto elige el motivo; en las páginas para clubes, hoteles, etc.
+ * `topics` acota los motivos (uno solo = campo oculto) y el resto de los props adapta los textos.
+ */
+export function ContactForm({
+  defaultTopic,
+  topics,
+  submitLabel = contactCopy.form.submit,
+  messagePlaceholder,
+  organizationLabel,
+}: {
+  defaultTopic?: string;
+  topics?: readonly string[];
+  submitLabel?: string;
+  messagePlaceholder?: string;
+  organizationLabel?: string;
+}) {
   const [state, action, pending] = useActionState(sendContact, initialFormState);
   const formRef = useRef<HTMLFormElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
@@ -40,9 +56,9 @@ export function ContactForm({ defaultTopic }: { defaultTopic?: string }) {
 
   const values = state.status === "error" ? (state.values ?? {}) : {};
   const errors = state.status === "error" ? (state.fieldErrors ?? {}) : {};
-  const topic =
-    values.type ??
-    ((contactTopicValues as readonly string[]).includes(defaultTopic ?? "") ? defaultTopic : "OTRO");
+  const allowed: readonly string[] = topics?.length ? topics : contactTopicValues;
+  const options = contactTopicOptions.filter((o) => allowed.includes(o.value));
+  const topic = values.type ?? (allowed.includes(defaultTopic ?? "") ? defaultTopic : allowed.includes("OTRO") ? "OTRO" : allowed[0]);
 
   return (
     <form
@@ -55,19 +71,23 @@ export function ContactForm({ defaultTopic }: { defaultTopic?: string }) {
       {state.status === "error" && <FormAlert message={state.message} />}
       <p className="text-xs text-ink-muted">{formCopy.requiredHint}</p>
 
-      <SelectField name="type" label={f.type} required options={contactTopicOptions} defaultValue={topic} error={errors.type} />
+      {options.length === 1 ? (
+        <input type="hidden" name="type" value={options[0].value} />
+      ) : (
+        <SelectField name="type" label={f.type} required options={options} defaultValue={topic} error={errors.type} />
+      )}
       <div className="grid gap-5 sm:grid-cols-2">
         <TextField name="name" label={f.name} required autoComplete="name" defaultValue={values.name} error={errors.name} />
-        <TextField name="organization" label={f.organization} hint={f.organizationHint} autoComplete="organization" defaultValue={values.organization} error={errors.organization} />
+        <TextField name="organization" label={organizationLabel ?? f.organization} hint={organizationLabel ? undefined : f.organizationHint} autoComplete="organization" defaultValue={values.organization} error={errors.organization} />
         <TextField name="email" type="email" label={f.email} required autoComplete="email" inputMode="email" defaultValue={values.email} error={errors.email} />
         <TextField name="whatsapp" type="tel" label={f.whatsapp} hint={f.whatsappHint} autoComplete="tel" inputMode="tel" defaultValue={values.whatsapp} error={errors.whatsapp} />
       </div>
-      <TextAreaField name="message" label={f.message} required defaultValue={values.message} error={errors.message} />
+      <TextAreaField name="message" label={f.message} required placeholder={messagePlaceholder} defaultValue={values.message} error={errors.message} />
 
       <ConsentField error={errors.consent} defaultChecked={values.consent === "on"} />
       <Honeypot />
       <div>
-        <SubmitButton pending={pending}>{contactCopy.form.submit}</SubmitButton>
+        <SubmitButton pending={pending}>{submitLabel}</SubmitButton>
       </div>
     </form>
   );

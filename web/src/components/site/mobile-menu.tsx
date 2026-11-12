@@ -31,7 +31,7 @@ export function MobileMenu({ items, cta }: { items: readonly Item[]; cta: Item }
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
         type="button"
         aria-expanded={open}
