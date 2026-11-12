@@ -9,6 +9,7 @@ import { formatDateRange } from "@/lib/format";
 import { SEAT_HOLDING_STATUSES } from "@/lib/registration-rules";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { CostsCard } from "@/components/admin/costs-card";
+import { CollapsibleCard } from "@/components/admin/collapsible-card";
 import { ActionForm, AdminField } from "@/components/admin/action-form";
 import { adminInputClass } from "@/components/admin/styles";
 import { addPriceOption, deletePriceOption, savePriceOption, saveSettings, setPublished } from "../actions";
@@ -107,8 +108,25 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
         </div>
       </Card>
 
+      <CostsCard
+        data={{
+          id: e.id,
+          capacity: e.capacity,
+          earningsPercent: e.earningsPercent,
+          expectedAttendance: e.expectedAttendance,
+          costItems: e.costItems,
+          priceOptions: e.priceOptions.map((o) => ({ id: o.id, label: o.label, price: o.price, cost: o.cost })),
+          seatRegistrations: seatRegistrations.map((r) => ({
+            price: r.priceOption?.price ?? null,
+            optionCost: r.priceOption?.cost ?? null,
+          })),
+          collected: collected._sum.amount ?? 0,
+        }}
+      />
+
       {/* Precios */}
-      <Card title={c.pricesTitle} hint={c.pricesHint}>
+      <CollapsibleCard title={c.pricesTitle} summary={c.pricesSummary(e.priceOptions.length, missingPrices)}>
+        <p className="mb-5 text-sm text-ink-muted">{c.pricesHint}</p>
         <ul className="space-y-4">
           {e.priceOptions.map((o) => (
             <li key={o.id} className="rounded-sm border border-border p-4">
@@ -166,23 +184,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
             </div>
           </ActionForm>
         </div>
-      </Card>
-
-      <CostsCard
-        data={{
-          id: e.id,
-          capacity: e.capacity,
-          earningsPercent: e.earningsPercent,
-          expectedAttendance: e.expectedAttendance,
-          costItems: e.costItems,
-          priceOptions: e.priceOptions.map((o) => ({ id: o.id, label: o.label, price: o.price, cost: o.cost })),
-          seatRegistrations: seatRegistrations.map((r) => ({
-            price: r.priceOption?.price ?? null,
-            optionCost: r.priceOption?.cost ?? null,
-          })),
-          collected: collected._sum.amount ?? 0,
-        }}
-      />
+      </CollapsibleCard>
 
       {/* Datos */}
       <Card title={c.settingsTitle}>

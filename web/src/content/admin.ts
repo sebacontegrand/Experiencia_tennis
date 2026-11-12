@@ -50,6 +50,8 @@ export const adminCopy = {
     save: "Guardar",
     pricesTitle: "Opciones y precios",
     pricesHint: "Precio por persona en pesos, sin centavos. Vacío = «Consultar».",
+    pricesSummary: (n: number, missing: number) =>
+      `${n === 1 ? "1 opción" : `${n} opciones`}${missing > 0 ? ` · ${missing} sin precio` : " · todas con precio"}. Tocá para editar.`,
     optionLabel: "Opción",
     optionPrice: "Precio",
     optionCapacity: "Cupo de la opción",

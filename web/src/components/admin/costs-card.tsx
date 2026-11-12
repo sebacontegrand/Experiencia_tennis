@@ -1,9 +1,9 @@
-import { ChevronDown } from "lucide-react";
 import { adminCopy } from "@/content/admin";
 import { formatPrice } from "@/lib/format";
 import { earningsFor, projectedResult, sharedCostPerPerson, suggestedPrice, type CostItemLike } from "@/lib/pricing";
 import { ActionForm, AdminField } from "@/components/admin/action-form";
 import { adminInputClass } from "@/components/admin/styles";
+import { CollapsibleCard } from "@/components/admin/collapsible-card";
 import { cn } from "@/lib/utils";
 import {
   addCostItem,
@@ -36,20 +36,15 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
   const result = projectedResult({ items: e.costItems, registrations: e.seatRegistrations });
 
   return (
-    // Plegable: se configura una vez por experiencia y en el celular alarga mucho la página.
-    <details className="group rounded-sm bg-white p-5 sm:p-7">
-      <summary className="flex cursor-pointer list-none items-start justify-between gap-4 [&::-webkit-details-marker]:hidden">
-        <div>
-          <h2 className="font-serif text-2xl text-navy-900">{c.title}</h2>
-          <p className="mt-1 text-sm text-ink-muted">
-            {e.costItems.length === 0 && e.earningsPercent == null
-              ? c.summaryEmpty
-              : c.summary(e.earningsPercent, formatPrice(Math.round(result.earnings)), result.people)}
-          </p>
-        </div>
-        <ChevronDown aria-hidden className="mt-2 size-5 shrink-0 text-navy-900 transition group-open:rotate-180" />
-      </summary>
-      <p className="mt-4 text-sm text-ink-muted">{c.hint}</p>
+    <CollapsibleCard
+      title={c.title}
+      summary={
+        e.costItems.length === 0 && e.earningsPercent == null
+          ? c.summaryEmpty
+          : c.summary(e.earningsPercent, formatPrice(Math.round(result.earnings)), result.people)
+      }
+    >
+      <p className="text-sm text-ink-muted">{c.hint}</p>
 
       {/* % y asistencia */}
       <ActionForm action={saveProfitSettings.bind(null, e.id)} submitLabel={adminCopy.edit.save} className="mt-6">
@@ -171,7 +166,7 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
         <Stat label={c.collected} value={formatPrice(e.collected)} />
       </dl>
       {result.missingPrices > 0 && <p className="mt-3 text-sm text-amber-900">{c.missingPrices(result.missingPrices)}</p>}
-    </details>
+    </CollapsibleCard>
   );
 }
 
