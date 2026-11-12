@@ -30,8 +30,8 @@ export const siteConfig = {
 
   contact: {
     // TODO(negocio): confirmar que WhatsApp y email son los de esta web (PENDIENTES #6)
-    whatsappNumber: "5491123902736", // formato wa.me: sin +, sin espacios
-    whatsappDisplay: "+54 9 11 2390 2736",
+    whatsappNumber: "5491157364407", // formato wa.me: sin +, sin espacios
+    whatsappDisplay: "+54 9 11 5736 4407",
     whatsappDefaultMessage: "¡Hola! Quiero saber más sobre Experiencia Tenis.",
     email: "gabrielabrunotenis@gmail.com",
     instagramUser: "gabibruno_todotenis" as string | null,

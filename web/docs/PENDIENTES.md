@@ -10,7 +10,7 @@ No se inventan: hasta que lleguen, el sitio muestra un marcador neutro o "Consul
 | 3 | Usuario de Instagram | `src/config/site.ts` | ✅ `gabibruno_todotenis` (11/11) |
 | 4 | Alias o CBU para transferencias (y titular) | `src/config/site.ts`, email de inscripción, pantalla de confirmación | Pendiente |
 | 5 | Logo vectorial (SVG) o PNG de alta resolución | `public/brand/`, componente `<Logo />`. El actual mide 195×79 px | Pendiente |
-| 6 | Confirmar que WhatsApp (+54 9 11 2390 2736) y email (gabrielabrunotenis@gmail.com) son los de esta web | `src/config/site.ts` | Pendiente |
+| 6 | Confirmar que el email (gabrielabrunotenis@gmail.com) es el de esta web. WhatsApp: +54 9 11 5736 4407 (de Gabriela, confirmado 12/11) | `src/config/site.ts` | Email pendiente |
 | 7 | Texto de "Quiénes somos" y foto de Gabriela | `/nosotros` | Pendiente |
 | 8 | Condiciones de inscripción, seña y cancelación | Detalle de experiencia, inscripción, emails | Pendiente |
 | 9 | Responsable de la base de datos para la política de privacidad (nombre/razón social, CUIT, domicilio) e inscripción ante la AAIP | `/privacidad` | Pendiente |
