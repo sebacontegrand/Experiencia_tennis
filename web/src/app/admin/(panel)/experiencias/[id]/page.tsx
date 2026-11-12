@@ -15,7 +15,7 @@ import { adminInputClass } from "@/components/admin/styles";
 import { ItineraryEditor } from "@/components/admin/itinerary-editor";
 import { dateToInput } from "@/lib/experience-content";
 import { parseItinerary } from "@/lib/itinerary";
-import { addPriceOption, deletePriceOption, savePriceOption, saveContent, saveItinerary, saveSettings, setPublished } from "../actions";
+import { addPriceOption, deleteExperience, deletePriceOption, savePriceOption, saveContent, saveItinerary, saveSettings, setPublished } from "../actions";
 
 export const metadata: Metadata = { title: "Editar experiencia" };
 const c = adminCopy.edit;
@@ -63,6 +63,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
   const byStatus = await db.registration.groupBy({ by: ["status"], where: { experienceId: e.id }, _count: { _all: true } });
   const n = (s: string) => byStatus.find((r) => r.status === s)?._count._all ?? 0;
   const taken = SEAT_HOLDING_STATUSES.reduce((sum, s) => sum + n(s), 0);
+  const total = byStatus.reduce((sum, r) => sum + r._count._all, 0);
   const missingPrices = e.priceOptions.filter((o) => o.price == null).length;
   const isVisible = e.status === "PUBLICADA" || e.status === "CUPO_COMPLETO";
 
@@ -327,6 +328,23 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
           <Users aria-hidden className="size-4" /> {adminCopy.registrations.openList}
         </Link>
       </Card>
+
+      {/* Eliminar: al final y separado, para no tocarlo sin querer. */}
+      <section aria-labelledby="eliminar" className="rounded-sm border border-destructive/30 bg-white p-5 sm:p-7">
+        <h2 id="eliminar" className="font-serif text-2xl text-navy-900">
+          {c.deleteTitle}
+        </h2>
+        <p className="mt-1 text-sm text-ink-muted">{total > 0 ? c.deleteBlocked(total) : c.deleteText}</p>
+        <ActionForm
+          action={deleteExperience.bind(null, e.id)}
+          submitLabel={c.deleteButton}
+          pendingLabel="Eliminando…"
+          variant="danger"
+          confirm={c.deleteConfirm(e.title)}
+          disabled={total > 0}
+          className="mt-5"
+        />
+      </section>
     </div>
   );
 }

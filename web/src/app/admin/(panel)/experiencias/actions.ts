@@ -226,3 +226,27 @@ export async function saveItinerary(experienceId: string, _prev: AdminActionStat
   refreshPublic(exp.slug);
   return ok(m.saved);
 }
+
+/**
+ * Borrar una experiencia. Solo si no tiene inscripciones (de ningún estado): esas son datos de personas
+ * y pagos. Opciones de precio y costos se borran con ella (cascade); testimonios y fotos quedan sueltos.
+ */
+export async function deleteExperience(experienceId: string, _prev: AdminActionState, _formData: FormData): Promise<AdminActionState> {
+  void _formData;
+  await requireAdmin();
+  const exp = await db.experience.findUnique({
+    where: { id: experienceId },
+    select: { id: true, slug: true, _count: { select: { registrations: true } } },
+  });
+  if (!exp) return fail(m.notFound);
+  if (exp._count.registrations > 0) return fail(m.experienceHasRegistrations(exp._count.registrations));
+  try {
+    await db.experience.delete({ where: { id: exp.id } });
+  } catch (err) {
+    // Alguien se inscribió justo ahora: la base no deja borrar (clave foránea).
+    console.error("[deleteExperience]", err);
+    return fail(m.experienceHasRegistrations(1));
+  }
+  refreshPublic(exp.slug);
+  redirect("/admin/experiencias");
+}

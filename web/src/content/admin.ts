@@ -105,6 +105,12 @@ export const adminCopy = {
     removeItem: "Quitar actividad",
     itineraryEmpty: "Todavía no hay días cargados.",
     saveItinerary: "Guardar cronograma",
+    deleteTitle: "Eliminar experiencia",
+    deleteText: "Se borra con sus opciones de precio y costos. No se puede deshacer.",
+    deleteBlocked: (n: number) =>
+      `No se puede eliminar porque tiene ${n === 1 ? "1 inscripción" : `${n} inscripciones`}. Si no se va a hacer, volvela a borrador para que no se vea en el sitio.`,
+    deleteButton: "Eliminar experiencia",
+    deleteConfirm: (title: string) => `¿Eliminar «${title}»? Se borra con sus opciones de precio y costos. No se puede deshacer.`,
   },
   create: {
     cta: "Nueva experiencia",
@@ -379,6 +385,8 @@ export const adminCopy = {
     invalidPartner: "Elegí una sede u hotel de la lista.",
     invalidItinerary: "No pudimos leer el cronograma. Recargá la página y probá de nuevo.",
     tooLong: "Algún texto es demasiado largo.",
+    experienceHasRegistrations: (n: number) =>
+      `No se puede eliminar: tiene ${n === 1 ? "1 inscripción" : `${n} inscripciones`}.`,
     missingDescription: "Antes de publicar, escribí la descripción (en «Textos y fechas»).",
   },
 } as const;
