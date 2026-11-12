@@ -121,3 +121,35 @@ export const experiencesCopy = {
     },
   },
 } as const;
+
+/**
+ * Flyers por experiencia (slug → imágenes en /public/flyers), para ver, guardar o compartir.
+ * Sin precios ni logos de terceros: solo lo que ya dice la página de la experiencia.
+ */
+export const experienceFlyers: Record<string, { src: string; alt: string; width: number; height: number }[]> = {
+  "villa-gesell-diciembre-2026": [
+    {
+      src: "/flyers/villa-gesell-2026-portada.jpg",
+      alt: "Flyer de Experiencia Tenis Gesell, 11 al 13 de diciembre de 2026: torneo en el Villa Gesell Golf Club y dos noches en Tequendama Spa & Resort.",
+      width: 1024,
+      height: 1280,
+    },
+    {
+      src: "/flyers/villa-gesell-2026-cronograma.jpg",
+      alt: "Cronograma del fin de semana. Viernes 11: check-in desde las 13 y tarde libre. Sábado 12: desayuno, torneo de 10 a 19 con almuerzo en el club, y a las 21 cena, premiación y cierre. Domingo 13: desayuno y check-out a las 13.",
+      width: 940,
+      height: 1280,
+    },
+  ],
+};
+
+export const flyerCopy = {
+  link: "Ver el flyer",
+  title: "Flyer",
+  lead: "Guardalo o compartilo con quien quieras sumar.",
+  download: "Descargar",
+  share: "Compartir por WhatsApp",
+  shareText: (title: string, url: string) => `Mirá esta experiencia de tenis: ${title} ${url}`,
+  back: "Volver a la experiencia",
+  register: "Inscribirme",
+} as const;

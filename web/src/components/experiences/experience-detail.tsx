@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, CalendarDays, Check, CloudRain, Hotel, MapPin, Trophy, Users, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Images, Check, CloudRain, Hotel, MapPin, Trophy, Users, X } from "lucide-react";
 import { getLiveAvailability, type ExperienceDetail as Detail } from "@/lib/data/public";
-import { experiencesCopy } from "@/content/experiences";
+import { experienceFlyers, experiencesCopy, flyerCopy } from "@/content/experiences";
 import { formatDate, formatDateRange, formatPrice } from "@/lib/format";
 import { parseItinerary } from "@/lib/itinerary";
 import { absoluteUrl, siteConfig, whatsappLink } from "@/config/site";
@@ -55,6 +55,14 @@ export function ExperienceDetailView({ experience: e, preview = false }: { exper
           <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.05] font-medium text-balance sm:text-6xl">{e.title}</h1>
           <div className="gold-rule mt-6" />
           {e.summary && <p className="mt-6 max-w-2xl text-lg text-white/80">{e.summary}</p>}
+          {!preview && experienceFlyers[e.slug] && (
+            <Link
+              href={`/experiencias/${e.slug}/flyer`}
+              className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-gold-light underline-offset-4 hover:underline"
+            >
+              <Images aria-hidden className="size-5" /> {flyerCopy.link}
+            </Link>
+          )}
 
           <dl className="mt-10 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
             <Fact icon={<CalendarDays />} label={c.when} value={formatDateRange(e.startDate, e.endDate)} />
