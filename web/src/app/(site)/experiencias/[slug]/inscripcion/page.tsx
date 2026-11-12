@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { ArrowLeft } from "lucide-react";
 import { RegistrationForm } from "@/components/forms/registration-form";
 import { getLiveAvailability, getPublicExperience, getVisibleExperienceSlugs } from "@/lib/data/public";
@@ -35,6 +36,9 @@ export default function RegistrationPage({ params }: PageProps<"/experiencias/[s
 }
 
 async function Registration({ params }: Pick<PageProps<"/experiencias/[slug]/inscripcion">, "params">) {
+  // Render en cada request (los datos sí van cacheados por tag): así publicar, despublicar
+  // o cambiar un precio desde el admin se ve al instante, sin una versión vieja de por medio.
+  await connection();
   const { slug } = await params;
   const e = await getPublicExperience(slug);
   if (!e) notFound();

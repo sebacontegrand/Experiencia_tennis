@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { connection } from "next/server";
 import { ExperienceDetailView } from "@/components/experiences/experience-detail";
 import { getPublicExperience, getVisibleExperienceSlugs } from "@/lib/data/public";
 import { formatDateRange } from "@/lib/format";
@@ -35,6 +36,9 @@ export default function ExperiencePage({ params }: PageProps<"/experiencias/[slu
 }
 
 async function Detail({ params }: Pick<PageProps<"/experiencias/[slug]">, "params">) {
+  // Render en cada request (los datos sí van cacheados por tag): así publicar, despublicar
+  // o cambiar un precio desde el admin se ve al instante, sin una versión vieja de por medio.
+  await connection();
   const { slug } = await params;
   const experience = await getPublicExperience(slug);
   if (!experience) notFound();
