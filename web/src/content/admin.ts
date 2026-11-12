@@ -2,6 +2,8 @@
 export const adminCopy = {
   title: "Panel",
   signOut: "Salir",
+  brand: "Experiencia Tenis",
+  nav: { label: "Secciones del panel", board: "Tablero", experiences: "Experiencias", site: "Ver sitio" },
   login: {
     title: "Ingresá al panel",
     text: "Usá tu cuenta de Google. Solo pueden entrar las personas habilitadas como administradoras.",
@@ -9,7 +11,6 @@ export const adminCopy = {
     denied: "Esa cuenta de Google no tiene acceso al panel. Pedí que te habiliten y volvé a intentar.",
     error: "No pudimos iniciar sesión. Probá de nuevo.",
   },
-  nav: [{ href: "/admin/experiencias", label: "Experiencias" }],
   status: {
     BORRADOR: "Borrador",
     PUBLICADA: "Publicada",
@@ -138,8 +139,6 @@ export const adminCopy = {
     whatsappGreeting: (firstName: string, title: string) => `¡Hola ${firstName}! Te escribo por tu inscripción a ${title}.`,
   },
   board: {
-    tabList: "Lista",
-    tabBoard: "Tablero",
     title: "Tablero",
     intro: "Todas las experiencias de un vistazo: cupos, plata y lo que necesita atención.",
     totalsTitle: "Próximas experiencias",

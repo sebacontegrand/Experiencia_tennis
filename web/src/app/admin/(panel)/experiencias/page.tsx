@@ -6,7 +6,6 @@ import { adminCopy } from "@/content/admin";
 import { formatDateRange } from "@/lib/format";
 import { SEAT_HOLDING_STATUSES } from "@/lib/registration-rules";
 import { StatusBadge } from "@/components/admin/status-badge";
-import { ExperiencesTabs } from "@/components/admin/experiences-tabs";
 
 export const metadata: Metadata = { title: "Experiencias" };
 const c = adminCopy.list;
@@ -24,7 +23,6 @@ export default async function AdminExperiencesPage() {
   return (
     <>
       <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
-      <ExperiencesTabs active="list" />
       {experiences.length === 0 ? (
         <p className="mt-6 text-ink-muted">{c.empty}</p>
       ) : (

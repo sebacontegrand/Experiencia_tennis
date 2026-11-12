@@ -20,7 +20,7 @@ export default function LoginPage({ searchParams }: PageProps<"/admin/ingresar">
         <form
           action={async () => {
             "use server";
-            await signIn("google", { redirectTo: "/admin/experiencias" });
+            await signIn("google", { redirectTo: "/admin" });
           }}
           className="mt-8"
         >

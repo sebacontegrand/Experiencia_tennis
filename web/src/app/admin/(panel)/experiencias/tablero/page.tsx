@@ -7,7 +7,6 @@ import { adminCopy } from "@/content/admin";
 import { formatDateRange, formatPrice } from "@/lib/format";
 import { experienceOverview, sumOverviews, type Alert, type Overview } from "@/lib/overview";
 import { StatusBadge } from "@/components/admin/status-badge";
-import { ExperiencesTabs } from "@/components/admin/experiences-tabs";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Tablero" };
@@ -40,12 +39,11 @@ export default async function BoardPage() {
 
   return (
     <>
-      <h1 className="font-serif text-4xl text-navy-900">{adminCopy.list.title}</h1>
-      <ExperiencesTabs active="board" />
-      <p className="mt-6 text-ink-muted">{c.intro}</p>
+      <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
+      <p className="mt-2 text-ink-muted">{c.intro}</p>
 
       <section aria-labelledby="totales" className="mt-6 rounded-sm bg-navy-900 p-5 text-white sm:p-7">
-        <h2 id="totales" className="eyebrow text-gold-light">
+        <h2 id="totales" className="text-sm font-semibold text-gold-light">
           {c.totalsTitle}
         </h2>
         {upcoming.length === 0 ? (
