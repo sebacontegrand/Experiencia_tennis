@@ -134,7 +134,7 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
                 <Figure label={c.current} value={formatPrice(o.price)} />
                 <Figure
                   label={c.earnings}
-                  value={current ? `${formatPrice(current.amount)} (${Math.round(current.percent)} %)` : "—"}
+                  value={current ? `${formatPrice(current.amount)} (${Math.round(current.percent)}\u00a0%)` : "—"}
                   tone={current ? (current.amount < 0 ? "bad" : "good") : undefined}
                 />
               </dl>
