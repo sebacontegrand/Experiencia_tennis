@@ -1,13 +1,7 @@
-import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
+import { resolve } from "./vitest.shared.mjs";
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
-      // "server-only" lanza fuera de React Server Components; en tests lo neutralizamos.
-      "server-only": fileURLToPath(new URL("./src/test/empty.ts", import.meta.url)),
-    },
-  },
-  test: { environment: "node", include: ["src/**/*.test.ts"] },
+  resolve,
+  test: { environment: "node", include: ["src/**/*.test.ts"], exclude: ["src/**/*.db.test.ts", "node_modules/**"] },
 });

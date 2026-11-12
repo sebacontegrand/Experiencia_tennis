@@ -135,6 +135,11 @@ enum ExperienceStatus {
   CANCELADA
 }
 
+enum ExperienceAudience {
+  MUJERES
+  MIXTO
+}
+
 model Experience {
   id                   String           @id @default(cuid())
   slug                 String           @unique
@@ -144,6 +149,7 @@ model Experience {
   endDate              DateTime
   destination          String
   capacity             Int
+  audience             ExperienceAudience? // null = todavía sin definir (no se muestra)
   summary              String? // bajada corta para tarjetas
   description          String
   // [{ day: "Viernes 11/12", items: ["Check-in", "..."] }]
