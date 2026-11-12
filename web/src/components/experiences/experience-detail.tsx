@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
 import { ArrowLeft, ArrowRight, CalendarDays, Check, CloudRain, Hotel, MapPin, Trophy, Users, X } from "lucide-react";
@@ -7,6 +8,7 @@ import { formatDate, formatDateRange, formatPrice } from "@/lib/format";
 import { parseItinerary } from "@/lib/itinerary";
 import { absoluteUrl, siteConfig, whatsappLink } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { formatImage } from "@/content/images";
 import { WhatsappIcon } from "@/components/icons/brand-icons";
 
 const c = experiencesCopy.detail;
@@ -22,6 +24,7 @@ export function ExperienceDetailView({ experience: e, preview = false }: { exper
   const canRegister = !e.closedReason;
   const itinerary = parseItinerary(e.itinerary);
   const live = { experienceId: e.id };
+  const cover = formatImage(e.format.slug);
 
   return (
     <>
@@ -30,12 +33,25 @@ export function ExperienceDetailView({ experience: e, preview = false }: { exper
           <EventJsonLd experience={e} />
         </Suspense>
       )}
-      <section className="bg-navy-900 px-5 pt-12 pb-16 text-white sm:px-8 sm:pt-16 sm:pb-20">
+      <section className="relative isolate overflow-hidden bg-navy-900 px-5 pt-6 pb-16 text-white sm:px-8 sm:pt-8 sm:pb-20">
+        {/* Foto ilustrativa del formato: franja arriba que se funde en navy donde empieza el título. */}
+        <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-80 sm:h-[26rem]">
+          <Image
+            src={cover.src}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            style={{ objectPosition: cover.position }}
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-navy-900/60 via-navy-900/25 via-30% to-navy-900" />
+        </div>
         <div className="mx-auto max-w-6xl">
-          <Link href="/calendario" className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-gold-light">
+          <Link href="/calendario" className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-gold-light">
             <ArrowLeft aria-hidden className="size-4" /> {c.back}
           </Link>
-          <p className="eyebrow mt-8 text-gold">Experiencia {e.format.name}</p>
+          <p className="eyebrow mt-44 text-gold sm:mt-60">Experiencia {e.format.name}</p>
           <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.05] font-medium text-balance sm:text-6xl">{e.title}</h1>
           <div className="gold-rule mt-6" />
           {e.summary && <p className="mt-6 max-w-2xl text-lg text-white/80">{e.summary}</p>}

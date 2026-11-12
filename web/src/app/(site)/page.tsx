@@ -53,7 +53,12 @@ export default function HomePage() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-navy-900 px-5 pt-14 pb-20 text-white sm:px-8 sm:pt-20 sm:pb-28">
+    <section className="relative isolate overflow-hidden bg-navy-900 px-5 pt-44 pb-16 text-white sm:px-8 sm:pt-20 sm:pb-28">
+      {/* Celular: la foto es una franja arriba que se funde en navy justo donde empieza el texto. */}
+      <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-72 sm:hidden">
+        <Image src={images.heroCourt.src} alt="" fill priority sizes="100vw" className="object-cover object-[50%_40%]" />
+        <div className="absolute inset-0 bg-linear-to-b from-navy-900/0 from-25% via-navy-900/90 via-65% to-navy-900" />
+      </div>
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.25fr_1fr]">
         <div>
           <p className="eyebrow text-gold">{c.hero.eyebrow}</p>
@@ -61,9 +66,9 @@ function Hero() {
             {c.hero.title}
             <span className="mt-2 block text-gold-light italic">{c.hero.titleAccent}</span>
           </h1>
-          <div className="gold-rule mt-8" />
-          <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/80">{c.hero.lead}</p>
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <div className="gold-rule mt-6 sm:mt-8" />
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:mt-8 sm:text-lg">{c.hero.lead}</p>
+          <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
             <Link
               href={c.hero.primaryCta.href}
               className="btn-label inline-flex h-14 items-center justify-center rounded-sm bg-gold px-8 text-navy-900 transition hover:bg-gold-light"
@@ -78,14 +83,13 @@ function Hero() {
             </Link>
           </div>
         </div>
-        <div className="relative mx-auto hidden w-full max-w-sm sm:block lg:max-w-none">
+        <div className="relative mx-auto hidden aspect-4/5 w-full max-w-sm overflow-hidden rounded-sm ring-1 ring-gold/40 sm:block lg:max-w-none">
           <Image
             src={images.heroCourt.src}
             alt={images.heroCourt.alt}
-            width={images.heroCourt.width}
-            height={images.heroCourt.height}
-            priority
-            className="h-auto w-full"
+            fill
+            sizes="(min-width: 1024px) 40vw, 384px"
+            className="object-cover"
           />
         </div>
       </div>
@@ -132,7 +136,15 @@ async function Formats() {
                 : "flex flex-col overflow-hidden rounded-sm border border-border bg-white"
             }
           >
-            <Image src={img.src} alt="" width={img.width} height={img.height} className="h-auto w-full" />
+            <Image
+              src={img.src}
+              alt=""
+              width={img.width}
+              height={img.height}
+              sizes="(min-width: 768px) 33vw, 100vw"
+              className="aspect-3/2 w-full object-cover"
+              style={{ objectPosition: img.position }}
+            />
             <div className="flex flex-1 flex-col p-7">
               <p className={featured ? "eyebrow text-gold" : "eyebrow text-gold-deep"}>Experiencia</p>
               <h3 className={featured ? "mt-2 font-serif text-4xl text-white" : "mt-2 font-serif text-4xl text-navy-900"}>
@@ -266,7 +278,8 @@ function Community() {
             alt={images.table.alt}
             width={images.table.width}
             height={images.table.height}
-            className="h-auto w-full rounded-sm"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="aspect-4/3 w-full rounded-sm object-cover"
           />
           <figcaption className="mt-4 text-sm text-white/60">{c.community.photosSoon}</figcaption>
         </figure>

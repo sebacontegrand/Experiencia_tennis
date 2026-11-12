@@ -32,7 +32,15 @@ export default async function ExperiencesPage() {
             const img = formatImage(f.slug);
             return (
               <li key={f.id} id={f.slug} className="scroll-mt-24 overflow-hidden rounded-sm border border-border bg-white">
-                <Image src={img.src} alt="" width={img.width} height={img.height} className="h-auto w-full" />
+                <Image
+                  src={img.src}
+                  alt=""
+                  width={img.width}
+                  height={img.height}
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                  className="aspect-3/2 w-full object-cover"
+                  style={{ objectPosition: img.position }}
+                />
                 <div className="p-8">
                   <p className="eyebrow text-gold-deep">Experiencia</p>
                   <h2 className="mt-2 font-serif text-4xl text-navy-900">{f.name}</h2>

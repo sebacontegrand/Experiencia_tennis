@@ -74,7 +74,7 @@ export const homeCopy = {
     text:
       "Experiencia Tenis es, antes que nada, una comunidad de jugadoras y jugadores que buscan algo más que competir. Grupos de amigos, parejas de dobles, compañeras de club y profes que quieren compartir el tenis de otra manera.",
     // TODO(negocio): fotos y testimonios reales después de cada experiencia (Fase 6)
-    photosSoon: "Muy pronto, las fotos de nuestras experiencias.",
+    photosSoon: "Foto ilustrativa. Muy pronto, las de nuestras experiencias.",
   },
 
   partners: {

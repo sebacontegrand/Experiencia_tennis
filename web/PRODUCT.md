@@ -32,7 +32,7 @@ Exclusive, warm, careful. Gabriela Bruno's personal brand: a curated trip among 
 2. **Curated, not loud.** Premium comes from restraint: space, rhythm, precise type, one accent. If a detail calls attention to itself, it goes.
 3. **Close at hand.** WhatsApp and a person (Gabriela) are always one tap away. The tone is a host's, not a company's.
 4. **Phone first, thumb first.** Most visits come from Instagram or WhatsApp on a phone: large targets, short scans, no horizontal scroll, the main action within reach.
-5. **Honest imagery.** No photos that look like real participants and no invented testimonials; illustrations stand in until there are real photos.
+5. **Honest imagery.** No photos that look like real participants and no invented testimonials. Until there are real photos, licensed stock stands in where people aren't the focus (courts, landscapes, players far away or from behind, details), captioned as illustrative where it could be read as ours.
 
 ## Accessibility & Inclusion
 
