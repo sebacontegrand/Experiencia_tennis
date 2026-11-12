@@ -32,6 +32,13 @@ export default async function BoardPage() {
   });
 
   const now = new Date();
+  const monthAgo = new Date(now.getTime() - 30 * 24 * 3600 * 1000);
+  const [players, newPlayers, consenting, newLeads] = await Promise.all([
+    db.player.count(),
+    db.player.count({ where: { createdAt: { gte: monthAgo } } }),
+    db.player.count({ where: { marketingConsent: true } }),
+    db.lead.count({ where: { status: "NUEVO" } }),
+  ]);
   const rows = experiences.map((e) => ({ e, o: experienceOverview(e, now) }));
   const upcoming = rows.filter((r) => r.o.upcoming);
   const past = rows.filter((r) => !r.o.upcoming).reverse();
@@ -41,6 +48,18 @@ export default async function BoardPage() {
     <>
       <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
       <p className="mt-2 text-ink-muted">{c.intro}</p>
+
+      <section aria-labelledby="comunidad" className="mt-6">
+        <h2 id="comunidad" className="sr-only">
+          {c.communityTitle}
+        </h2>
+        <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <CommunityStat href="/admin/jugadores" label={c.players} value={players} />
+          <CommunityStat href="/admin/jugadores" label={c.newPlayers} value={newPlayers} />
+          <CommunityStat href="/admin/jugadores?consentimiento=1" label={c.consenting} value={consenting} />
+          <CommunityStat label={c.newLeads} value={newLeads} />
+        </dl>
+      </section>
 
       <section aria-labelledby="totales" className="mt-6 rounded-sm bg-navy-900 p-5 text-white sm:p-7">
         <h2 id="totales" className="text-sm font-semibold text-gold-light">
@@ -194,5 +213,22 @@ function Figure({ label, value, tone }: { label: string; value: string; tone?: "
         {value}
       </dd>
     </div>
+  );
+}
+
+function CommunityStat({ label, value, href }: { label: string; value: number; href?: string }) {
+  const body = (
+    <>
+      <dt className="text-sm text-ink-muted">{label}</dt>
+      <dd className="mt-1 text-2xl font-semibold text-navy-900 tabular-nums">{value}</dd>
+    </>
+  );
+  return href ? (
+    <div className="relative rounded-sm border border-border bg-white p-4 hover:border-navy-900">
+      <Link href={href} className="absolute inset-0" aria-label={`${label}: ${value}`} />
+      {body}
+    </div>
+  ) : (
+    <div className="rounded-sm border border-border bg-white p-4">{body}</div>
   );
 }

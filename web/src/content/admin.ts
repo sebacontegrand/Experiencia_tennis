@@ -192,7 +192,12 @@ export const adminCopy = {
   },
   board: {
     title: "Tablero",
-    intro: "Todas las experiencias de un vistazo: cupos, plata y lo que necesita atención.",
+    intro: "La comunidad y todas las experiencias de un vistazo: cupos, plata y lo que necesita atención.",
+    communityTitle: "Comunidad",
+    players: "Jugadores",
+    newPlayers: "Nuevos (30 días)",
+    consenting: "Aceptan novedades",
+    newLeads: "Consultas sin responder",
     totalsTitle: "Próximas experiencias",
     totalsEmpty: "No hay experiencias próximas.",
     upcoming: "Próximas",
