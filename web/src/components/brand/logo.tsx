@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
  * TODO(negocio): reemplazar por el SVG vectorial (PENDIENTES #5). Al llegar, cambiar solo este componente.
  * No escalar por encima del tamaño original.
  */
-const LOGO = { src: "/brand/logo-gabriela-bruno.png", width: 195, height: 79 };
+const LOGO = { src: "/brand/logo-gabriela-bruno-srgb.png", width: 195, height: 79 };
 
 export function Logo({ className, priority = false }: { className?: string; priority?: boolean }) {
   return (
