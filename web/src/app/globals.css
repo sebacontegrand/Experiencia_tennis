@@ -108,8 +108,20 @@
   .eyebrow {
     @apply font-sans text-xs font-semibold tracking-[0.28em] uppercase;
   }
+  /* Texto de botones y llamados a la acción: legible (no en mayúsculas espaciadas) */
+  .btn-label {
+    @apply font-sans text-[0.9375rem] font-semibold tracking-[0.01em];
+  }
   /* Línea fina dorada como separador */
   .gold-rule {
     @apply h-px w-16 bg-gold;
+  }
+}
+
+/* En el celular, si la página tiene barra fija de inscripción, el WhatsApp va dentro de la barra.
+   Fuera de las capas a propósito: tiene que ganarle a la utilidad inline-flex del botón. */
+@media (width < 48rem) {
+  body:has([data-sticky-cta]) [data-whatsapp-fab] {
+    display: none;
   }
 }

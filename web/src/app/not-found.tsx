@@ -15,7 +15,7 @@ export default function NotFound() {
       <p className="mx-auto mt-6 max-w-md text-white/80">{c.text}</p>
       <Link
         href="/"
-        className="eyebrow mt-10 inline-flex h-12 items-center rounded-sm bg-gold px-6 text-navy-900 transition hover:bg-gold-light"
+        className="btn-label mt-10 inline-flex h-12 items-center rounded-sm bg-gold px-6 text-navy-900 transition hover:bg-gold-light"
       >
         {c.cta}
       </Link>

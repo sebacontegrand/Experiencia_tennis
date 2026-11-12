@@ -99,7 +99,7 @@ export default async function ExperiencesPage() {
         </div>
         <Link
           href={c.cta.href}
-          className="eyebrow mt-12 inline-flex h-14 items-center rounded-sm bg-navy-900 px-8 text-white transition hover:bg-navy-800"
+          className="btn-label mt-12 inline-flex h-14 items-center rounded-sm bg-navy-900 px-8 text-white transition hover:bg-navy-800"
         >
           {c.cta.label}
         </Link>

@@ -7,6 +7,7 @@ import { formatDate, formatDateRange, formatPrice } from "@/lib/format";
 import { parseItinerary } from "@/lib/itinerary";
 import { absoluteUrl, siteConfig, whatsappLink } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { WhatsappIcon } from "@/components/icons/brand-icons";
 
 const c = experiencesCopy.detail;
 
@@ -71,7 +72,7 @@ export function ExperienceDetailView({ experience: e, preview = false }: { exper
               href={whatsappLink(c.askMessage(e.title))}
               target="_blank"
               rel="noopener noreferrer"
-              className="eyebrow inline-flex h-14 items-center justify-center rounded-sm border border-white/30 px-8 text-white transition hover:border-gold-light hover:text-gold-light"
+              className="btn-label inline-flex h-14 items-center justify-center rounded-sm border border-white/30 px-8 text-white transition hover:border-gold-light hover:text-gold-light"
             >
               {c.ask}
             </a>
@@ -163,7 +164,65 @@ export function ExperienceDetailView({ experience: e, preview = false }: { exper
           )}
         </div>
       </section>
+
+      {canRegister && !preview && <StickyRegisterBar experience={e} />}
     </>
+  );
+}
+
+/**
+ * Barra fija en el celular: precio "desde", inscripción y WhatsApp siempre a mano mientras se lee.
+ * Reemplaza al botón flotante de WhatsApp en esta página (ver globals.css).
+ */
+function StickyRegisterBar({ experience: e }: { experience: Detail }) {
+  const prices = e.priceOptions.map((o) => o.price).filter((p): p is number => p != null);
+  const from = prices.length > 0 ? Math.min(...prices) : null;
+  return (
+    <>
+      {/* Espacio para que la barra no tape el final de la página */}
+      <div aria-hidden className="h-24 bg-navy-950 md:hidden" />
+      <div
+        data-sticky-cta
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-gold/30 bg-navy-900 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-white md:hidden"
+      >
+        <div className="flex items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-xs text-white/70">{from == null ? c.priceAsk : c.priceFrom}</p>
+            <p className="truncate font-semibold">{from == null ? formatPrice(null) : formatPrice(from)}</p>
+          </div>
+          <a
+            href={whatsappLink(c.askMessage(e.title))}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${c.ask} (se abre en una nueva pestaña)`}
+            className="inline-flex size-12 shrink-0 items-center justify-center rounded-sm border border-white/30 text-gold-light"
+          >
+            <WhatsappIcon size={22} />
+          </a>
+          <Suspense
+            fallback={
+              <Link href={`/experiencias/${e.slug}/inscripcion`} className={barButton}>
+                {c.register}
+              </Link>
+            }
+          >
+            <LiveBarButton slug={e.slug} experienceId={e.id} />
+          </Suspense>
+        </div>
+      </div>
+    </>
+  );
+}
+
+const barButton =
+  "btn-label inline-flex h-12 shrink-0 items-center justify-center rounded-sm bg-gold px-5 text-navy-900 transition hover:bg-gold-light";
+
+async function LiveBarButton({ slug, experienceId }: { slug: string; experienceId: string }) {
+  const a = await getLiveAvailability(experienceId);
+  return (
+    <Link href={`/experiencias/${slug}/inscripcion`} className={barButton}>
+      {a.isFull ? c.waitlistShort : c.register}
+    </Link>
   );
 }
 
@@ -187,7 +246,7 @@ async function LiveRegisterButton({
 function RegisterButton({ slug, label, preview, variant }: { slug: string; label: string; preview?: boolean; variant?: "dark" }) {
   if (preview) {
     return (
-      <span className="eyebrow inline-flex h-14 items-center justify-center rounded-sm border border-dashed border-gold px-8 text-gold-light">
+      <span className="btn-label inline-flex h-14 items-center justify-center rounded-sm border border-dashed border-gold px-8 text-gold-light">
         {label} (vista previa)
       </span>
     );
@@ -196,7 +255,7 @@ function RegisterButton({ slug, label, preview, variant }: { slug: string; label
     <Link
       href={`/experiencias/${slug}/inscripcion`}
       className={cn(
-        "eyebrow inline-flex items-center justify-center gap-2 rounded-sm transition",
+        "btn-label inline-flex items-center justify-center gap-2 rounded-sm transition",
         variant === "dark"
           ? "mt-6 flex h-12 bg-navy-900 text-white hover:bg-navy-800"
           : "h-14 bg-gold px-8 text-navy-900 hover:bg-gold-light",

@@ -213,7 +213,7 @@ export function SubmitButton({ pending, children }: { pending: boolean; children
       type="submit"
       disabled={pending}
       aria-disabled={pending}
-      className="eyebrow inline-flex h-14 w-full items-center justify-center rounded-sm bg-navy-900 px-8 text-white transition hover:bg-navy-800 disabled:opacity-60 sm:w-auto"
+      className="btn-label inline-flex h-14 w-full items-center justify-center rounded-sm bg-navy-900 px-8 text-white transition hover:bg-navy-800 disabled:opacity-60 sm:w-auto"
     >
       {pending ? formCopy.sending : children}
     </button>

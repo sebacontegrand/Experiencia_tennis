@@ -103,7 +103,7 @@ export function RegistrationForm({
           href={whatsappLink(c.payment.whatsappMessage(title, state.firstName))}
           target="_blank"
           rel="noopener noreferrer"
-          className="eyebrow mt-8 inline-flex h-12 items-center rounded-sm bg-navy-900 px-6 text-white transition hover:bg-navy-800"
+          className="btn-label mt-8 inline-flex h-12 items-center rounded-sm bg-navy-900 px-6 text-white transition hover:bg-navy-800"
         >
           {c.payment.whatsappCta}
         </a>

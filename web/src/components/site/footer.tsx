@@ -18,10 +18,10 @@ export function SiteFooter() {
 
         <nav aria-label="Pie de página">
           <p className="eyebrow text-gold">Sitio</p>
-          <ul className="mt-5 space-y-3 text-sm">
+          <ul className="mt-3 text-[0.9375rem]">
             {footerLinks.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="transition hover:text-gold-light">
+                <Link href={l.href} className="inline-flex min-h-11 items-center transition hover:text-gold-light">
                   {l.label}
                 </Link>
               </li>
@@ -31,13 +31,13 @@ export function SiteFooter() {
 
         <div>
           <p className="eyebrow text-gold">Contacto</p>
-          <ul className="mt-5 space-y-3 text-sm">
+          <ul className="mt-3 text-[0.9375rem]">
             <li>
               <a
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 transition hover:text-gold-light"
+                className="inline-flex min-h-11 items-center gap-3 transition hover:text-gold-light"
               >
                 <WhatsappIcon size={18} /> {siteConfig.contact.whatsappDisplay}
               </a>
@@ -45,7 +45,7 @@ export function SiteFooter() {
             <li>
               <a
                 href={`mailto:${siteConfig.contact.email}`}
-                className="inline-flex items-center gap-3 break-all transition hover:text-gold-light"
+                className="inline-flex min-h-11 items-center gap-3 break-all transition hover:text-gold-light"
               >
                 <Mail size={18} aria-hidden /> {siteConfig.contact.email}
               </a>
@@ -56,7 +56,7 @@ export function SiteFooter() {
                   href={instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 transition hover:text-gold-light"
+                  className="inline-flex min-h-11 items-center gap-3 transition hover:text-gold-light"
                 >
                   <InstagramIcon size={18} /> @{siteConfig.contact.instagramUser}
                 </a>

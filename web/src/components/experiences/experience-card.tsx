@@ -59,7 +59,7 @@ export function ExperienceCard({ experience: e, tone = "light" }: { experience: 
       <span
         aria-hidden
         className={cn(
-          "eyebrow mt-auto inline-flex items-center gap-2 pt-7",
+          "btn-label mt-auto inline-flex items-center gap-2 pt-7",
           dark ? "text-gold-light" : "text-navy-900",
         )}
       >

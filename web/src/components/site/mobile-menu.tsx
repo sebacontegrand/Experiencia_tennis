@@ -64,7 +64,7 @@ export function MobileMenu({ items, cta }: { items: readonly Item[]; cta: Item }
           <Link
             href={cta.href}
             onClick={() => setOpen(false)}
-            className="eyebrow mt-10 flex h-14 items-center justify-center rounded-sm bg-gold text-navy-900"
+            className="btn-label mt-10 flex h-14 items-center justify-center rounded-sm bg-gold text-navy-900"
           >
             {cta.label} a la comunidad
           </Link>

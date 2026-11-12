@@ -38,7 +38,7 @@ export function CommunityForm({ id = "comunidad-form" }: { id?: string }) {
           href={whatsappLink("¡Hola! Me acabo de sumar a la comunidad de Experiencia Tenis.")}
           target="_blank"
           rel="noopener noreferrer"
-          className="eyebrow mt-6 inline-flex h-12 items-center rounded-sm border border-navy-900 px-6 text-navy-900 transition hover:bg-navy-900 hover:text-white"
+          className="btn-label mt-6 inline-flex h-12 items-center rounded-sm border border-navy-900 px-6 text-navy-900 transition hover:bg-navy-900 hover:text-white"
         >
           {communityCopy.form.successCta}
         </a>

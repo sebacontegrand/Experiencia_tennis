@@ -23,7 +23,7 @@ export function SiteHeader() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="eyebrow text-[0.7rem] text-white/85 transition hover:text-gold-light"
+                  className="inline-flex h-11 items-center text-[0.9375rem] font-medium text-white/85 transition hover:text-gold-light"
                 >
                   {item.label}
                 </Link>
@@ -32,7 +32,7 @@ export function SiteHeader() {
             <li>
               <Link
                 href={headerCta.href}
-                className="eyebrow inline-flex h-10 items-center rounded-sm border border-gold px-5 text-[0.7rem] text-gold-light transition hover:bg-gold hover:text-navy-900"
+                className="btn-label inline-flex h-11 items-center rounded-sm border border-gold px-5 text-gold-light transition hover:bg-gold hover:text-navy-900"
               >
                 {headerCta.label}
               </Link>

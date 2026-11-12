@@ -26,7 +26,7 @@ export default async function CalendarPage() {
               <p className="max-w-xl text-lg text-white/85">{c.empty}</p>
               <Link
                 href={c.emptyCta.href}
-                className="eyebrow mt-8 inline-flex h-12 items-center rounded-sm bg-gold px-6 text-navy-900 transition hover:bg-gold-light"
+                className="btn-label mt-8 inline-flex h-12 items-center rounded-sm bg-gold px-6 text-navy-900 transition hover:bg-gold-light"
               >
                 {c.emptyCta.label}
               </Link>
