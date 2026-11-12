@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
 import { adminCopy } from "@/content/admin";
@@ -22,7 +23,15 @@ export default async function AdminExperiencesPage() {
 
   return (
     <>
-      <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
+        <Link
+          href="/admin/experiencias/nueva"
+          className="inline-flex h-12 items-center gap-2 rounded-sm bg-navy-900 px-5 text-sm font-semibold text-white hover:bg-navy-800"
+        >
+          <Plus aria-hidden className="size-4" /> {adminCopy.create.cta}
+        </Link>
+      </div>
       {experiences.length === 0 ? (
         <p className="mt-6 text-ink-muted">{c.empty}</p>
       ) : (

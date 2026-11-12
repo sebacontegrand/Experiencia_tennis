@@ -12,7 +12,10 @@ import { CostsCard } from "@/components/admin/costs-card";
 import { CollapsibleCard } from "@/components/admin/collapsible-card";
 import { ActionForm, AdminField } from "@/components/admin/action-form";
 import { adminInputClass } from "@/components/admin/styles";
-import { addPriceOption, deletePriceOption, savePriceOption, saveSettings, setPublished } from "../actions";
+import { ItineraryEditor } from "@/components/admin/itinerary-editor";
+import { dateToInput } from "@/lib/experience-content";
+import { parseItinerary } from "@/lib/itinerary";
+import { addPriceOption, deletePriceOption, savePriceOption, saveContent, saveItinerary, saveSettings, setPublished } from "../actions";
 
 export const metadata: Metadata = { title: "Editar experiencia" };
 const c = adminCopy.edit;
@@ -40,6 +43,14 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
     },
   });
   if (!e) notFound();
+
+  const [formats, partners] = await Promise.all([
+    db.experienceFormat.findMany({ orderBy: { sortOrder: "asc" }, select: { id: true, name: true } }),
+    db.partner.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true, type: true } }),
+  ]);
+  const venues = partners.filter((p) => p.type === "CLUB" || p.type === "BARRIO" || p.id === e.venueId);
+  const hotels = partners.filter((p) => p.type === "HOTEL" || p.id === e.hotelId);
+  const itinerary = parseItinerary(e.itinerary);
 
   const [seatRegistrations, collected] = await Promise.all([
     db.registration.findMany({
@@ -184,6 +195,98 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
             </div>
           </ActionForm>
         </div>
+      </CollapsibleCard>
+
+      {/* Textos y fechas */}
+      <CollapsibleCard title={c.contentTitle} summary={c.contentSummary}>
+        <ActionForm action={saveContent.bind(null, e.id)} submitLabel={c.save}>
+          <AdminField label={c.titleField} htmlFor="title">
+            <input id="title" name="title" required maxLength={120} defaultValue={e.title} className={adminInputClass} />
+          </AdminField>
+          <AdminField label={c.slug} hint={e.status === "BORRADOR" ? c.slugHint : c.slugLocked} htmlFor="slug">
+            <input
+              id="slug"
+              name="slug"
+              required
+              maxLength={80}
+              defaultValue={e.slug}
+              readOnly={e.status !== "BORRADOR"}
+              autoCapitalize="none"
+              spellCheck={false}
+              className={`${adminInputClass} read-only:bg-cream read-only:text-ink-muted`}
+            />
+          </AdminField>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <AdminField label={c.format} htmlFor="formatId">
+              <select id="formatId" name="formatId" defaultValue={e.formatId} className={adminInputClass}>
+                {formats.map((f) => (
+                  <option key={f.id} value={f.id}>
+                    {f.name}
+                  </option>
+                ))}
+              </select>
+            </AdminField>
+            <AdminField label={c.startDate} htmlFor="startDate">
+              <input id="startDate" name="startDate" type="date" required defaultValue={dateToInput(e.startDate)} className={adminInputClass} />
+            </AdminField>
+            <AdminField label={c.endDate} htmlFor="endDate">
+              <input id="endDate" name="endDate" type="date" required defaultValue={dateToInput(e.endDate)} className={adminInputClass} />
+            </AdminField>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <AdminField label={c.destination} hint={c.destinationHint} htmlFor="destination">
+              <input id="destination" name="destination" required maxLength={120} defaultValue={e.destination} className={adminInputClass} />
+            </AdminField>
+            <AdminField label={c.venue} htmlFor="venueId">
+              <select id="venueId" name="venueId" defaultValue={e.venueId ?? ""} className={adminInputClass}>
+                <option value="">{c.noPartner}</option>
+                {venues.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </AdminField>
+            <AdminField label={c.hotel} htmlFor="hotelId">
+              <select id="hotelId" name="hotelId" defaultValue={e.hotelId ?? ""} className={adminInputClass}>
+                <option value="">{c.noPartner}</option>
+                {hotels.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </AdminField>
+          </div>
+          <AdminField label={c.summary} hint={c.summaryHint} htmlFor="summary">
+            <textarea id="summary" name="summary" rows={2} maxLength={300} defaultValue={e.summary ?? ""} className={`${adminInputClass} h-auto py-3`} />
+          </AdminField>
+          <AdminField label={c.description} hint={c.descriptionHint} htmlFor="description">
+            <textarea id="description" name="description" rows={8} maxLength={5000} defaultValue={e.description} className={`${adminInputClass} h-auto py-3`} />
+          </AdminField>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <AdminField label={c.includes} hint={c.listHint} htmlFor="includes">
+              <textarea id="includes" name="includes" rows={7} defaultValue={e.includes.join("\n")} className={`${adminInputClass} h-auto py-3`} />
+            </AdminField>
+            <AdminField label={c.excludes} hint={c.listHint} htmlFor="excludes">
+              <textarea id="excludes" name="excludes" rows={7} defaultValue={e.excludes.join("\n")} className={`${adminInputClass} h-auto py-3`} />
+            </AdminField>
+          </div>
+          <AdminField label={c.rainPlan} hint={c.rainPlanHint} htmlFor="rainPlan">
+            <textarea id="rainPlan" name="rainPlan" rows={2} maxLength={1000} defaultValue={e.rainPlan ?? ""} className={`${adminInputClass} h-auto py-3`} />
+          </AdminField>
+          <AdminField label={c.menuOptions} hint={c.menuOptionsHint} htmlFor="menuOptions">
+            <textarea id="menuOptions" name="menuOptions" rows={3} defaultValue={e.menuOptions.join("\n")} className={`${adminInputClass} h-auto py-3`} />
+          </AdminField>
+        </ActionForm>
+      </CollapsibleCard>
+
+      {/* Cronograma */}
+      <CollapsibleCard title={c.itineraryTitle} summary={c.itinerarySummary(itinerary.length)}>
+        <p className="mb-5 text-sm text-ink-muted">{c.itineraryHint}</p>
+        <ActionForm action={saveItinerary.bind(null, e.id)} submitLabel={c.saveItinerary}>
+          <ItineraryEditor initial={itinerary} />
+        </ActionForm>
       </CollapsibleCard>
 
       {/* Datos */}
