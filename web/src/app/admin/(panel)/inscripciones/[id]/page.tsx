@@ -184,6 +184,12 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
           <Row label={c.club} value={r.player.club} />
           <Row label={c.level} value={r.player.level} />
         </dl>
+        <Link
+          href={`/admin/jugadores/${r.player.id}`}
+          className="mt-5 inline-flex h-11 items-center gap-2 text-sm font-semibold text-navy-900 underline underline-offset-4"
+        >
+          {c.playerProfile}
+        </Link>
       </Card>
 
       <Card title={c.internalNotes} hint={c.internalNotesHint}>

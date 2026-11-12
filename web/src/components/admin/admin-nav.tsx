@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, ExternalLink, LayoutDashboard } from "lucide-react";
+import { CalendarDays, ExternalLink, LayoutDashboard, Users } from "lucide-react";
 import { adminCopy } from "@/content/admin";
 import { cn } from "@/lib/utils";
 
@@ -16,6 +16,7 @@ const items = [
     icon: CalendarDays,
     match: (p: string) => (p.startsWith("/admin/experiencias") && !p.startsWith("/admin/experiencias/tablero")) || p.startsWith("/admin/inscripciones"),
   },
+  { href: "/admin/jugadores", label: c.players, icon: Users, match: (p: string) => p.startsWith("/admin/jugadores") },
   { href: "/", label: c.site, icon: ExternalLink, match: () => false, external: true },
 ] as const;
 
@@ -63,7 +64,7 @@ export function AdminNavView({ variant, pathname }: { variant: "top" | "bottom";
       aria-label={c.label}
       className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-white pb-[env(safe-area-inset-bottom)] sm:hidden"
     >
-      <ul className="grid grid-cols-3">
+      <ul className="grid grid-cols-4">
         {items.map((it) => {
           const active = it.match(pathname);
           const Icon = it.icon;
@@ -80,7 +81,7 @@ export function AdminNavView({ variant, pathname }: { variant: "top" | "bottom";
               >
                 <span
                   className={cn(
-                    "flex h-7 w-14 items-center justify-center rounded-full transition-colors",
+                    "flex h-7 w-12 items-center justify-center rounded-full transition-colors",
                     active && "bg-cream-200",
                   )}
                 >
