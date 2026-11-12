@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ArrowRight, CalendarDays, GlassWater, Mail, MapPin, Nut, ShoppingBag, Users } from "lucide-react";
+import { ArrowRight, GlassWater, Mail, Nut, ShoppingBag } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Section, SectionHeading } from "@/components/site/section";
 import { CommunityForm } from "@/components/forms/community-form";
@@ -9,8 +9,8 @@ import { TennisBallIcon } from "@/components/icons/brand-icons";
 import { homeCopy as c } from "@/content/home";
 import { formatImage, images } from "@/content/images";
 import { getFormats, getPublicPartners, getUpcomingExperiences } from "@/lib/data/public";
-import { formatDateRange } from "@/lib/format";
-import { siteConfig, whatsappLink } from "@/config/site";
+import { siteConfig } from "@/config/site";
+import { ExperienceCard } from "@/components/experiences/experience-card";
 
 export default function HomePage() {
   return (
@@ -22,6 +22,12 @@ export default function HomePage() {
         <Suspense fallback={<CardsSkeleton count={3} />}>
           <Formats />
         </Suspense>
+        <Link
+          href={c.formats.cta.href}
+          className="eyebrow mt-10 inline-flex h-12 items-center gap-2 rounded-sm border border-navy-900 px-6 text-navy-900 transition hover:bg-navy-900 hover:text-white"
+        >
+          {c.formats.cta.label} <ArrowRight aria-hidden className="size-4" />
+        </Link>
       </Section>
       <Section id="proxima" tone="navy" labelledBy="proxima-title">
         <SectionHeading id="proxima-title" tone="navy" eyebrow={c.next.eyebrow} title={c.next.title} />
@@ -169,35 +175,21 @@ async function UpcomingExperiences() {
     );
   }
   return (
-    <ul className="mt-12 grid gap-6 md:grid-cols-2">
-      {experiences.map((e) => (
-        <li key={e.slug} className="rounded-sm border border-gold/40 p-8">
-          <p className="eyebrow text-gold">Experiencia {e.format.name}</p>
-          <h3 className="mt-3 font-serif text-3xl text-white">{e.title}</h3>
-          <ul className="mt-6 space-y-3 text-white/85">
-            <li className="flex items-center gap-3">
-              <CalendarDays aria-hidden className="size-5 text-gold" /> {formatDateRange(e.startDate, e.endDate)}
-            </li>
-            <li className="flex items-center gap-3">
-              <MapPin aria-hidden className="size-5 text-gold" /> {e.destination}
-            </li>
-            <li className="flex items-center gap-3">
-              <Users aria-hidden className="size-5 text-gold" /> {c.next.capacityLabel(e.capacity)}
-            </li>
-          </ul>
-          {e.summary && <p className="mt-6 text-white/75">{e.summary}</p>}
-          {/* Fase 2: enlace a /experiencias/[slug]. Mientras tanto, consulta por WhatsApp. */}
-          <a
-            href={whatsappLink(`¡Hola! Quiero info sobre la experiencia ${e.title}.`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="eyebrow mt-8 inline-flex h-12 items-center gap-2 rounded-sm bg-gold px-6 text-navy-900 transition hover:bg-gold-light"
-          >
-            Quiero info <ArrowRight aria-hidden className="size-4" />
-          </a>
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="mt-12 grid gap-6 md:grid-cols-2">
+        {experiences.map((e) => (
+          <li key={e.slug}>
+            <ExperienceCard experience={e} tone="navy" />
+          </li>
+        ))}
+      </ul>
+      <Link
+        href={c.next.allCta.href}
+        className="eyebrow mt-10 inline-flex h-12 items-center gap-2 rounded-sm border border-gold px-6 text-gold-light transition hover:bg-gold hover:text-navy-900"
+      >
+        {c.next.allCta.label} <ArrowRight aria-hidden className="size-4" />
+      </Link>
+    </>
   );
 }
 

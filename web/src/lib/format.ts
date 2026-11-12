@@ -22,3 +22,10 @@ const ars = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS",
 export function formatPrice(amount: number | null | undefined) {
   return amount == null ? "Consultar" : ars.format(amount);
 }
+
+const fullDate = new Intl.DateTimeFormat("es-AR", { day: "numeric", month: "long", year: "numeric", timeZone: TZ });
+
+/** "25 de noviembre de 2026" */
+export function formatDate(date: Date) {
+  return fullDate.format(date);
+}

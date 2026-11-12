@@ -29,6 +29,7 @@ export const homeCopy = {
     eyebrow: "Tres formatos",
     title: "Elegí cómo querés vivirla",
     lead: "Desde un día de tenis y encuentro hasta un viaje completo. El mismo cuidado en cada formato.",
+    cta: { href: "/experiencias", label: "Conocé los formatos" },
   },
 
   next: {
@@ -39,8 +40,7 @@ export const homeCopy = {
       text: "Sumate a la comunidad y te avisamos antes que a nadie, con prioridad para reservar tu lugar.",
       cta: { href: "/comunidad", label: "Quiero enterarme primero" },
     },
-    capacityLabel: (n: number) => `Cupo para ${n} personas`,
-    detailsCta: "Ver detalles",
+    allCta: { href: "/calendario", label: "Ver todas las fechas" },
   },
 
   howItWorks: {

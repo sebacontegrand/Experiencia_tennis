@@ -80,3 +80,14 @@ export function fieldErrors(error: z.ZodError): Record<string, string> {
   }
   return out;
 }
+
+/** Inscripción: datos de la persona (como la comunidad) + datos de la experiencia. */
+export const registrationSchema = communitySchema.extend({
+  priceOptionId: optionalText(40),
+  doublesPartner: optionalText(120),
+  roommate: optionalText(200),
+  menuChoice: optionalText(120),
+  notes: optionalText(1000),
+});
+
+export type RegistrationInput = z.infer<typeof registrationSchema>;

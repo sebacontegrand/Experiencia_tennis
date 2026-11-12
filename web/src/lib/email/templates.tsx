@@ -106,3 +106,68 @@ export function ContactReceivedEmail({ name }: { name: string }) {
     </Layout>
   );
 }
+
+type PaymentInfo = { alias: string | null; cbu: string | null; holder: string | null };
+
+export function RegistrationEmail({
+  firstName,
+  status,
+  title,
+  dates,
+  optionLabel,
+  price,
+  payment,
+  whatsappHref,
+}: {
+  firstName: string;
+  status: "PENDIENTE" | "LISTA_ESPERA";
+  title: string;
+  dates: string;
+  optionLabel?: string;
+  price?: string;
+  payment: PaymentInfo;
+  whatsappHref: string;
+}) {
+  const c = emailCopy.registration;
+  const hasTransfer = Boolean(payment.alias || payment.cbu);
+  return (
+    <Layout preview={c.preview[status]}>
+      <Heading style={h1}>{c.heading(firstName)}</Heading>
+      <Text style={p}>{c.intro[status](title)}</Text>
+      <Section style={{ backgroundColor: colors.cream, padding: "16px 20px", margin: "8px 0 20px" }}>
+        <Text style={{ ...p, fontWeight: 600, margin: "0 0 8px" }}>{c.summary}</Text>
+        <Text style={{ ...p, margin: "0 0 4px" }}>
+          <strong>{c.rows.dates}:</strong> {dates}
+        </Text>
+        {optionLabel && (
+          <Text style={{ ...p, margin: "0 0 4px" }}>
+            <strong>{c.rows.option}:</strong> {optionLabel}
+          </Text>
+        )}
+        {price && (
+          <Text style={{ ...p, margin: 0 }}>
+            <strong>{c.rows.price}:</strong> {price}
+          </Text>
+        )}
+      </Section>
+      {status === "PENDIENTE" &&
+        (hasTransfer ? (
+          <>
+            <Text style={p}>{c.paymentWithAlias}</Text>
+            <Text style={{ ...p, margin: "0 0 4px" }}>
+              {payment.alias && <>Alias: <strong>{payment.alias}</strong><br /></>}
+              {payment.cbu && <>CBU: <strong>{payment.cbu}</strong><br /></>}
+              {payment.holder && <>Titular: {payment.holder}</>}
+            </Text>
+          </>
+        ) : (
+          <Text style={p}>{c.paymentWithoutAlias}</Text>
+        ))}
+      <Section style={{ margin: "24px 0 8px" }}>
+        <Button href={whatsappHref} style={button}>
+          {c.cta}
+        </Button>
+      </Section>
+    </Layout>
+  );
+}
