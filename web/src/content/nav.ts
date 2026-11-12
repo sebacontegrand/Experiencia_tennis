@@ -20,3 +20,6 @@ export const footerLinks = [
   { href: "/contacto", label: "Contacto" },
   { href: "/privacidad", label: "Privacidad" },
 ] as const;
+
+/** Acceso discreto al panel (arriba a la derecha). Lleva al login con Google si no hay sesión. */
+export const adminLink = { href: "/admin", label: "Ingreso administradores" } as const;

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/logo";
 import { MobileMenu } from "@/components/site/mobile-menu";
-import { headerCta, mainNav } from "@/content/nav";
+import { LockKeyhole } from "lucide-react";
+import { adminLink, headerCta, mainNav } from "@/content/nav";
 
 export function SiteHeader() {
   return (
@@ -38,7 +39,18 @@ export function SiteHeader() {
             </li>
           </ul>
         </nav>
-        <MobileMenu items={mainNav} cta={headerCta} />
+        <div className="flex items-center gap-1 md:-mr-2">
+          <MobileMenu items={mainNav} cta={headerCta} />
+          <Link
+            href={adminLink.href}
+            prefetch={false}
+            aria-label={adminLink.label}
+            title={adminLink.label}
+            className="inline-flex size-11 items-center justify-center rounded-sm text-white/60 transition hover:text-gold-light"
+          >
+            <LockKeyhole aria-hidden className="size-[18px]" />
+          </Link>
+        </div>
       </div>
     </header>
   );
