@@ -56,7 +56,7 @@ npx prisma studio        # explorar la base
 - Si falta un dato del negocio (precio, logo, texto legal, contacto), **no inventarlo**: marcador `TODO(negocio)` y sumarlo a `docs/PENDIENTES.md`.
 - Los importes de `_material/` son costos de proveedores: **nunca** se usan en el sitio. Precio vacío → "Consultar".
 - Formatos (Classic / Gold / Black) como datos en la base, no hardcodeados. El tercero se llama **Black**, nunca "Premium".
-- Marcas de terceros: Wilson en todo el sitio. Tequendama Spa & Resort y Villa Gesell Golf Club solo se nombran dentro de la experiencia de Villa Gesell (sin logos ni franja de aliados; autorizado 11/11). Abril Sur y otras no se muestran.
+- Marcas de terceros: Wilson en todo el sitio. Tequendama Spa & Resort y Villa Gesell Golf Club solo se nombran dentro de la experiencia de Villa Gesell (sin logos ni franja de aliados; autorizado 11/11). Abril Sur solo dentro de su experiencia Classic (autorizado 12/11; no en las páginas B2B ni en la franja de aliados). Otras no se muestran.
 - Sin fotos de personas que parezcan participantes reales ni testimonios inventados. Hasta tener fotos reales: stock con licencia libre donde las personas no son el foco (`src/content/images.ts`, créditos ahí).
 - Precios como enteros (ARS). Inscripción: upsert de `Player` por email; cupo controlado en transacción; si está completo → `LISTA_ESPERA`.
 - Accesibilidad: contraste AA (dorado nunca en texto chico sobre blanco), foco visible, formularios con labels.
