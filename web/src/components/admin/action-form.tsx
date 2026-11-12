@@ -14,6 +14,7 @@ export function ActionForm({
   pendingLabel = "Guardando…",
   variant = "primary",
   confirm,
+  disabled = false,
   className,
   children,
 }: {
@@ -23,6 +24,8 @@ export function ActionForm({
   variant?: "primary" | "secondary" | "danger";
   /** Texto de confirmación antes de enviar (acciones que cambian lo que se ve en el sitio). */
   confirm?: string;
+  /** Botón deshabilitado (p. ej. no hay nada que aplicar). El mensaje del último envío sigue visible. */
+  disabled?: boolean;
   className?: string;
   children?: ReactNode;
 }) {
@@ -43,7 +46,7 @@ export function ActionForm({
       <div className="flex flex-wrap items-center gap-3">
         <button
           type="submit"
-          disabled={pending}
+          disabled={pending || disabled}
           className={cn(
             "inline-flex h-12 items-center justify-center rounded-sm px-6 text-sm font-semibold transition disabled:opacity-60",
             variant === "primary" && "bg-navy-900 text-white hover:bg-navy-800",

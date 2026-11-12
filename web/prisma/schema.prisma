@@ -161,6 +161,10 @@ model Experience {
   coverImage           String?
   // Opciones de menú para la cena grupal (vacío = no se pregunta)
   menuOptions          String[]
+  // Rentabilidad (interno, solo panel): % de ganancia sobre el precio final y asistencia esperada
+  // para repartir los costos grupales (null = usar el cupo).
+  earningsPercent      Int?
+  expectedAttendance   Int?
   createdAt            DateTime         @default(now())
   updatedAt            DateTime         @updatedAt
 
@@ -172,6 +176,7 @@ model Experience {
   hotel    Partner?         @relation("ExperienceHotel", fields: [hotelId], references: [id])
 
   priceOptions  PriceOption[]
+  costItems     CostItem[]
   registrations Registration[]
   testimonials  Testimonial[]
   gallery       GalleryImage[]
@@ -185,6 +190,8 @@ model PriceOption {
   price     Int? // ARS, entero; null = "Consultar"
   currency  String   @default("ARS")
   capacity  Int? // cupo propio de la opción (opcional)
+  // Costo propio de la opción por persona (p. ej. la habitación). Interno: nunca se muestra en el sitio.
+  cost      Int?
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -361,4 +368,26 @@ model RateLimitHit {
   createdAt DateTime @default(now())
 
   @@index([key, createdAt])
+}
+
+/** Cómo se carga un costo grupal: monto total del grupo o monto por persona. */
+enum CostKind {
+  TOTAL
+  PER_PERSON
+}
+
+/** Costos de una experiencia (canchas, profe, traslados, cena…). Internos: solo los ve el panel. */
+model CostItem {
+  id        String   @id @default(cuid())
+  label     String
+  amount    Int // ARS, entero
+  kind      CostKind @default(TOTAL)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  experienceId String
+  experience   Experience @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+
+  @@index([experienceId])
 }

@@ -88,13 +88,21 @@ const detailInclude = {
   format: true,
   venue: { select: { name: true, city: true, website: true } },
   hotel: { select: { name: true, city: true, website: true } },
-  priceOptions: { orderBy: { sortOrder: "asc" as const } },
+  // Campos explícitos: el costo de la opción es interno y no debe llegar al sitio ni a su caché.
+  priceOptions: {
+    orderBy: { sortOrder: "asc" as const },
+    select: { id: true, label: true, price: true, currency: true, capacity: true, sortOrder: true },
+  },
 } as const;
+
+/** Datos internos de rentabilidad: nunca en las lecturas públicas. */
+const internalFields = { earningsPercent: true, expectedAttendance: true } as const;
 
 async function loadExperience(slug: string, visibleOnly: boolean) {
   const experience = await db.experience.findFirst({
     where: { slug, ...(visibleOnly ? { status: { in: [...VISIBLE_EXPERIENCE_STATUSES] } } : {}) },
     include: detailInclude,
+    omit: internalFields,
   });
   if (!experience) return null;
   return {

@@ -8,6 +8,7 @@ import { adminCopy } from "@/content/admin";
 import { formatDateRange } from "@/lib/format";
 import { SEAT_HOLDING_STATUSES } from "@/lib/registration-rules";
 import { StatusBadge } from "@/components/admin/status-badge";
+import { CostsCard } from "@/components/admin/costs-card";
 import { ActionForm, AdminField } from "@/components/admin/action-form";
 import { adminInputClass } from "@/components/admin/styles";
 import { addPriceOption, deletePriceOption, savePriceOption, saveSettings, setPublished } from "../actions";
@@ -34,9 +35,18 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
     include: {
       format: { select: { name: true } },
       priceOptions: { orderBy: { sortOrder: "asc" }, include: { _count: { select: { registrations: true } } } },
+      costItems: { orderBy: { sortOrder: "asc" }, select: { id: true, label: true, amount: true, kind: true } },
     },
   });
   if (!e) notFound();
+
+  const [seatRegistrations, collected] = await Promise.all([
+    db.registration.findMany({
+      where: { experienceId: e.id, status: { in: [...SEAT_HOLDING_STATUSES] } },
+      select: { priceOption: { select: { price: true, cost: true } } },
+    }),
+    db.payment.aggregate({ where: { status: "APROBADO", registration: { experienceId: e.id } }, _sum: { amount: true } }),
+  ]);
 
   const byStatus = await db.registration.groupBy({ by: ["status"], where: { experienceId: e.id }, _count: { _all: true } });
   const n = (s: string) => byStatus.find((r) => r.status === s)?._count._all ?? 0;
@@ -111,6 +121,8 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
                     <div className="relative">
                       <span aria-hidden className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-muted">$</span>
                       <input
+                        // key con el precio: si cambia desde "Usar precio sugerido", el campo muestra el valor nuevo.
+                        key={`price-${o.price}`}
                         id={`price-${o.id}`}
                         name="price"
                         inputMode="numeric"
@@ -155,6 +167,22 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
           </ActionForm>
         </div>
       </Card>
+
+      <CostsCard
+        data={{
+          id: e.id,
+          capacity: e.capacity,
+          earningsPercent: e.earningsPercent,
+          expectedAttendance: e.expectedAttendance,
+          costItems: e.costItems,
+          priceOptions: e.priceOptions.map((o) => ({ id: o.id, label: o.label, price: o.price, cost: o.cost })),
+          seatRegistrations: seatRegistrations.map((r) => ({
+            price: r.priceOption?.price ?? null,
+            optionCost: r.priceOption?.cost ?? null,
+          })),
+          collected: collected._sum.amount ?? 0,
+        }}
+      />
 
       {/* Datos */}
       <Card title={c.settingsTitle}>
