@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink, Eye } from "lucide-react";
+import { ArrowLeft, ExternalLink, Eye, Users } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
 import { adminCopy } from "@/content/admin";
 import { formatDateRange } from "@/lib/format";
 import { SEAT_HOLDING_STATUSES } from "@/lib/registration-rules";
 import { StatusBadge } from "@/components/admin/status-badge";
-import { ActionForm, AdminField, adminInputClass } from "@/components/admin/action-form";
+import { ActionForm, AdminField } from "@/components/admin/action-form";
+import { adminInputClass } from "@/components/admin/styles";
 import { addPriceOption, deletePriceOption, savePriceOption, saveSettings, setPublished } from "../actions";
 
 export const metadata: Metadata = { title: "Editar experiencia" };
@@ -182,10 +183,16 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
       <Card title={c.registrationsTitle} hint={c.registrationsHint}>
         <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Stat label="Con lugar" value={`${taken} / ${e.capacity}`} />
-          <Stat label="Pendientes de seña" value={n("PENDIENTE")} />
-          <Stat label="Confirmadas" value={n("CONFIRMADA") + n("SENADA")} />
+          <Stat label="Pendientes de pago" value={n("PENDIENTE")} />
+          <Stat label="Señadas o confirmadas" value={n("CONFIRMADA") + n("SENADA")} />
           <Stat label="Lista de espera" value={n("LISTA_ESPERA")} />
         </dl>
+        <Link
+          href={`/admin/experiencias/${e.id}/inscripciones`}
+          className="mt-5 inline-flex h-12 items-center gap-2 rounded-sm bg-navy-900 px-6 text-sm font-semibold text-white hover:bg-navy-800"
+        >
+          <Users aria-hidden className="size-4" /> {adminCopy.registrations.openList}
+        </Link>
       </Card>
     </div>
   );
