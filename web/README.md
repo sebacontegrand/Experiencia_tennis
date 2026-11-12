@@ -38,6 +38,8 @@ npm run lint && npm run typecheck && npm test && npm run build
 | `RESEND_API_KEY` | API key de Resend (sin ella los emails solo se loguean) |
 | `EMAIL_FROM` | Remitente verificado en Resend |
 | `ADMIN_NOTIFY_EMAIL` | Casilla(s) para avisos, separadas por coma |
+| `AUTH_SECRET` | `openssl rand -base64 33` |
+| `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` | Credenciales OAuth de Google (ver abajo) |
 
 5. Redeploy. El script `vercel-build` corre `prisma migrate deploy` antes del build, así que las tablas se crean solas.
 6. **Una sola vez**, cargar los datos iniciales en producción desde tu máquina:
@@ -45,3 +47,20 @@ npm run lint && npm run typecheck && npm test && npm run build
 ```bash
 DATABASE_URL="<DATABASE_URL_UNPOOLED de Neon>" npx prisma db seed
 ```
+
+## Panel admin (login con Google)
+
+1. En [Google Cloud Console](https://console.cloud.google.com/) creá un proyecto (por ejemplo «Experiencia Tenis»).
+2. **Google Auth Platform → Branding**: nombre de la app y email de soporte. **Audience**: *External* y publicá la app (*In production*); con los permisos básicos (email y perfil) no requiere verificación.
+3. **Clients → Create client → Web application**:
+   - *Authorized JavaScript origins*: `https://experiencia-tennis.vercel.app` y `http://localhost:3000`
+   - *Authorized redirect URIs*: `https://experiencia-tennis.vercel.app/api/auth/callback/google` y `http://localhost:3000/api/auth/callback/google`
+4. Copiá el *Client ID* y el *Client secret* a Vercel (`AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`), agregá `AUTH_SECRET` y hacé redeploy.
+5. Habilitá a quienes administran (solo esos emails pueden entrar):
+
+```bash
+DATABASE_URL="<DATABASE_URL_UNPOOLED de Neon>" npm run admin:add -- gabriela@gmail.com "Gabriela Bruno"
+```
+
+Entrar en `https://experiencia-tennis.vercel.app/admin`. El login funciona en producción y en local; en los previews de Vercel no (la URL cambia en cada deploy y Google exige URLs exactas).
+

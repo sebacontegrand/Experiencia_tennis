@@ -28,7 +28,9 @@ npm run dev          # servidor de desarrollo
 npm run build        # build de producción
 npm run lint         # ESLint
 npm run typecheck    # next typegen + tsc --noEmit
-npm test             # tests (Vitest)
+npm test             # tests unitarios (Vitest)
+npm run test:db      # tests de cupo/concurrencia contra Postgres real (TEST_DATABASE_URL)
+npm run admin:add -- email "Nombre"   # habilitar un administrador del panel
 npx prisma migrate dev   # aplicar/crear migraciones en local
 npx prisma db seed       # cargar datos iniciales (formatos, Villa Gesell en BORRADOR); idempotente
 npx prisma studio        # explorar la base
@@ -64,7 +66,11 @@ npx prisma studio        # explorar la base
 ## Notas técnicas
 
 - **Prisma 7**: la URL de la base está en `prisma.config.ts`; el cliente se genera en `src/generated/prisma` (gitignored, lo regenera `postinstall`/`build`). Importar desde `@/generated/prisma/client`; usar siempre `db` de `@/lib/db`.
-- **Cache Components** activo: las lecturas públicas están en `src/lib/data/public.ts` con `"use cache"` + `cacheTag` (`formats`, `experiences`, `partners`). Al mutar desde el admin, invalidar con `updateTag(...)`. Las APIs de request (`searchParams`, `headers`) van dentro de `<Suspense>`.
+- **Cache Components** activo: las lecturas públicas están en `src/lib/data/public.ts` con `"use cache"` + `cacheTag` (`formats`, `experiences`, `experience:<slug>`, `partners`). Al mutar desde el admin, invalidar con `updateTag(...)`. Las APIs de request (`searchParams`, `headers`) van dentro de `<Suspense>`.
+  - `updateTag` desde una acción en *otra* ruta deja que la página entera cacheada de esta ruta se sirva vieja **una vez**. Por eso el detalle y la inscripción hacen `await connection()` (render por request, datos cacheados por tag) y los cupos se leen en vivo con `getLiveAvailability()`.
+  - Cambios hechos fuera del admin (seed, SQL a mano) no invalidan el caché: tardan hasta 1 hora en verse.
+- **Cupo**: `registerForExperience()` (`src/lib/registrations.ts`) bloquea la fila de la experiencia con `SELECT … FOR UPDATE` dentro de una transacción. Las reglas puras están en `registration-rules.ts`. `npm run test:db` prueba 30 inscripciones simultáneas.
+- **Admin**: Auth.js + Google (`src/auth.ts`), sesiones en base. Solo entran emails existentes en `User`. `requireAdmin()` (`src/lib/admin.ts`) en cada página **y** cada Server Action; hace `await connection()` porque Auth.js usa valores aleatorios.
 - **Formularios**: Server Action + `useActionState`; errores con `formError()` (`src/lib/form-state.ts`) para que el formulario se remonte con lo enviado. Anti-spam: honeypot + `checkRateLimit()` (tabla `RateLimitHit`).
 - **Emails**: `sendEmail()` dentro de `after()`; sin `RESEND_API_KEY` se loguean en consola.
 - El header no usa `backdrop-filter`: rompería el menú móvil (`position: fixed`).
