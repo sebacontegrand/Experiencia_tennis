@@ -57,7 +57,7 @@ export default async function BoardPage() {
           <CommunityStat href="/admin/jugadores" label={c.players} value={players} />
           <CommunityStat href="/admin/jugadores" label={c.newPlayers} value={newPlayers} />
           <CommunityStat href="/admin/jugadores?consentimiento=1" label={c.consenting} value={consenting} />
-          <CommunityStat label={c.newLeads} value={newLeads} />
+          <CommunityStat href="/admin/consultas?estado=NUEVO" label={c.newLeads} value={newLeads} />
         </dl>
       </section>
 
