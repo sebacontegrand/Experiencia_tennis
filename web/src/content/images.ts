@@ -18,6 +18,29 @@ export type SiteImage = {
 };
 
 export const images = {
+  heroNet: {
+    src: "/photos/court-net-bw.jpg",
+    alt: "Cancha de tenis en blanco y negro: la red, la línea central y pelotas repartidas al sol",
+    width: 2400,
+    height: 1589,
+    position: "50% 62%",
+    credit: "Yoav Hornung / Unsplash (WGkwbpaWUJE)",
+  },
+  clayLines: {
+    src: "/photos/clay-lines.jpg",
+    alt: "Líneas blancas sobre una cancha de polvo de ladrillo",
+    width: 2400,
+    height: 1605,
+    position: "35% 30%",
+    credit: "Andrea Caligiuri / Unsplash (QK1mXce30bQ)",
+  },
+  courtLines: {
+    src: "/photos/court-lines-bw.jpg",
+    alt: "Líneas blancas de una cancha de tenis que se cruzan, en blanco y negro",
+    width: 1600,
+    height: 1200,
+    credit: "Compagnons / Unsplash (yWyP_P5-6-A)",
+  },
   heroCourt: {
     src: "/photos/clay-court-aerial.jpg",
     alt: "Cancha de polvo de ladrillo vista desde arriba, rodeada de árboles",

@@ -17,12 +17,7 @@ export const homeCopy = {
       "No organizamos torneos sueltos. Diseñamos experiencias completas donde el torneo es una parte, y lo demás importa tanto como el resultado: el encuentro, la comida compartida, el descanso y las ganas de volver.",
       "Cada fecha tiene cupos limitados y un seguimiento cercano antes, durante y después. No tenés que coordinar nada: llegás, jugás y disfrutás.",
     ],
-    pillars: [
-      { title: "Tenis", text: "Partidos organizados por nivel, con coordinación deportiva profesional." },
-      { title: "Encuentro", text: "Gente que juega, comparte y arma comunidad." },
-      { title: "Gastronomía", text: "Mesas compartidas y momentos para celebrar." },
-      { title: "Bienestar", text: "Descanso, spa y tiempo para vos en las escapadas." },
-    ],
+    cta: "Mirá cómo se arma",
   },
 
   formats: {
@@ -41,6 +36,8 @@ export const homeCopy = {
       cta: { href: "/comunidad", label: "Quiero enterarme primero" },
     },
     allCta: { href: "/calendario", label: "Ver todas las fechas" },
+    /** Rótulo sobre la foto de «Lo que viene», según cuántas fechas hay abiertas. */
+    photoCaption: (n: number) => (n === 0 ? "Próximamente" : n === 1 ? "1 fecha abierta" : `${n} fechas abiertas`),
   },
 
   howItWorks: {
