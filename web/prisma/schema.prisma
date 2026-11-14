@@ -345,18 +345,28 @@ model Testimonial {
 
   experienceId String?
   experience   Experience? @relation(fields: [experienceId], references: [id], onDelete: SetNull)
+
+  @@index([experienceId, isPublic, sortOrder])
 }
 
+// Fotos de cada experiencia (galería pública). Se suben desde el panel a Vercel Blob
+// (en local sin token: /public/uploads). Ocultar = isPublic false; borrar también borra el archivo.
 model GalleryImage {
   id        String   @id @default(cuid())
   url       String
   alt       String
+  width     Int?
+  height    Int?
+  // Ruta en el almacenamiento ("blob:<pathname>" o "local:<archivo>"); null = archivo del repo
+  storageKey String?
   isPublic  Boolean  @default(false)
   sortOrder Int      @default(0)
   createdAt DateTime @default(now())
 
   experienceId String?
   experience   Experience? @relation(fields: [experienceId], references: [id], onDelete: SetNull)
+
+  @@index([experienceId, isPublic, sortOrder])
 }
 
 // ─── Anti-spam ──────────────────────────────────────────────────────

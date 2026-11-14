@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink, Eye, Users } from "lucide-react";
+import { ArrowLeft, ExternalLink, Eye, Image as ImageIcon, Users } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
 import { adminCopy } from "@/content/admin";
@@ -60,6 +60,10 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
     db.payment.aggregate({ where: { status: "APROBADO", registration: { experienceId: e.id } }, _sum: { amount: true } }),
   ]);
 
+  const [photoCount, hiddenPhotos] = await Promise.all([
+    db.galleryImage.count({ where: { experienceId: e.id } }),
+    db.galleryImage.count({ where: { experienceId: e.id, isPublic: false } }),
+  ]);
   const byStatus = await db.registration.groupBy({ by: ["status"], where: { experienceId: e.id }, _count: { _all: true } });
   const n = (s: string) => byStatus.find((r) => r.status === s)?._count._all ?? 0;
   const taken = SEAT_HOLDING_STATUSES.reduce((sum, s) => sum + n(s), 0);
@@ -326,6 +330,17 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
           className="mt-5 inline-flex h-12 items-center gap-2 rounded-sm bg-navy-900 px-6 text-sm font-semibold text-white hover:bg-navy-800"
         >
           <Users aria-hidden className="size-4" /> {adminCopy.registrations.openList}
+        </Link>
+      </Card>
+
+      {/* Fotos (galería del sitio) */}
+      <Card title={adminCopy.photos.cardTitle} hint={adminCopy.photos.cardHint}>
+        <p className="text-sm text-ink">{adminCopy.photos.cardSummary(photoCount, hiddenPhotos)}</p>
+        <Link
+          href={`/admin/experiencias/${e.id}/fotos`}
+          className="mt-5 inline-flex h-12 items-center gap-2 rounded-sm border border-navy-900 px-6 text-sm font-semibold text-navy-900 hover:bg-cream"
+        >
+          <ImageIcon aria-hidden className="size-4" /> {adminCopy.photos.open}
         </Link>
       </Card>
 

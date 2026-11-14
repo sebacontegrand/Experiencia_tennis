@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight, CalendarDays, Images, Check, CloudRain, Hotel, MapPin, Trophy, Users, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Camera, Images, Check, CloudRain, Hotel, MapPin, Trophy, Users, X } from "lucide-react";
 import { getLiveAvailability, type ExperienceDetail as Detail } from "@/lib/data/public";
 import { experienceFlyers, experiencesCopy, flyerCopy } from "@/content/experiences";
 import { formatDate, formatDateRange, formatPrice } from "@/lib/format";
@@ -9,6 +9,7 @@ import { parseItinerary } from "@/lib/itinerary";
 import { absoluteUrl, siteConfig, whatsappLink } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { formatImage } from "@/content/images";
+import { galleryCopy } from "@/content/gallery";
 import { WhatsappIcon } from "@/components/icons/brand-icons";
 
 const c = experiencesCopy.detail;
@@ -20,7 +21,7 @@ const c = experiencesCopy.detail;
  * El contenido viene cacheado; lo que depende de los cupos (lugares, botón, opciones completas)
  * se renderiza en vivo dentro de <Suspense> con getLiveAvailability.
  */
-export function ExperienceDetailView({ experience: e, preview = false }: { experience: Detail; preview?: boolean }) {
+export function ExperienceDetailView({ experience: e, preview = false, photoCount = 0 }: { experience: Detail; preview?: boolean; photoCount?: number }) {
   const canRegister = !e.closedReason;
   const itinerary = parseItinerary(e.itinerary);
   const live = { experienceId: e.id };
@@ -61,6 +62,14 @@ export function ExperienceDetailView({ experience: e, preview = false }: { exper
               className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-gold-light underline-offset-4 hover:underline"
             >
               <Images aria-hidden className="size-5" /> {flyerCopy.link}
+            </Link>
+          )}
+          {!preview && photoCount > 0 && (
+            <Link
+              href={`/galeria/${e.slug}`}
+              className="mt-5 ml-0 inline-flex min-h-11 items-center gap-2 font-semibold text-gold-light underline-offset-4 hover:underline sm:ml-6"
+            >
+              <Camera aria-hidden className="size-5" /> {galleryCopy.detailLink(photoCount)}
             </Link>
           )}
 

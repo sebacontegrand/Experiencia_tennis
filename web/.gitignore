@@ -43,3 +43,6 @@ next-env.d.ts
 
 # prisma client generado
 /src/generated/
+
+# fotos subidas en desarrollo (galería sin Vercel Blob)
+/public/uploads/

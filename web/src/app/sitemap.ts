@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/config/site";
 import { getVisibleExperienceSlugs } from "@/lib/data/public";
+import { getAlbumSlugs } from "@/lib/data/gallery";
 
 const routes = [
   { path: "/", priority: 1 },
   { path: "/experiencias", priority: 0.9 },
   { path: "/calendario", priority: 0.9 },
   { path: "/comunidad", priority: 0.9 },
+  { path: "/galeria", priority: 0.6 },
   { path: "/clubes-y-barrios", priority: 0.7 },
   { path: "/hoteles", priority: 0.7 },
   { path: "/sponsors", priority: 0.5 },
@@ -17,9 +19,10 @@ const routes = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const slugs = await getVisibleExperienceSlugs();
+  const [slugs, albums] = await Promise.all([getVisibleExperienceSlugs(), getAlbumSlugs()]);
   return [
     ...routes.map((r) => ({ url: absoluteUrl(r.path), changeFrequency: "weekly" as const, priority: r.priority })),
     ...slugs.map((slug) => ({ url: absoluteUrl(`/experiencias/${slug}`), changeFrequency: "daily" as const, priority: 0.8 })),
+    ...albums.map((slug) => ({ url: absoluteUrl(`/galeria/${slug}`), changeFrequency: "weekly" as const, priority: 0.5 })),
   ];
 }

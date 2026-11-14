@@ -13,6 +13,7 @@ export const footerLinks = [
   { href: "/experiencias", label: "Experiencias" },
   { href: "/calendario", label: "Calendario" },
   { href: "/comunidad", label: "Sumate a la comunidad" },
+  { href: "/galeria", label: "Galería" },
   { href: "/clubes-y-barrios", label: "Clubes y barrios" },
   { href: "/hoteles", label: "Hoteles" },
   { href: "/empresas", label: "Empresas" },

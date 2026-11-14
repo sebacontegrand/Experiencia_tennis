@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
+  images: {
+    // Fotos de la galería subidas a Vercel Blob
+    remotePatterns: [{ protocol: "https", hostname: "*.public.blob.vercel-storage.com" }],
+  },
   partialPrefetching: true,
   turbopack: {
     rules: {
