@@ -118,6 +118,35 @@
   }
 }
 
+/* Anatomía de la raqueta (home): pieza activa iluminada, el resto en segundo plano. */
+.racket-anatomy .ra-part {
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.racket-anatomy .ra-part[data-state="off"] {
+  opacity: 0.5;
+}
+.racket-anatomy .ra-part[data-state="on"] {
+  filter: drop-shadow(0 0 14px rgb(212 176 122 / 0.55));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .racket-anatomy .ra-sweet.is-on {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ra-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+}
+@keyframes ra-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
 /* En el celular, si la página tiene barra fija de inscripción, el WhatsApp va dentro de la barra.
    Fuera de las capas a propósito: tiene que ganarle a la utilidad inline-flex del botón. */
 @media (width < 48rem) {
