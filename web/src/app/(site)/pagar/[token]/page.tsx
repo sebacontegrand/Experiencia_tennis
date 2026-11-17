@@ -24,7 +24,7 @@ export const metadata: Metadata = { title: c.page.title, robots: { index: false,
 
 export default function PayPage({ params }: PageProps<"/pagar/[token]">) {
   return (
-    <Suspense fallback={<div className="min-h-[70vh] bg-navy-900" />}>
+    <Suspense fallback={<div className="min-h-[70vh] bg-forest-900" />}>
       <Pay params={params} />
     </Suspense>
   );
@@ -45,13 +45,13 @@ async function Pay({ params }: Pick<PageProps<"/pagar/[token]">, "params">) {
   const state = !payable.ok ? c.states[payable.reason] : !enabled ? c.states.DISABLED : null;
 
   return (
-    <section className="bg-navy-900 px-5 pt-10 pb-20 text-white sm:px-8">
+    <section className="bg-forest-900 px-5 pt-10 pb-20 text-white sm:px-8">
       <div className="mx-auto max-w-xl">
-        <Link href={`/experiencias/${reg.experience.slug}`} className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-gold-light">
+        <Link href={`/experiencias/${reg.experience.slug}`} className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-ball-light">
           <ArrowLeft aria-hidden className="size-4" /> {reg.experience.title}
         </Link>
         <h1 className="mt-6 font-serif text-5xl leading-[1.02] font-light">{c.page.title}</h1>
-        <div className="gold-rule mt-5" />
+        <div className="brand-rule mt-5" />
         <p className="mt-5 text-white/80">{c.page.lead}</p>
 
         <dl className="mt-8 divide-y divide-white/10 border-y border-white/10">
@@ -81,7 +81,7 @@ async function Pay({ params }: Pick<PageProps<"/pagar/[token]">, "params">) {
           href={whatsappLink(c.page.transferMessage(reg.experience.title, name))}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-10 inline-flex min-h-11 items-center gap-2 text-sm text-white/80 underline-offset-4 hover:text-gold-light hover:underline"
+          className="mt-10 inline-flex min-h-11 items-center gap-2 text-sm text-white/80 underline-offset-4 hover:text-ball-light hover:underline"
         >
           <WhatsappIcon size={18} /> {c.page.transfer}
         </a>
@@ -94,7 +94,7 @@ function Row({ label, value, strong = false }: { label: string; value: string; s
   return (
     <div className="flex items-baseline justify-between gap-6 py-3.5">
       <dt className="text-sm text-white/60">{label}</dt>
-      <dd className={strong ? "font-serif text-2xl text-gold-light" : "text-right"}>{value}</dd>
+      <dd className={strong ? "font-serif text-2xl text-ball-light" : "text-right"}>{value}</dd>
     </div>
   );
 }

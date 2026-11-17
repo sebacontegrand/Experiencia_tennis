@@ -49,8 +49,8 @@ export function ActionForm({
           disabled={pending || disabled}
           className={cn(
             "inline-flex h-12 items-center justify-center rounded-sm px-6 text-sm font-semibold transition disabled:opacity-60",
-            variant === "primary" && "bg-navy-900 text-white hover:bg-navy-800",
-            variant === "secondary" && "border border-navy-900 text-navy-900 hover:bg-cream",
+            variant === "primary" && "bg-forest-900 text-white hover:bg-forest-800",
+            variant === "secondary" && "border border-forest-900 text-forest-900 hover:bg-cream",
             variant === "danger" && "border border-destructive/50 text-destructive hover:bg-destructive/5",
           )}
         >
@@ -77,7 +77,7 @@ export function AdminField({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={htmlFor} className="text-sm font-medium text-navy-900">
+      <label htmlFor={htmlFor} className="text-sm font-medium text-forest-900">
         {label}
       </label>
       {children}

@@ -10,11 +10,11 @@ import { AdminNav, AdminNavView } from "@/components/admin/admin-nav";
 export default function PanelLayout({ children }: LayoutProps<"/admin">) {
   return (
     <>
-      <header className="border-b border-gold/30 bg-navy-900 text-white">
+      <header className="border-b border-ball/30 bg-forest-900 text-white">
         <div className="mx-auto flex h-14 max-w-4xl items-center gap-6 px-4">
           <Link href="/admin" className="flex shrink-0 items-baseline gap-2 whitespace-nowrap">
             <span className="font-serif text-lg text-white md:max-lg:hidden">{adminCopy.brand}</span>
-            <span className="text-sm text-gold-light">{adminCopy.title}</span>
+            <span className="text-sm text-ball-light">{adminCopy.title}</span>
           </Link>
           <Suspense fallback={<AdminNavView variant="top" pathname="" />}>
             <NavWithBadges variant="top" />
@@ -61,7 +61,7 @@ async function UserMenu() {
       className="flex items-center gap-3"
     >
       <span className="hidden text-sm text-white/70 lg:inline">{user.name ?? user.email}</span>
-      <button type="submit" className="inline-flex h-11 items-center text-sm text-white/90 underline underline-offset-4 hover:text-gold-light">
+      <button type="submit" className="inline-flex h-11 items-center text-sm text-white/90 underline underline-offset-4 hover:text-ball-light">
         {adminCopy.signOut}
       </button>
     </form>

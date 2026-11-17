@@ -59,7 +59,7 @@ npx prisma studio        # explorar la base
 - Marcas de terceros: Wilson en todo el sitio. Tequendama Spa & Resort y Villa Gesell Golf Club solo se nombran dentro de la experiencia de Villa Gesell (sin logos ni franja de aliados; autorizado 11/11). Abril Sur solo dentro de su experiencia Classic (autorizado 12/11; no en las páginas B2B ni en la franja de aliados). Otras no se muestran.
 - Sin fotos de personas que parezcan participantes reales ni testimonios inventados. Hasta tener fotos reales: stock con licencia libre donde las personas no son el foco (`src/content/images.ts`, créditos ahí).
 - Precios como enteros (ARS). Inscripción: upsert de `Player` por email; cupo controlado en transacción; si está completo → `LISTA_ESPERA`.
-- Accesibilidad: contraste AA (dorado nunca en texto chico sobre blanco), foco visible, formularios con labels.
+- Accesibilidad: contraste AA (amarillo pelota `ball` nunca como texto sobre claro; texto chico en ladrillo usa `clay-deep`), foco visible, formularios con labels.
 - Tests para la lógica de cupos, lista de espera y estados de pago.
 - Al final de cada fase: `lint`, `typecheck` y `build` sin errores.
 
@@ -81,5 +81,6 @@ npx prisma studio        # explorar la base
 - **Pagos online (Mercado Pago, Fase 5)**: cada inscripción tiene `payToken` → `/pagar/<token>` (saldo calculado en el servidor, `payableAmount()`), botón que crea la preferencia (`src/lib/mercadopago.ts`) con `external_reference` = id de la inscripción. El webhook `/api/mercadopago/webhook` verifica `x-signature` (SDK `WebhookSignatureValidator`), lee el pago en la API y lo aplica con `applyMercadoPagoPayment()` (`src/lib/online-payments.ts`): un `Payment` por operación (`externalRef`), candado de fila, idempotente; aprobado sube con `statusAfterPayment()` (total → CONFIRMADA), nunca baja; devoluciones y pagos sin lugar se avisan por email. La vuelta `/pagar/<token>/resultado` hace lo mismo (sirve en local sin webhook). Sin `MP_ACCESS_TOKEN` no se ofrece. Tests: `mercadopago-rules.test.ts`, `mercadopago.test.ts`, `online-payments.db.test.ts`.
 - **Formularios**: Server Action + `useActionState`; errores con `formError()` (`src/lib/form-state.ts`) para que el formulario se remonte con lo enviado. Anti-spam: honeypot + `checkRateLimit()` (tabla `RateLimitHit`).
 - **Emails**: `sendEmail()` dentro de `after()`; sin `RESEND_API_KEY` se loguean en consola.
+- **Marca (manual `_material/TENIS.pdf`, 17/11)**: lidera **Experiencia Tenis** («por Gabriela Bruno» como firma). Colores en `globals.css`: `forest` (#103c2d), `ball` (#d3d93a), `clay` (#b6462b), gris `ink-muted` (#616160), `cream` (#ede9d6). Tipos: Bitter (títulos) y Hind (texto), equivalentes web de KEFA III y SATHU. Logos extraídos del PDF en `public/brand/` (`logo-experiencia-tenis*`, `monogram-gb*`; `-light` para fondos verdes) vía `<Logo variant tone />`. `.brand-rule`: ladrillo sobre claro, pelota sobre verde.
 - El header no usa `backdrop-filter`: rompería el menú móvil (`position: fixed`).
 

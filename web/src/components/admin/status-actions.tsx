@@ -41,8 +41,8 @@ export function StatusActions({
             disabled={pending}
             className={cn(
               "inline-flex h-12 items-center justify-center rounded-sm px-6 text-sm font-semibold transition disabled:opacity-60",
-              o.variant === "primary" && "bg-navy-900 text-white hover:bg-navy-800",
-              o.variant === "secondary" && "border border-navy-900 text-navy-900 hover:bg-cream",
+              o.variant === "primary" && "bg-forest-900 text-white hover:bg-forest-800",
+              o.variant === "secondary" && "border border-forest-900 text-forest-900 hover:bg-cream",
               o.variant === "danger" && "border border-destructive/50 text-destructive hover:bg-destructive/5",
             )}
           >

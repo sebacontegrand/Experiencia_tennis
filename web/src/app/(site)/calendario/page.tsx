@@ -18,15 +18,15 @@ export default async function CalendarPage() {
   const { upcoming, past } = await getCalendar();
   return (
     <>
-      <section className="bg-navy-900 px-5 pt-14 pb-16 text-white sm:px-8 sm:pt-20 sm:pb-20">
+      <section className="bg-forest-900 px-5 pt-14 pb-16 text-white sm:px-8 sm:pt-20 sm:pb-20">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading as="h1" tone="navy" eyebrow={c.eyebrow} title={c.title} />
+          <SectionHeading as="h1" tone="dark" eyebrow={c.eyebrow} title={c.title} />
           {upcoming.length === 0 ? (
-            <div className="mt-12 rounded-sm border border-gold/40 p-8 sm:p-12">
+            <div className="mt-12 rounded-sm border border-ball/40 p-8 sm:p-12">
               <p className="max-w-xl text-lg text-white/85">{c.empty}</p>
               <Link
                 href={c.emptyCta.href}
-                className="btn-label mt-8 inline-flex h-12 items-center rounded-sm bg-gold px-6 text-navy-900 transition hover:bg-gold-light"
+                className="btn-label mt-8 inline-flex h-12 items-center rounded-sm bg-ball px-6 text-forest-900 transition hover:bg-ball-light"
               >
                 {c.emptyCta.label}
               </Link>
@@ -35,7 +35,7 @@ export default async function CalendarPage() {
             <ul className="mt-12 grid gap-6 md:grid-cols-2">
               {upcoming.map((e) => (
                 <li key={e.slug}>
-                  <ExperienceCard experience={e} tone="navy" />
+                  <ExperienceCard experience={e} tone="dark" />
                 </li>
               ))}
             </ul>
@@ -44,10 +44,10 @@ export default async function CalendarPage() {
       </section>
       {past.length > 0 && (
         <Section tone="cream" labelledBy="pasadas">
-          <h2 id="pasadas" className="font-serif text-4xl text-navy-900">
+          <h2 id="pasadas" className="font-serif text-4xl text-forest-900">
             {c.pastTitle}
           </h2>
-          <div className="gold-rule mt-4" />
+          <div className="brand-rule mt-4" />
           <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {past.map((e) => (
               <li key={e.slug}>

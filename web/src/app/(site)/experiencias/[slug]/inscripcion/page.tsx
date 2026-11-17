@@ -49,17 +49,17 @@ async function Registration({ params }: Pick<PageProps<"/experiencias/[slug]/ins
 
   return (
     <>
-      <section className="bg-navy-900 px-5 pt-12 pb-14 text-white sm:px-8 sm:pt-16">
+      <section className="bg-forest-900 px-5 pt-12 pb-14 text-white sm:px-8 sm:pt-16">
         <div className="mx-auto max-w-3xl">
-          <Link href={`/experiencias/${e.slug}`} className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-gold-light">
+          <Link href={`/experiencias/${e.slug}`} className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-ball-light">
             <ArrowLeft aria-hidden className="size-4" /> {e.title}
           </Link>
-          <p className="eyebrow mt-8 text-gold">{c.eyebrow}</p>
+          <p className="eyebrow mt-8 text-ball">{c.eyebrow}</p>
           <h1 className="mt-4 font-serif text-4xl font-medium sm:text-5xl">{e.title}</h1>
           <p className="mt-3 text-white/80">
             {formatDateRange(e.startDate, e.endDate)} · {e.destination}
           </p>
-          <div className="gold-rule mt-6" />
+          <div className="brand-rule mt-6" />
           <p className="mt-6 max-w-2xl text-white/85">{isFull ? c.waitlistLead : c.lead}</p>
         </div>
       </section>

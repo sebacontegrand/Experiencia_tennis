@@ -65,10 +65,10 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
   return (
     <div className="space-y-6">
       <div>
-        <Link href={`/admin/experiencias/${exp.id}`} className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-navy-900">
+        <Link href={`/admin/experiencias/${exp.id}`} className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-forest-900">
           <ArrowLeft aria-hidden className="size-4" /> {c.back}
         </Link>
-        <h1 className="mt-6 font-serif text-4xl text-navy-900">{c.title}</h1>
+        <h1 className="mt-6 font-serif text-4xl text-forest-900">{c.title}</h1>
         <p className="mt-1 text-ink-muted">
           {exp.title} · {formatDateRange(exp.startDate, exp.endDate)}
         </p>
@@ -86,7 +86,7 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
       {total > 0 && (
         <a
           href={`/admin/experiencias/${exp.id}/nomina`}
-          className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+          className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
         >
           <Download aria-hidden className="size-4" /> {c.exportCsv}
         </a>
@@ -105,7 +105,7 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
                   aria-current={active ? "page" : undefined}
                   className={cn(
                     "inline-flex h-10 items-center gap-2 rounded-full border px-4 text-sm whitespace-nowrap",
-                    active ? "border-navy-900 bg-navy-900 text-white" : "border-border bg-white text-navy-900 hover:border-navy-900",
+                    active ? "border-forest-900 bg-forest-900 text-white" : "border-border bg-white text-forest-900 hover:border-forest-900",
                   )}
                 >
                   {s ? adminCopy.registrationStatus[s] : c.all}
@@ -123,7 +123,7 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
           {c.search}
         </label>
         <input id="q" name="q" type="search" defaultValue={q} placeholder={c.search} className={adminInputClass} />
-        <button type="submit" aria-label={c.searchButton} className="inline-flex size-12 shrink-0 items-center justify-center rounded-sm bg-navy-900 text-white">
+        <button type="submit" aria-label={c.searchButton} className="inline-flex size-12 shrink-0 items-center justify-center rounded-sm bg-forest-900 text-white">
           <Search aria-hidden className="size-5" />
         </button>
       </form>
@@ -145,10 +145,10 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
             const wa = waNumber(r.player.whatsapp);
             const price = r.priceOption?.price;
             return (
-              <li key={r.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-navy-900">
+              <li key={r.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-forest-900">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="font-semibold text-navy-900">
+                    <h2 className="font-semibold text-forest-900">
                       <Link href={`/admin/inscripciones/${r.id}`} className="after:absolute after:inset-0">
                         {r.player.firstName} {r.player.lastName}
                       </Link>

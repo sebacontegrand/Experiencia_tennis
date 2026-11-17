@@ -11,8 +11,8 @@ export default function LoginPage({ searchParams }: PageProps<"/admin/ingresar">
   return (
     <main className="flex flex-1 items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm rounded-sm bg-white p-8 text-center shadow-sm">
-        <p className="eyebrow text-gold-deep">Experiencia Tenis</p>
-        <h1 className="mt-3 font-serif text-4xl text-navy-900">{c.title}</h1>
+        <p className="eyebrow text-clay-deep">Experiencia Tenis</p>
+        <h1 className="mt-3 font-serif text-4xl text-forest-900">{c.title}</h1>
         <p className="mt-3 text-sm text-ink-muted">{c.text}</p>
         <Suspense fallback={null}>
           <LoginError searchParams={searchParams} />
@@ -26,7 +26,7 @@ export default function LoginPage({ searchParams }: PageProps<"/admin/ingresar">
         >
           <button
             type="submit"
-            className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-sm bg-navy-900 text-sm font-semibold text-white transition hover:bg-navy-800"
+            className="inline-flex h-12 w-full items-center justify-center gap-3 rounded-sm bg-forest-900 text-sm font-semibold text-white transition hover:bg-forest-800"
           >
             <GoogleMark /> {c.button}
           </button>

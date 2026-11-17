@@ -63,19 +63,19 @@ export function RegistrationForm({
     return (
       <div ref={doneRef} tabIndex={-1} role="status" className="scroll-mt-28 outline-none">
         {waitlist ? (
-          <Hourglass aria-hidden className="size-10 text-gold-deep" />
+          <Hourglass aria-hidden className="size-10 text-clay-deep" />
         ) : (
-          <CheckCircle2 aria-hidden className="size-10 text-gold-deep" />
+          <CheckCircle2 aria-hidden className="size-10 text-clay-deep" />
         )}
-        <h2 className="mt-4 font-serif text-4xl text-navy-900">{s.title}</h2>
+        <h2 className="mt-4 font-serif text-4xl text-forest-900">{s.title}</h2>
         <p className="mt-3 text-lg text-ink">{s.text}</p>
         {!waitlist && (
           <div className="mt-8 rounded-sm bg-cream p-6">
-            <h3 className="font-serif text-2xl text-navy-900">{c.payment.title}</h3>
+            <h3 className="font-serif text-2xl text-forest-900">{c.payment.title}</h3>
             {state.payPath && (
               <Link
                 href={state.payPath}
-                className="btn-label mt-4 mb-2 inline-flex h-14 w-full items-center justify-center bg-gold px-8 text-navy-900 transition hover:bg-gold-light sm:w-auto"
+                className="btn-label mt-4 mb-2 inline-flex h-14 w-full items-center justify-center bg-ball px-8 text-forest-900 transition hover:bg-ball-light sm:w-auto"
               >
                 {paymentCopy.payCta}
               </Link>
@@ -113,7 +113,7 @@ export function RegistrationForm({
           href={whatsappLink(c.payment.whatsappMessage(title, state.firstName))}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-label mt-8 inline-flex h-12 items-center rounded-sm bg-navy-900 px-6 text-white transition hover:bg-navy-800"
+          className="btn-label mt-8 inline-flex h-12 items-center rounded-sm bg-forest-900 px-6 text-white transition hover:bg-forest-800"
         >
           {c.payment.whatsappCta}
         </a>
@@ -136,7 +136,7 @@ export function RegistrationForm({
       {state.status === "error" && <FormAlert message={state.message} />}
 
       <fieldset className="flex flex-col gap-5">
-        <legend className="font-serif text-3xl text-navy-900">{c.sections.you}</legend>
+        <legend className="font-serif text-3xl text-forest-900">{c.sections.you}</legend>
         <p className="text-xs text-ink-muted">{formCopy.requiredHint}</p>
         <div className="grid gap-5 sm:grid-cols-2">
           <TextField name="firstName" label={f.firstName} required autoComplete="given-name" defaultValue={values.firstName} error={errors.firstName} />
@@ -153,12 +153,12 @@ export function RegistrationForm({
       </fieldset>
 
       <fieldset className="flex flex-col gap-5">
-        <legend className="font-serif text-3xl text-navy-900">{c.sections.experience}</legend>
+        <legend className="font-serif text-3xl text-forest-900">{c.sections.experience}</legend>
         {priceOptions.length > 0 && (
           <div role="radiogroup" aria-labelledby="price-label" aria-describedby={optionError ? "price-hint price-error" : "price-hint"} aria-invalid={optionError ? true : undefined} className="flex flex-col gap-2">
-            <p id="price-label" className="text-sm font-medium text-navy-900">
+            <p id="price-label" className="text-sm font-medium text-forest-900">
               {c.fields.priceOptionId}
-              <span aria-hidden className="ml-0.5 text-gold-deep">*</span>
+              <span aria-hidden className="ml-0.5 text-clay-deep">*</span>
             </p>
             <p id="price-hint" className="text-xs text-ink-muted">
               {c.fields.priceOptionHint}
@@ -168,7 +168,7 @@ export function RegistrationForm({
                 <label
                   key={o.id}
                   className={cn(
-                    "flex cursor-pointer items-start gap-3 rounded-sm border bg-white p-4 transition has-[:checked]:border-navy-900 has-[:checked]:bg-cream has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-gold/40",
+                    "flex cursor-pointer items-start gap-3 rounded-sm border bg-white p-4 transition has-[:checked]:border-forest-900 has-[:checked]:bg-cream has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ball/40",
                     optionError ? "border-destructive" : "border-input",
                   )}
                 >
@@ -178,11 +178,11 @@ export function RegistrationForm({
                     value={o.id}
                     required
                     defaultChecked={values.priceOptionId === o.id}
-                    className="mt-1 size-4 shrink-0 accent-navy-900"
+                    className="mt-1 size-4 shrink-0 accent-forest-900"
                   />
                   <span className="flex flex-1 flex-col">
                     <span className="text-ink">{o.label}</span>
-                    <span className="text-sm font-medium text-navy-900">
+                    <span className="text-sm font-medium text-forest-900">
                       {o.price}
                       {o.isFull && !isFull && <span className="ml-2 font-normal text-ink-muted">· lista de espera</span>}
                     </span>
@@ -214,7 +214,7 @@ export function RegistrationForm({
       </fieldset>
 
       <fieldset className="flex flex-col gap-5">
-        <legend className="font-serif text-3xl text-navy-900">{c.sections.extra}</legend>
+        <legend className="font-serif text-3xl text-forest-900">{c.sections.extra}</legend>
         <SelectField name="referralSource" label={f.referralSource} placeholder={f.referralPlaceholder} options={toOptions(referralOptions)} defaultValue={values.referralSource} error={errors.referralSource} />
         <TextAreaField name="notes" label={c.fields.notes} hint={c.fields.notesHint} defaultValue={values.notes} error={errors.notes} />
         <ConsentField error={errors.consent} defaultChecked={values.consent === "on"} />

@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps<"/experiencias/[slu
 
 export default function FlyerPage({ params }: PageProps<"/experiencias/[slug]/flyer">) {
   return (
-    <Suspense fallback={<div className="min-h-[60vh] bg-navy-900" />}>
+    <Suspense fallback={<div className="min-h-[60vh] bg-forest-900" />}>
       <Flyer params={params} />
     </Suspense>
   );
@@ -48,9 +48,9 @@ async function Flyer({ params }: Pick<PageProps<"/experiencias/[slug]/flyer">, "
   const share = `https://wa.me/?text=${encodeURIComponent(c.shareText(e.title, absoluteUrl(`/experiencias/${e.slug}`)))}`;
 
   return (
-    <section className="bg-navy-900 px-5 pt-10 pb-20 text-white sm:px-8">
+    <section className="bg-forest-900 px-5 pt-10 pb-20 text-white sm:px-8">
       <div className="mx-auto max-w-xl">
-        <Link href={`/experiencias/${e.slug}`} className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-gold-light">
+        <Link href={`/experiencias/${e.slug}`} className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-ball-light">
           <ArrowLeft aria-hidden className="size-4" /> {c.back}
         </Link>
         <h1 className="mt-6 font-serif text-4xl text-balance">{e.title}</h1>
@@ -59,7 +59,7 @@ async function Flyer({ params }: Pick<PageProps<"/experiencias/[slug]/flyer">, "
           href={share}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-label mt-6 inline-flex h-12 items-center gap-2 rounded-sm border border-white/30 px-5 text-white transition hover:border-gold-light hover:text-gold-light"
+          className="btn-label mt-6 inline-flex h-12 items-center gap-2 rounded-sm border border-white/30 px-5 text-white transition hover:border-ball-light hover:text-ball-light"
         >
           <WhatsappIcon size={18} /> {c.share}
         </a>
@@ -79,7 +79,7 @@ async function Flyer({ params }: Pick<PageProps<"/experiencias/[slug]/flyer">, "
               <a
                 href={f.src}
                 download
-                className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-gold-light underline-offset-4 hover:underline"
+                className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-ball-light underline-offset-4 hover:underline"
               >
                 <Download aria-hidden className="size-4" /> {c.download} ({i + 1} de {flyers.length})
               </a>
@@ -90,7 +90,7 @@ async function Flyer({ params }: Pick<PageProps<"/experiencias/[slug]/flyer">, "
         {!e.closedReason && (
           <Link
             href={`/experiencias/${e.slug}/inscripcion`}
-            className="btn-label mt-12 inline-flex h-14 w-full items-center justify-center rounded-sm bg-gold px-8 text-navy-900 transition hover:bg-gold-light sm:w-auto"
+            className="btn-label mt-12 inline-flex h-14 w-full items-center justify-center rounded-sm bg-ball px-8 text-forest-900 transition hover:bg-ball-light sm:w-auto"
           >
             {c.register}
           </Link>

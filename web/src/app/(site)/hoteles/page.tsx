@@ -21,15 +21,15 @@ async function Formats() {
   if (formats.length === 0) return null;
   return (
     <Section labelledBy="formatos">
-      <h2 id="formatos" className="max-w-2xl font-serif text-4xl text-navy-900 text-balance">
+      <h2 id="formatos" className="max-w-2xl font-serif text-4xl text-forest-900 text-balance">
         {hotelFormatsTitle}
       </h2>
-      <div className="gold-rule mt-6" />
+      <div className="brand-rule mt-6" />
       <dl className="mt-10 divide-y divide-border border-y border-border">
         {formats.map((f) => (
           <div key={f.id} className="py-6 sm:grid sm:grid-cols-[12rem_1fr] sm:gap-8">
             <dt>
-              <span className="font-serif text-3xl text-navy-900">{f.name}</span>
+              <span className="font-serif text-3xl text-forest-900">{f.name}</span>
               <span className="mt-1 block text-sm text-ink-muted">{f.tagline}</span>
             </dt>
             <dd className="mt-3 leading-relaxed text-ink sm:mt-1">{hotelFormatAngle[f.slug] ?? f.description}</dd>

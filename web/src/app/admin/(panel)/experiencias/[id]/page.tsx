@@ -74,11 +74,11 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/admin/experiencias" className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-navy-900">
+        <Link href="/admin/experiencias" className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-forest-900">
           <ArrowLeft aria-hidden className="size-4" /> {c.back}
         </Link>
-        <p className="mt-6 text-xs font-semibold tracking-widest text-gold-deep uppercase">{e.format.name}</p>
-        <h1 className="mt-1 font-serif text-4xl text-navy-900">{e.title}</h1>
+        <p className="mt-6 text-xs font-semibold tracking-widest text-clay-deep uppercase">{e.format.name}</p>
+        <h1 className="mt-1 font-serif text-4xl text-forest-900">{e.title}</h1>
         <p className="mt-1 text-ink-muted">{formatDateRange(e.startDate, e.endDate)}</p>
       </div>
 
@@ -107,7 +107,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
           )}
           <Link
             href={`/admin/experiencias/${e.id}/vista-previa`}
-            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
           >
             <Eye aria-hidden className="size-4" /> {c.preview}
           </Link>
@@ -116,7 +116,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
               href={`/experiencias/${e.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+              className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
             >
               <ExternalLink aria-hidden className="size-4" /> {c.viewLive}
             </a>
@@ -185,7 +185,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
           ))}
         </ul>
         <div className="mt-6 rounded-sm border border-dashed border-input p-4">
-          <h3 className="text-sm font-semibold text-navy-900">{c.addTitle}</h3>
+          <h3 className="text-sm font-semibold text-forest-900">{c.addTitle}</h3>
           <ActionForm action={addPriceOption.bind(null, e.id)} submitLabel={c.add} pendingLabel="Agregando…" className="mt-3">
             <div className="grid gap-4 sm:grid-cols-[2fr_1fr_1fr]">
               <AdminField label={c.optionLabel} htmlFor="label-new">
@@ -327,7 +327,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
         </dl>
         <Link
           href={`/admin/experiencias/${e.id}/inscripciones`}
-          className="mt-5 inline-flex h-12 items-center gap-2 rounded-sm bg-navy-900 px-6 text-sm font-semibold text-white hover:bg-navy-800"
+          className="mt-5 inline-flex h-12 items-center gap-2 rounded-sm bg-forest-900 px-6 text-sm font-semibold text-white hover:bg-forest-800"
         >
           <Users aria-hidden className="size-4" /> {adminCopy.registrations.openList}
         </Link>
@@ -338,7 +338,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
         <p className="text-sm text-ink">{adminCopy.photos.cardSummary(photoCount, hiddenPhotos)}</p>
         <Link
           href={`/admin/experiencias/${e.id}/fotos`}
-          className="mt-5 inline-flex h-12 items-center gap-2 rounded-sm border border-navy-900 px-6 text-sm font-semibold text-navy-900 hover:bg-cream"
+          className="mt-5 inline-flex h-12 items-center gap-2 rounded-sm border border-forest-900 px-6 text-sm font-semibold text-forest-900 hover:bg-cream"
         >
           <ImageIcon aria-hidden className="size-4" /> {adminCopy.photos.open}
         </Link>
@@ -346,7 +346,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
 
       {/* Eliminar: al final y separado, para no tocarlo sin querer. */}
       <section aria-labelledby="eliminar" className="rounded-sm border border-destructive/30 bg-white p-5 sm:p-7">
-        <h2 id="eliminar" className="font-serif text-2xl text-navy-900">
+        <h2 id="eliminar" className="font-serif text-2xl text-forest-900">
           {c.deleteTitle}
         </h2>
         <p className="mt-1 text-sm text-ink-muted">{total > 0 ? c.deleteBlocked(total) : c.deleteText}</p>
@@ -367,7 +367,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
 function Card({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
     <section className="rounded-sm bg-white p-5 sm:p-7">
-      <h2 className="font-serif text-2xl text-navy-900">{title}</h2>
+      <h2 className="font-serif text-2xl text-forest-900">{title}</h2>
       {hint && <p className="mt-1 text-sm text-ink-muted">{hint}</p>}
       <div className="mt-5">{children}</div>
     </section>
@@ -378,7 +378,7 @@ function Stat({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="rounded-sm bg-cream p-4">
       <dt className="text-xs text-ink-muted">{label}</dt>
-      <dd className="mt-1 font-serif text-3xl text-navy-900">{value}</dd>
+      <dd className="mt-1 font-serif text-3xl text-forest-900">{value}</dd>
     </div>
   );
 }

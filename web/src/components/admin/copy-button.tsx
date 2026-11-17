@@ -14,7 +14,7 @@ export function CopyButton({ text, label, doneLabel }: { text: string; label: st
         setDone(true);
         setTimeout(() => setDone(false), 2000);
       }}
-      className="inline-flex h-12 items-center gap-2 rounded-sm border border-navy-900 px-5 text-sm font-semibold text-navy-900 hover:bg-cream"
+      className="inline-flex h-12 items-center gap-2 rounded-sm border border-forest-900 px-5 text-sm font-semibold text-forest-900 hover:bg-cream"
     >
       {done ? <Check aria-hidden className="size-4" /> : <Copy aria-hidden className="size-4" />}
       <span aria-live="polite">{done ? doneLabel : label}</span>

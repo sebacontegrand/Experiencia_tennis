@@ -31,11 +31,11 @@ export default async function LeadPage({ params }: PageProps<"/admin/consultas/[
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/admin/consultas" className="inline-flex min-h-11 items-center gap-2 text-sm text-ink-muted hover:text-navy-900">
+        <Link href="/admin/consultas" className="inline-flex min-h-11 items-center gap-2 text-sm text-ink-muted hover:text-forest-900">
           <ArrowLeft aria-hidden className="size-4" /> {c.back}
         </Link>
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <h1 className="font-serif text-4xl text-navy-900">{lead.name}</h1>
+          <h1 className="font-serif text-4xl text-forest-900">{lead.name}</h1>
           <StatusBadge status={lead.status} kind="lead" />
         </div>
         <p className="mt-1 text-ink-muted">
@@ -55,7 +55,7 @@ export default async function LeadPage({ params }: PageProps<"/admin/consultas/[
           )}
           <a
             href={mailto}
-            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
           >
             <Mail aria-hidden className="size-4" /> {c.email}
           </a>
@@ -108,7 +108,7 @@ export default async function LeadPage({ params }: PageProps<"/admin/consultas/[
 function Card({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
     <section className="rounded-sm bg-white p-5 sm:p-7">
-      <h2 className="font-serif text-2xl text-navy-900">{title}</h2>
+      <h2 className="font-serif text-2xl text-forest-900">{title}</h2>
       {hint && <p className="mt-1 text-sm text-ink-muted">{hint}</p>}
       <div className="mt-5">{children}</div>
     </section>

@@ -61,12 +61,12 @@ export function AdminNavView({ variant, pathname, badges = {} }: { variant: "top
                   target={it.external ? "_blank" : undefined}
                   className={cn(
                     "inline-flex h-14 items-center gap-1.5 border-b-2 text-[0.9375rem] font-medium whitespace-nowrap transition-colors",
-                    active ? "border-gold text-white" : "border-transparent text-white/75 hover:text-white",
+                    active ? "border-ball text-white" : "border-transparent text-white/75 hover:text-white",
                   )}
                 >
                   {it.label}
                   {n > 0 && (
-                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1.5 text-xs font-semibold text-navy-900">
+                    <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-ball px-1.5 text-xs font-semibold text-forest-900">
                       {badgeLabel(n)}
                       <span className="sr-only"> sin responder</span>
                     </span>
@@ -99,13 +99,13 @@ export function AdminNavView({ variant, pathname, badges = {} }: { variant: "top
                 target={it.external ? "_blank" : undefined}
                 className={cn(
                   "flex h-16 flex-col items-center justify-center gap-1 text-xs font-medium transition-colors",
-                  active ? "text-navy-900" : "text-ink-muted hover:text-navy-900",
+                  active ? "text-forest-900" : "text-ink-muted hover:text-forest-900",
                 )}
               >
                 <span className={cn("relative flex h-7 w-11 items-center justify-center rounded-full transition-colors", active && "bg-cream-200")}>
                   <Icon aria-hidden className="size-5" strokeWidth={active ? 2.25 : 1.75} />
                   {n > 0 && (
-                    <span className="absolute -top-1 right-0 inline-flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-gold px-1 text-[0.6875rem] leading-none font-semibold text-navy-900">
+                    <span className="absolute -top-1 right-0 inline-flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-ball px-1 text-[0.6875rem] leading-none font-semibold text-forest-900">
                       {badgeLabel(n)}
                       <span className="sr-only"> sin responder</span>
                     </span>

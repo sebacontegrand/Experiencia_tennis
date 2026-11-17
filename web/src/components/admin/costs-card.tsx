@@ -77,7 +77,7 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
       </ActionForm>
 
       {/* Costos del grupo */}
-      <h3 className="mt-10 text-lg font-semibold text-navy-900">{c.itemsTitle}</h3>
+      <h3 className="mt-10 text-lg font-semibold text-forest-900">{c.itemsTitle}</h3>
       <p className="mt-1 text-sm text-ink-muted">{c.itemsHint}</p>
       {e.costItems.length === 0 ? (
         <p className="mt-4 text-sm text-ink-muted">{c.noItems}</p>
@@ -101,18 +101,18 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
         </ul>
       )}
       <div className="mt-4 rounded-sm border border-dashed border-input p-4">
-        <h4 className="text-sm font-semibold text-navy-900">{c.addItemTitle}</h4>
+        <h4 className="text-sm font-semibold text-forest-900">{c.addItemTitle}</h4>
         <ActionForm action={addCostItem.bind(null, e.id)} submitLabel={c.addItem} pendingLabel="Agregando…" className="mt-3">
           <CostItemFields id="new" />
         </ActionForm>
       </div>
       <p className="mt-4 flex flex-wrap justify-between gap-2 rounded-sm bg-cream px-4 py-3 text-sm text-ink">
         <span>{c.sharedPerPerson(attendance)}</span>
-        <strong className="text-navy-900">{formatPrice(Math.round(shared))}</strong>
+        <strong className="text-forest-900">{formatPrice(Math.round(shared))}</strong>
       </p>
 
       {/* Precio sugerido por opción */}
-      <h3 className="mt-10 text-lg font-semibold text-navy-900">{c.optionsTitle}</h3>
+      <h3 className="mt-10 text-lg font-semibold text-forest-900">{c.optionsTitle}</h3>
       <p className="mt-1 text-sm text-ink-muted">{c.optionsHint}</p>
       {e.earningsPercent == null && <p className="mt-4 rounded-sm bg-amber-50 px-4 py-3 text-sm text-amber-900">{c.noPercent}</p>}
       <ul className="mt-4 space-y-3">
@@ -122,7 +122,7 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
           const current = earningsFor(o.price, total);
           return (
             <li key={o.id} className="rounded-sm border border-border p-4">
-              <p className="font-semibold text-navy-900">{o.label}</p>
+              <p className="font-semibold text-forest-900">{o.label}</p>
               <ActionForm action={saveOptionCost.bind(null, e.id, o.id)} submitLabel={adminCopy.edit.save} className="mt-3">
                 <AdminField label={c.optionCost} htmlFor={`cost-${o.id}`}>
                   <MoneyInput id={`cost-${o.id}`} name="cost" defaultValue={o.cost} />
@@ -156,7 +156,7 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
       </ul>
 
       {/* Resultado real */}
-      <h3 className="mt-10 text-lg font-semibold text-navy-900">{c.resultTitle}</h3>
+      <h3 className="mt-10 text-lg font-semibold text-forest-900">{c.resultTitle}</h3>
       <p className="mt-1 text-sm text-ink-muted">{c.resultHint}</p>
       <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">
         <Stat label={c.people} value={String(result.people)} />
@@ -224,7 +224,7 @@ function Figure({ label, value, strong, tone }: { label: string; value: string; 
       <dt className="text-xs text-ink-muted">{label}</dt>
       <dd
         className={cn(
-          "mt-0.5 text-navy-900",
+          "mt-0.5 text-forest-900",
           strong && "text-base font-semibold",
           tone === "good" && "text-emerald-800",
           tone === "bad" && "font-semibold text-destructive",
@@ -242,7 +242,7 @@ function Stat({ label, value, tone }: { label: string; value: string; tone?: "go
       <dt className="text-xs text-ink-muted">{label}</dt>
       <dd
         className={cn(
-          "mt-1 text-lg font-semibold text-navy-900",
+          "mt-1 text-lg font-semibold text-forest-900",
           tone === "good" && "text-emerald-800",
           tone === "bad" && "text-destructive",
         )}

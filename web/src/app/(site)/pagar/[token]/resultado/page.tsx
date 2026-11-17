@@ -20,7 +20,7 @@ export const metadata: Metadata = { title: c.page.title, robots: { index: false,
 
 export default function PayResultPage(props: PageProps<"/pagar/[token]/resultado">) {
   return (
-    <Suspense fallback={<div className="min-h-[70vh] bg-navy-900" />}>
+    <Suspense fallback={<div className="min-h-[70vh] bg-forest-900" />}>
       <Result {...props} />
     </Suspense>
   );
@@ -57,16 +57,16 @@ async function Result({ params, searchParams }: PageProps<"/pagar/[token]/result
   const Icon = outcome === "approved" ? CheckCircle2 : outcome === "rejected" ? XCircle : Clock;
 
   return (
-    <section className="bg-navy-900 px-5 pt-16 pb-24 text-white sm:px-8">
+    <section className="bg-forest-900 px-5 pt-16 pb-24 text-white sm:px-8">
       <div className="mx-auto max-w-xl">
-        <Icon aria-hidden className={outcome === "approved" ? "size-12 text-gold-light" : "size-12 text-white/70"} />
+        <Icon aria-hidden className={outcome === "approved" ? "size-12 text-ball-light" : "size-12 text-white/70"} />
         <h1 className="mt-6 font-serif text-5xl leading-[1.02] font-light">{r.title}</h1>
-        <div className="gold-rule mt-5" />
+        <div className="brand-rule mt-5" />
         <p className="mt-5 text-lg text-white/80">{r.text}</p>
         <p className="mt-2 text-white/60">{fresh.experience.title}</p>
         <div className="mt-10 flex flex-col gap-4">
           {outcome !== "approved" && outcome !== "pending" && stillPayable && <CheckoutButton token={token} label={c.result.retry} />}
-          <Link href={`/experiencias/${fresh.experience.slug}`} className="inline-flex min-h-11 items-center text-sm text-white/80 underline-offset-4 hover:text-gold-light hover:underline">
+          <Link href={`/experiencias/${fresh.experience.slug}`} className="inline-flex min-h-11 items-center text-sm text-white/80 underline-offset-4 hover:text-ball-light hover:underline">
             {c.result.back}
           </Link>
         </div>

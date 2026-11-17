@@ -24,10 +24,10 @@ export default async function AdminExperiencesPage() {
   return (
     <>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
+        <h1 className="font-serif text-4xl text-forest-900">{c.title}</h1>
         <Link
           href="/admin/experiencias/nueva"
-          className="inline-flex h-12 items-center gap-2 rounded-sm bg-navy-900 px-5 text-sm font-semibold text-white hover:bg-navy-800"
+          className="inline-flex h-12 items-center gap-2 rounded-sm bg-forest-900 px-5 text-sm font-semibold text-white hover:bg-forest-800"
         >
           <Plus aria-hidden className="size-4" /> {adminCopy.create.cta}
         </Link>
@@ -43,13 +43,13 @@ export default async function AdminExperiencesPage() {
               <li key={e.id}>
                 <Link
                   href={`/admin/experiencias/${e.id}`}
-                  className="block rounded-sm border border-border bg-white p-5 transition hover:border-navy-900"
+                  className="block rounded-sm border border-border bg-white p-5 transition hover:border-forest-900"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-xs font-semibold tracking-widest text-gold-deep uppercase">{e.format.name}</p>
+                    <p className="text-xs font-semibold tracking-widest text-clay-deep uppercase">{e.format.name}</p>
                     <StatusBadge status={e.status} />
                   </div>
-                  <h2 className="mt-2 font-serif text-2xl text-navy-900">{e.title}</h2>
+                  <h2 className="mt-2 font-serif text-2xl text-forest-900">{e.title}</h2>
                   <p className="mt-1 text-sm text-ink-muted">{formatDateRange(e.startDate, e.endDate)}</p>
                   <p className="mt-3 text-sm text-ink">
                     {c.seats(taken, e.capacity)}

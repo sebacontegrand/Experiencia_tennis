@@ -38,10 +38,10 @@ export default async function PhotosPage({ params }: PageProps<"/admin/experienc
   return (
     <div className="space-y-8">
       <div>
-        <Link href={`/admin/experiencias/${e.id}`} className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-navy-900">
+        <Link href={`/admin/experiencias/${e.id}`} className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-forest-900">
           <ArrowLeft aria-hidden className="size-4" /> {c.back}
         </Link>
-        <h1 className="mt-6 font-serif text-4xl text-navy-900">{c.title}</h1>
+        <h1 className="mt-6 font-serif text-4xl text-forest-900">{c.title}</h1>
         <p className="mt-1 text-ink-muted">
           {e.title} · {formatDateRange(e.startDate, e.endDate)}
         </p>
@@ -56,7 +56,7 @@ export default async function PhotosPage({ params }: PageProps<"/admin/experienc
               href={`/galeria/${e.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-2 font-semibold text-navy-900 hover:underline"
+              className="inline-flex min-h-11 items-center gap-2 font-semibold text-forest-900 hover:underline"
             >
               <ExternalLink aria-hidden className="size-4" /> {c.viewAlbum}
             </a>
@@ -77,7 +77,7 @@ export default async function PhotosPage({ params }: PageProps<"/admin/experienc
                 <div className="relative aspect-square overflow-hidden rounded-sm bg-cream">
                   <Image src={p.url} alt={p.alt} fill sizes="(min-width: 1024px) 220px, 45vw" className={p.isPublic ? "object-cover" : "object-cover opacity-40 grayscale"} />
                   {!p.isPublic && (
-                    <span className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-sm bg-navy-900 px-2 py-1 text-xs font-semibold text-white">
+                    <span className="absolute top-2 left-2 inline-flex items-center gap-1 rounded-sm bg-forest-900 px-2 py-1 text-xs font-semibold text-white">
                       <EyeOff aria-hidden className="size-3.5" /> {c.hidden}
                     </span>
                   )}

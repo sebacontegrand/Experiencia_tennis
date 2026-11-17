@@ -98,7 +98,7 @@ export function RacketAnatomy() {
   if (activeId) for (const p of parts) states[p.id] = p.id === activeId ? "on" : "off";
 
   return (
-    <section id="anatomia" aria-labelledby="anatomia-title" className="racket-anatomy relative bg-navy-950 text-white">
+    <section id="anatomia" aria-labelledby="anatomia-title" className="racket-anatomy relative bg-forest-950 text-white">
       <div ref={root} className="relative" style={scroll ? { height: `calc(100svh + ${SEGMENTS * 55}svh)` } : undefined}>
         <div
           className={cn(
@@ -118,7 +118,7 @@ export function RacketAnatomy() {
               <h1 id="anatomia-title" className="font-serif text-4xl leading-[1.02] font-light text-balance sm:text-5xl">
                 {c.title}
               </h1>
-              <div className="gold-rule mt-5" />
+              <div className="brand-rule mt-5" />
               <p className={cn("mt-5 max-w-md leading-relaxed text-white/75 max-sm:text-[0.9375rem]", scroll && "max-sm:hidden [@media(max-height:740px)]:hidden")}>
                 {c.lead}
               </p>
@@ -170,7 +170,7 @@ export function RacketAnatomy() {
                               isActive ? "text-white" : done ? "text-white/70 hover:text-white" : "text-white/45 hover:text-white/80",
                             )}
                           >
-                            <span className={cn("w-7 shrink-0 font-sans text-xs font-semibold tabular-nums", (isActive || done) && "text-gold-light")}>
+                            <span className={cn("w-7 shrink-0 font-sans text-xs font-semibold tabular-nums", (isActive || done) && "text-ball-light")}>
                               {pad(i + 1)}
                             </span>
                             <span className="font-serif text-2xl">
@@ -183,7 +183,7 @@ export function RacketAnatomy() {
                           </button>
                         ) : (
                           <p className="flex items-baseline gap-4">
-                            <span className="w-7 shrink-0 font-sans text-xs font-semibold text-gold-light tabular-nums">{pad(i + 1)}</span>
+                            <span className="w-7 shrink-0 font-sans text-xs font-semibold text-ball-light tabular-nums">{pad(i + 1)}</span>
                             <span className="font-serif text-2xl">{part.name}</span>
                           </p>
                         )}
@@ -198,7 +198,7 @@ export function RacketAnatomy() {
 
           {scroll && (
             <div aria-hidden className="relative h-px w-full bg-white/10">
-              <div className="h-full origin-left bg-gold" style={{ transform: "scaleX(var(--p, 0))" }} />
+              <div className="h-full origin-left bg-ball" style={{ transform: "scaleX(var(--p, 0))" }} />
             </div>
           )}
         </div>
@@ -217,7 +217,7 @@ function TraitList({ traits, tone = "dim" }: { traits: readonly string[]; tone?:
           key={t}
           className={cn(
             "inline-flex h-6 items-center px-2.5 text-[0.75rem] font-semibold",
-            tone === "gold" ? "bg-gold text-navy-900" : "text-gold-light ring-1 ring-gold/50 ring-inset",
+            tone === "gold" ? "bg-ball text-forest-900" : "text-ball-light ring-1 ring-ball/50 ring-inset",
           )}
         >
           {t}
@@ -237,7 +237,7 @@ function PartDetail({ part, className }: { part: RacketPart; className?: string 
       <p className="mt-2.5 max-w-sm text-[0.9375rem] leading-relaxed text-white/85">{part.play}</p>
       <div className="mt-4 max-w-sm border-t border-white/10 pt-3">
         <p className="text-[0.8125rem] text-white/60">
-          {c.inExperience}: <span className="font-serif text-lg text-gold-light italic">{part.title}</span>
+          {c.inExperience}: <span className="font-serif text-lg text-ball-light italic">{part.title}</span>
         </p>
         <p className="mt-1 text-[0.9375rem] leading-relaxed text-white/75">{part.text}</p>
       </div>
@@ -254,7 +254,7 @@ function ActivePanel({ part, index }: { part: RacketPart; index: number }) {
     >
       <div>
         <p className="flex items-baseline gap-3">
-          <span className="font-sans text-xs font-semibold text-gold-light tabular-nums">
+          <span className="font-sans text-xs font-semibold text-ball-light tabular-nums">
             {pad(index + 1)} / {pad(N)}
           </span>
           <span className="font-serif text-3xl">{part.name}</span>
@@ -267,7 +267,7 @@ function ActivePanel({ part, index }: { part: RacketPart; index: number }) {
       </div>
       <div className="border-t border-white/10 pt-4 sm:border-t-0 sm:border-l sm:pt-0 sm:pl-10">
         <p className="text-[0.8125rem] text-white/60">{c.inExperience}</p>
-        <p className="mt-1 font-serif text-2xl text-gold-light italic">{part.title}</p>
+        <p className="mt-1 font-serif text-2xl text-ball-light italic">{part.title}</p>
         <p className="mt-2 text-[0.9375rem] leading-relaxed text-white/75">{part.text}</p>
       </div>
     </div>
@@ -289,7 +289,7 @@ function Profiles() {
       <div className="mx-auto grid max-w-6xl gap-x-12 gap-y-10 lg:grid-cols-[22rem_1fr]">
         <div>
           <h2 className="font-serif text-3xl font-light text-balance sm:text-4xl">{p.title}</h2>
-          <div className="gold-rule mt-5" />
+          <div className="brand-rule mt-5" />
           <p className="mt-5 max-w-md leading-relaxed text-white/75">{p.lead}</p>
           <div role="group" aria-label={p.title} className="mt-8 flex flex-col gap-2">
             {p.items.map((item) => {
@@ -302,7 +302,7 @@ function Profiles() {
                   onClick={() => setSelected(item.id)}
                   className={cn(
                     "flex min-h-12 items-center justify-between gap-3 px-4 text-left text-[0.9375rem] font-medium transition-colors",
-                    on ? "bg-white text-navy-900" : "text-white/80 ring-1 ring-white/20 ring-inset hover:bg-white/5 hover:text-white",
+                    on ? "bg-white text-forest-900" : "text-white/80 ring-1 ring-white/20 ring-inset hover:bg-white/5 hover:text-white",
                   )}
                 >
                   {item.label}
@@ -335,11 +335,11 @@ function Profiles() {
 function Outro() {
   return (
     <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-1 motion-safe:duration-500">
-      <p className="text-[0.8125rem] font-medium text-gold-light">{c.outro.spec}</p>
+      <p className="text-[0.8125rem] font-medium text-ball-light">{c.outro.spec}</p>
       <p className="mt-3 font-serif text-3xl text-balance sm:text-4xl">{c.outro.title}</p>
       <Link
         href={c.outro.cta.href}
-        className="btn-label mt-6 inline-flex h-12 items-center gap-2 border border-gold px-6 text-gold-light transition hover:bg-gold hover:text-navy-900"
+        className="btn-label mt-6 inline-flex h-12 items-center gap-2 border border-ball px-6 text-ball-light transition hover:bg-ball hover:text-forest-900"
       >
         {c.outro.cta.label} <ArrowRight aria-hidden className="size-4" />
       </Link>
@@ -350,7 +350,7 @@ function Outro() {
 function Backdrop() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
-      <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_68%_50%,rgb(29_58_96/0.55),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_68%_50%,rgb(24_80_61/0.55),transparent_70%)]" />
       <div className="absolute inset-0 [background-image:linear-gradient(rgb(255_255_255/0.035)_1px,transparent_1px),linear-gradient(90deg,rgb(255_255_255/0.035)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(70%_70%_at_60%_50%,black,transparent)]" />
     </div>
   );
@@ -379,22 +379,22 @@ function RacketSvg({ states, label }: { states: PartStates; label: string }) {
     <svg viewBox="40 60 1350 520" role="img" aria-label={label} className="h-auto w-full overflow-visible">
       <defs>
         <linearGradient id={id("frame")} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#4a6489" />
-          <stop offset="0.45" stopColor="#1f3657" />
-          <stop offset="1" stopColor="#0c1a30" />
+          <stop offset="0" stopColor="#4c8a6f" />
+          <stop offset="0.45" stopColor="#1c5440" />
+          <stop offset="1" stopColor="#0b2a20" />
         </linearGradient>
         <linearGradient id={id("core")} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#3b5578" />
-          <stop offset="1" stopColor="#16283f" />
+          <stop offset="0" stopColor="#447c64" />
+          <stop offset="1" stopColor="#153b2d" />
         </linearGradient>
         <radialGradient id={id("sweet")}>
-          <stop offset="0" stopColor="#d4b07a" stopOpacity="0.75" />
-          <stop offset="0.6" stopColor="#b98c4a" stopOpacity="0.2" />
-          <stop offset="1" stopColor="#b98c4a" stopOpacity="0" />
+          <stop offset="0" stopColor="#e3e77d" stopOpacity="0.75" />
+          <stop offset="0.6" stopColor="#d3d93a" stopOpacity="0.2" />
+          <stop offset="1" stopColor="#d3d93a" stopOpacity="0" />
         </radialGradient>
         <pattern id={id("wrap")} width="18" height="60" patternUnits="userSpaceOnUse" patternTransform="skewX(-38)">
-          <rect width="18" height="60" fill="#0d192c" />
-          <rect width="2.5" height="60" fill="#22385a" />
+          <rect width="18" height="60" fill="#0b2419" />
+          <rect width="2.5" height="60" fill="#21503f" />
         </pattern>
         <clipPath id={id("bed")}>
           <ellipse cx="980" cy="300" rx="212" ry="154" />
@@ -405,15 +405,15 @@ function RacketSvg({ states, label }: { states: PartStates; label: string }) {
       <g style={{ opacity: "var(--assembled, 0)" }}>
         <path
           d="M184 548 H1220"
-          stroke="#d4b07a"
+          stroke="#e3e77d"
           strokeWidth="1.5"
           pathLength={1}
           strokeDasharray="1"
           style={{ strokeDashoffset: "calc(1 - var(--assembled, 0))" }}
         />
-        <path d="M184 534 V562 M1220 534 V562" stroke="#d4b07a" strokeWidth="1.5" />
-        <rect x="642" y="530" width="120" height="36" fill="#020a15" />
-        <text x="702" y="556" textAnchor="middle" fill="#d4b07a" fontSize="24" fontFamily="var(--font-montserrat)" fontWeight="600">
+        <path d="M184 534 V562 M1220 534 V562" stroke="#e3e77d" strokeWidth="1.5" />
+        <rect x="642" y="530" width="120" height="36" fill="#06180f" />
+        <text x="702" y="556" textAnchor="middle" fill="#e3e77d" fontSize="24" fontFamily="var(--font-hind)" fontWeight="600">
           {c.lengthLabel}
         </text>
       </g>
@@ -421,24 +421,24 @@ function RacketSvg({ states, label }: { states: PartStates; label: string }) {
       {/* Tapón */}
       <g className="ra-part" data-state={states.cap} style={move("cap")}>
         <rect x="184" y="274" width="32" height="52" rx="9" fill={url("core")} />
-        <rect x="207" y="275" width="5" height="50" fill="#b98c4a" />
+        <rect x="207" y="275" width="5" height="50" fill="#d3d93a" />
       </g>
 
       {/* Garganta + varilla + alma del mango */}
       <g className="ra-part" data-state={states.throat} style={move("throat")}>
         <rect x="212" y="281" width="296" height="38" rx="3" fill={url("core")} />
-        <path d="M214 290 H506 M214 310 H506" stroke="#5b769c" strokeOpacity="0.5" strokeWidth="1.5" />
+        <path d="M214 290 H506 M214 310 H506" stroke="#62a083" strokeOpacity="0.5" strokeWidth="1.5" />
         <path d="M500 283 L604 281 L604 319 L500 317 Z" fill={url("frame")} />
         <path d="M794 188 C720 224 662 268 590 284 L590 299 C668 286 726 254 770 232 Z" fill={url("frame")} />
         <path d="M794 412 C720 376 662 332 590 316 L590 301 C668 314 726 346 770 368 Z" fill={url("frame")} />
-        <path d="M794 190 C722 226 664 269 592 285" fill="none" stroke="#7d97bb" strokeOpacity="0.45" strokeWidth="1.5" />
+        <path d="M794 190 C722 226 664 269 592 285" fill="none" stroke="#8ab9a2" strokeOpacity="0.45" strokeWidth="1.5" />
       </g>
 
       {/* Empuñadura (cubregrip) */}
       <g className="ra-part" data-state={states.grip} style={move("grip")}>
         <rect x="216" y="277" width="286" height="46" rx="7" fill={url("wrap")} />
-        <rect x="216" y="277" width="286" height="46" rx="7" fill="none" stroke="#2c4467" strokeWidth="1.5" />
-        <rect x="486" y="275" width="20" height="50" rx="2" fill="#b98c4a" />
+        <rect x="216" y="277" width="286" height="46" rx="7" fill="none" stroke="#2a5a47" strokeWidth="1.5" />
+        <rect x="486" y="275" width="20" height="50" rx="2" fill="#d3d93a" />
       </g>
 
       {/* Marco */}
@@ -448,9 +448,9 @@ function RacketSvg({ states, label }: { states: PartStates; label: string }) {
           fill={url("frame")}
           d="M740 300 a240 182 0 1 0 480 0 a240 182 0 1 0 -480 0 Z M768 300 a212 154 0 1 0 424 0 a212 154 0 1 0 -424 0 Z"
         />
-        <ellipse cx="980" cy="300" rx="226" ry="168" fill="none" stroke="#b98c4a" strokeWidth="28" strokeDasharray="0 200 26 804 26 188" />
-        <ellipse cx="980" cy="300" rx="226" ry="168" fill="none" stroke="#020a15" strokeOpacity="0.8" strokeWidth="3" strokeDasharray="2 13" />
-        <ellipse cx="980" cy="300" rx="238" ry="180" fill="none" stroke="#8aa3c6" strokeOpacity="0.45" strokeWidth="1.5" />
+        <ellipse cx="980" cy="300" rx="226" ry="168" fill="none" stroke="#d3d93a" strokeWidth="28" strokeDasharray="0 200 26 804 26 188" />
+        <ellipse cx="980" cy="300" rx="226" ry="168" fill="none" stroke="#06180f" strokeOpacity="0.8" strokeWidth="3" strokeDasharray="2 13" />
+        <ellipse cx="980" cy="300" rx="238" ry="180" fill="none" stroke="#9cc5b1" strokeOpacity="0.45" strokeWidth="1.5" />
       </g>
 
       {/* Encordado y punto dulce */}
@@ -460,13 +460,13 @@ function RacketSvg({ states, label }: { states: PartStates; label: string }) {
           cy="300"
           rx="212"
           ry="154"
-          fill="#020a15"
+          fill="#06180f"
           fillOpacity="0.35"
-          stroke="#efe7da"
+          stroke="#ede9d6"
           strokeWidth="1.5"
           style={{ strokeOpacity: "calc(var(--f-strings, 1) * 0.35)" }}
         />
-        <g clipPath={url("bed")} stroke="#efe7da" strokeOpacity="0.78" strokeWidth="1.6">
+        <g clipPath={url("bed")} stroke="#ede9d6" strokeOpacity="0.78" strokeWidth="1.6">
           {mains.map((y) => (
             <line key={`m${y}`} x1="760" x2="1200" y1={y} y2={y} />
           ))}
@@ -476,8 +476,8 @@ function RacketSvg({ states, label }: { states: PartStates; label: string }) {
         </g>
         <g className={cn("ra-sweet", states.sweetspot === "on" && "is-on")} style={{ opacity: "var(--f-sweetspot, 1)" }}>
           <circle cx="955" cy="300" r="70" fill={url("sweet")} />
-          <circle cx="955" cy="300" r="46" fill="none" stroke="#d4b07a" strokeWidth="1.5" strokeDasharray="4 6" />
-          <circle cx="955" cy="300" r="5" fill="#d4b07a" />
+          <circle cx="955" cy="300" r="46" fill="none" stroke="#e3e77d" strokeWidth="1.5" strokeDasharray="4 6" />
+          <circle cx="955" cy="300" r="5" fill="#e3e77d" />
         </g>
       </g>
     </svg>

@@ -29,16 +29,16 @@ export function CommunityForm({ id = "comunidad-form" }: { id?: string }) {
         ref={successRef}
         tabIndex={-1}
         role="status"
-        className="rounded-sm border border-gold/50 bg-white p-8 text-center outline-none"
+        className="rounded-sm border border-ball/50 bg-white p-8 text-center outline-none"
       >
-        <CheckCircle2 aria-hidden className="mx-auto size-10 text-gold-deep" />
-        <h3 className="mt-4 font-serif text-3xl text-navy-900">{communityCopy.form.successTitle}</h3>
+        <CheckCircle2 aria-hidden className="mx-auto size-10 text-clay-deep" />
+        <h3 className="mt-4 font-serif text-3xl text-forest-900">{communityCopy.form.successTitle}</h3>
         <p className="mx-auto mt-3 max-w-md text-ink-muted">{communityCopy.form.successText}</p>
         <a
           href={whatsappLink("¡Hola! Me acabo de sumar a la comunidad de Experiencia Tenis.")}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-label mt-6 inline-flex h-12 items-center rounded-sm border border-navy-900 px-6 text-navy-900 transition hover:bg-navy-900 hover:text-white"
+          className="btn-label mt-6 inline-flex h-12 items-center rounded-sm border border-forest-900 px-6 text-forest-900 transition hover:bg-forest-900 hover:text-white"
         >
           {communityCopy.form.successCta}
         </a>

@@ -53,7 +53,7 @@ export function PhotoAlbum({ title, photos }: { title: string; photos: Photo[] }
                 e.preventDefault();
                 open(i);
               }}
-              className="group block overflow-hidden rounded-sm bg-navy-800"
+              className="group block overflow-hidden rounded-sm bg-forest-800"
             >
               <Image
                 src={p.url}
@@ -71,7 +71,7 @@ export function PhotoAlbum({ title, photos }: { title: string; photos: Photo[] }
       <dialog
         ref={dialog}
         aria-label={title}
-        className="m-0 h-dvh max-h-none w-screen max-w-none bg-navy-950/97 p-0 text-white backdrop:bg-navy-950/80"
+        className="m-0 h-dvh max-h-none w-screen max-w-none bg-forest-950/97 p-0 text-white backdrop:bg-forest-950/80"
         onClick={(e) => {
           if (e.target === e.currentTarget) dialog.current?.close();
         }}
@@ -95,7 +95,7 @@ export function PhotoAlbum({ title, photos }: { title: string; photos: Photo[] }
                 <a
                   href={photo.url}
                   download
-                  className="inline-flex h-11 items-center gap-2 px-3 text-sm font-semibold text-gold-light hover:text-white"
+                  className="inline-flex h-11 items-center gap-2 px-3 text-sm font-semibold text-ball-light hover:text-white"
                 >
                   <Download aria-hidden className="size-4" /> {c.download}
                 </a>
@@ -118,7 +118,7 @@ export function PhotoAlbum({ title, photos }: { title: string; photos: Photo[] }
                     type="button"
                     onClick={() => go(-1)}
                     aria-label={c.prev}
-                    className="absolute top-1/2 left-2 inline-flex size-12 -translate-y-1/2 items-center justify-center bg-navy-950/60 text-white hover:bg-navy-950 sm:left-4"
+                    className="absolute top-1/2 left-2 inline-flex size-12 -translate-y-1/2 items-center justify-center bg-forest-950/60 text-white hover:bg-forest-950 sm:left-4"
                   >
                     <ChevronLeft aria-hidden className="size-6" />
                   </button>
@@ -126,7 +126,7 @@ export function PhotoAlbum({ title, photos }: { title: string; photos: Photo[] }
                     type="button"
                     onClick={() => go(1)}
                     aria-label={c.next}
-                    className="absolute top-1/2 right-2 inline-flex size-12 -translate-y-1/2 items-center justify-center bg-navy-950/60 text-white hover:bg-navy-950 sm:right-4"
+                    className="absolute top-1/2 right-2 inline-flex size-12 -translate-y-1/2 items-center justify-center bg-forest-950/60 text-white hover:bg-forest-950 sm:right-4"
                   >
                     <ChevronRight aria-hidden className="size-6" />
                   </button>

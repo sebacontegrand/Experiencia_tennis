@@ -9,7 +9,7 @@ No se inventan: hasta que lleguen, el sitio muestra un marcador neutro o "Consul
 | 2 | ¿Villa Gesell es solo para mujeres o mixta? | Se elige en el panel (Datos → Para quién es). «Solo mujeres» oculta la pregunta de género | Pendiente (lo define Gabriela) |
 | 3 | Usuario de Instagram | `src/config/site.ts` | ✅ `gabibruno_todotenis` (11/11) |
 | 4 | Alias o CBU para transferencias (y titular) | `src/config/site.ts`, email de inscripción, pantalla de confirmación | Pendiente |
-| 5 | Logo vectorial (SVG) o PNG de alta resolución | `public/brand/`, componente `<Logo />`. El actual mide 195×79 px | Pendiente |
+| 5 | Logo vectorial (SVG) o PNG de alta resolución | `public/brand/`, componente `<Logo />`. Desde el 17/11 se usan los logos extraídos en alta del manual (TENIS.pdf); faltan los SVG originales del diseño | Parcial |
 | 6 | Confirmar que el email (gabrielabrunotenis@gmail.com) es el de esta web. WhatsApp: +54 9 11 5736 4407 (de Gabriela, confirmado 12/11) | `src/config/site.ts` | Email pendiente |
 | 7 | Texto más personal de "Quiénes somos" y foto de Gabriela | `/nosotros` (hoy usa la bio del dossier de hoteles) · `src/content/b2b.ts` | Pendiente |
 | 8 | Condiciones de inscripción, seña y cancelación | Detalle de experiencia, inscripción, emails | Pendiente |
@@ -26,3 +26,4 @@ No se inventan: hasta que lleguen, el sitio muestra un marcador neutro o "Consul
 | 19 | Texto legal sobre uso de imagen: aviso en la inscripción («puede haber fotos que se publiquen en la galería») y párrafo en `/privacidad` | `src/content/privacy.ts`, formulario de inscripción. Hoy cada álbum tiene un link para pedir que saquen una foto | Pendiente (Gabriela / asesoría) |
 | 20 | Revisar los datos técnicos generales de la raqueta en «Anatomía de una experiencia» (patrón 16 × 19, tensión 22–26 kg, cabeza ~630 cm²) | `src/content/racket.ts` · `/como-se-arma` | Pendiente (Gabriela) |
 | 21 | Mercado Pago: credenciales de prueba (sandbox) para probar y después las de producción de la cuenta de Gabriela; configurar el webhook en la app de Mercado Pago | Variables `MP_ACCESS_TOKEN` y `MP_WEBHOOK_SECRET` (Vercel). URL del webhook: `<sitio>/api/mercadopago/webhook`, evento «Pagos» | Pendiente (Sebastián) |
+| 22 | Licencia web de KEFA III y SATHU (si se quieren en el sitio en lugar de Bitter y Hind) | `src/app/layout.tsx` | Opcional |

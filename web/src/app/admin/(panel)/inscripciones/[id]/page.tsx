@@ -58,12 +58,12 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
       <div>
         <Link
           href={`/admin/experiencias/${r.experience.id}/inscripciones`}
-          className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-navy-900"
+          className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-forest-900"
         >
           <ArrowLeft aria-hidden className="size-4" /> {c.back}
         </Link>
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <h1 className="font-serif text-4xl text-navy-900">
+          <h1 className="font-serif text-4xl text-forest-900">
             {r.player.firstName} {r.player.lastName}
           </h1>
           <StatusBadge status={r.status} kind="registration" />
@@ -84,7 +84,7 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
           )}
           <a
             href={`mailto:${r.player.email}`}
-            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
           >
             <Mail aria-hidden className="size-4" /> {c.email}
           </a>
@@ -106,7 +106,7 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
             {r.payments.map((p) => (
               <li key={p.id} className="flex flex-wrap items-center justify-between gap-3 p-4">
                 <div>
-                  <p className="font-semibold text-navy-900">
+                  <p className="font-semibold text-forest-900">
                     {formatPrice(p.amount)}
                     {p.status !== "APROBADO" && <span className="ml-2 text-xs font-normal text-ink-muted">({p.status.toLowerCase()})</span>}
                   </p>
@@ -131,7 +131,7 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
         )}
 
         <div className="mt-6 rounded-sm border border-dashed border-input p-4">
-          <h3 className="text-sm font-semibold text-navy-900">{c.addPayment}</h3>
+          <h3 className="text-sm font-semibold text-forest-900">{c.addPayment}</h3>
           <ActionForm action={addPayment.bind(null, r.id)} submitLabel={c.addPayment} className="mt-3">
             <div className="grid gap-4 sm:grid-cols-3">
               <AdminField label={c.amount} htmlFor="amount">
@@ -178,7 +178,7 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
                     href={`https://wa.me/${wa}?text=${encodeURIComponent(paymentCopy.panel.whatsappMessage(r.player.firstName, r.experience.title, payUrl))}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-12 items-center gap-2 rounded-sm bg-navy-900 px-5 text-sm font-semibold text-white hover:bg-navy-800"
+                    className="inline-flex h-12 items-center gap-2 rounded-sm bg-forest-900 px-5 text-sm font-semibold text-white hover:bg-forest-800"
                   >
                     {paymentCopy.panel.whatsapp}
                   </a>
@@ -221,7 +221,7 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
         </dl>
         <Link
           href={`/admin/jugadores/${r.player.id}`}
-          className="mt-5 inline-flex h-11 items-center gap-2 text-sm font-semibold text-navy-900 underline underline-offset-4"
+          className="mt-5 inline-flex h-11 items-center gap-2 text-sm font-semibold text-forest-900 underline underline-offset-4"
         >
           {c.playerProfile}
         </Link>
@@ -249,7 +249,7 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
 function Card({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
     <section className="rounded-sm bg-white p-5 sm:p-7">
-      <h2 className="font-serif text-2xl text-navy-900">{title}</h2>
+      <h2 className="font-serif text-2xl text-forest-900">{title}</h2>
       {hint && <p className="mt-1 text-sm text-ink-muted">{hint}</p>}
       <div className="mt-5">{children}</div>
     </section>
@@ -260,7 +260,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-sm bg-cream p-3 sm:p-4">
       <dt className="text-xs text-ink-muted">{label}</dt>
-      <dd className="mt-1 text-lg font-semibold text-navy-900 sm:text-xl">{value}</dd>
+      <dd className="mt-1 text-lg font-semibold text-forest-900 sm:text-xl">{value}</dd>
     </div>
   );
 }

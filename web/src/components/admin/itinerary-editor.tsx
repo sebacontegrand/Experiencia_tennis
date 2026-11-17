@@ -48,7 +48,7 @@ export function ItineraryEditor({ initial }: { initial: Itinerary }) {
 
       {days.map((d, di) => (
         <fieldset key={d.key} className="rounded-sm border border-border p-4">
-          <legend className="px-1 text-sm font-semibold text-navy-900">
+          <legend className="px-1 text-sm font-semibold text-forest-900">
             {c.day} {di + 1}
           </legend>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -112,7 +112,7 @@ export function ItineraryEditor({ initial }: { initial: Itinerary }) {
             <button
               type="button"
               onClick={() => updateDay(d.key, { items: [...d.items, emptyItem()] })}
-              className="inline-flex h-11 items-center gap-2 rounded-sm border border-border px-4 text-sm font-semibold text-navy-900 hover:border-navy-900"
+              className="inline-flex h-11 items-center gap-2 rounded-sm border border-border px-4 text-sm font-semibold text-forest-900 hover:border-forest-900"
             >
               <Plus aria-hidden className="size-4" /> {c.addItem}
             </button>
@@ -133,7 +133,7 @@ export function ItineraryEditor({ initial }: { initial: Itinerary }) {
       <button
         type="button"
         onClick={() => setDays((ds) => [...ds, emptyDay()])}
-        className="inline-flex h-12 items-center gap-2 rounded-sm border border-dashed border-navy-900/40 px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+        className="inline-flex h-12 items-center gap-2 rounded-sm border border-dashed border-forest-900/40 px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
       >
         <Plus aria-hidden className="size-4" /> {c.addDay}
       </button>
@@ -144,7 +144,7 @@ export function ItineraryEditor({ initial }: { initial: Itinerary }) {
 function Field({ label, htmlFor, hideLabel, children }: { label: string; htmlFor: string; hideLabel?: boolean; children: React.ReactNode }) {
   return (
     <div className="flex min-w-0 flex-col gap-1.5">
-      <label htmlFor={htmlFor} className={hideLabel ? "sr-only" : "text-sm font-medium text-navy-900"}>
+      <label htmlFor={htmlFor} className={hideLabel ? "sr-only" : "text-sm font-medium text-forest-900"}>
         {label}
       </label>
       {children}

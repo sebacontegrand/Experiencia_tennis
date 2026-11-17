@@ -38,14 +38,14 @@ export function MobileMenu({ items, cta }: { items: readonly Item[]; cta: Item }
         aria-controls={panelId}
         aria-label={open ? "Cerrar menú" : "Abrir menú"}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex size-11 items-center justify-center rounded-sm text-gold-light"
+        className="inline-flex size-11 items-center justify-center rounded-sm text-forest-900"
       >
         {open ? <X aria-hidden /> : <Menu aria-hidden />}
       </button>
       <div
         id={panelId}
         hidden={!open}
-        className="fixed inset-x-0 top-16 bottom-0 z-30 overflow-y-auto bg-navy-900 px-5 pt-8 pb-24"
+        className="fixed inset-x-0 top-16 bottom-0 z-30 overflow-y-auto bg-forest-900 px-5 pt-8 pb-24"
       >
         <nav aria-label="Principal (móvil)">
           <ul className="flex flex-col">
@@ -64,7 +64,7 @@ export function MobileMenu({ items, cta }: { items: readonly Item[]; cta: Item }
           <Link
             href={cta.href}
             onClick={() => setOpen(false)}
-            className="btn-label mt-10 flex h-14 items-center justify-center rounded-sm bg-gold text-navy-900"
+            className="btn-label mt-10 flex h-14 items-center justify-center rounded-sm bg-ball text-forest-900"
           >
             {cta.label} a la comunidad
           </Link>

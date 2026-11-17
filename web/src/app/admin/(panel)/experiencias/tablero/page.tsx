@@ -46,7 +46,7 @@ export default async function BoardPage() {
 
   return (
     <>
-      <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
+      <h1 className="font-serif text-4xl text-forest-900">{c.title}</h1>
       <p className="mt-2 text-ink-muted">{c.intro}</p>
 
       <section aria-labelledby="comunidad" className="mt-6">
@@ -61,8 +61,8 @@ export default async function BoardPage() {
         </dl>
       </section>
 
-      <section aria-labelledby="totales" className="mt-6 rounded-sm bg-navy-900 p-5 text-white sm:p-7">
-        <h2 id="totales" className="text-sm font-semibold text-gold-light">
+      <section aria-labelledby="totales" className="mt-6 rounded-sm bg-forest-900 p-5 text-white sm:p-7">
+        <h2 id="totales" className="text-sm font-semibold text-ball-light">
           {c.totalsTitle}
         </h2>
         {upcoming.length === 0 ? (
@@ -81,7 +81,7 @@ export default async function BoardPage() {
 
       {upcoming.length > 0 && (
         <>
-          <h2 className="mt-10 font-serif text-2xl text-navy-900">{c.upcoming}</h2>
+          <h2 className="mt-10 font-serif text-2xl text-forest-900">{c.upcoming}</h2>
           <ul className="mt-4 space-y-4">
             {upcoming.map(({ e, o }) => (
               <ExperienceRow key={e.id} e={e} o={o} />
@@ -91,7 +91,7 @@ export default async function BoardPage() {
       )}
       {past.length > 0 && (
         <>
-          <h2 className="mt-10 font-serif text-2xl text-navy-900">{c.past}</h2>
+          <h2 className="mt-10 font-serif text-2xl text-forest-900">{c.past}</h2>
           <ul className="mt-4 space-y-4">
             {past.map(({ e, o }) => (
               <ExperienceRow key={e.id} e={e} o={o} />
@@ -109,10 +109,10 @@ function ExperienceRow({ e, o }: { e: Row; o: Overview }) {
   return (
     <li className="rounded-sm border border-border bg-white p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs font-semibold tracking-widest text-gold-deep uppercase">{e.format.name}</p>
+        <p className="text-xs font-semibold tracking-widest text-clay-deep uppercase">{e.format.name}</p>
         <StatusBadge status={e.status} />
       </div>
-      <h3 className="mt-2 font-serif text-2xl text-navy-900">
+      <h3 className="mt-2 font-serif text-2xl text-forest-900">
         <Link href={`/admin/experiencias/${e.id}`} className="hover:underline">
           {e.title}
         </Link>
@@ -136,7 +136,7 @@ function ExperienceRow({ e, o }: { e: Row; o: Overview }) {
       {/* Ocupación */}
       <div className="mt-5">
         <div className="flex items-baseline justify-between gap-3 text-sm">
-          <span className="font-semibold text-navy-900">
+          <span className="font-semibold text-forest-900">
             {c.people}: {c.seats(o.taken, o.capacity)}
           </span>
           {o.waitlist > 0 && <span className="text-violet-900">{c.waitlist}: {o.waitlist}</span>}
@@ -149,7 +149,7 @@ function ExperienceRow({ e, o }: { e: Row; o: Overview }) {
           aria-valuenow={o.taken}
           className="mt-2 h-2.5 overflow-hidden rounded-full bg-cream-200"
         >
-          <div className="h-full rounded-full bg-navy-900" style={{ width: `${o.fillPercent}%` }} />
+          <div className="h-full rounded-full bg-forest-900" style={{ width: `${o.fillPercent}%` }} />
         </div>
         <p className="mt-1.5 text-xs text-ink-muted">{c.breakdown(o.pending, o.deposited, o.confirmed)}</p>
       </div>
@@ -170,13 +170,13 @@ function ExperienceRow({ e, o }: { e: Row; o: Overview }) {
       <div className="mt-5 flex flex-wrap gap-3">
         <Link
           href={`/admin/experiencias/${e.id}/inscripciones`}
-          className="inline-flex h-11 items-center rounded-sm bg-navy-900 px-5 text-sm font-semibold text-white hover:bg-navy-800"
+          className="inline-flex h-11 items-center rounded-sm bg-forest-900 px-5 text-sm font-semibold text-white hover:bg-forest-800"
         >
           {c.registrations}
         </Link>
         <Link
           href={`/admin/experiencias/${e.id}`}
-          className="inline-flex h-11 items-center rounded-sm border border-border px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+          className="inline-flex h-11 items-center rounded-sm border border-border px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
         >
           {c.open}
         </Link>
@@ -205,7 +205,7 @@ function Figure({ label, value, tone }: { label: string; value: string; tone?: "
       <dt className="text-xs text-ink-muted">{label}</dt>
       <dd
         className={cn(
-          "mt-1 font-semibold text-navy-900",
+          "mt-1 font-semibold text-forest-900",
           tone === "good" && "text-emerald-800",
           tone === "bad" && "text-destructive",
         )}
@@ -220,11 +220,11 @@ function CommunityStat({ label, value, href }: { label: string; value: number; h
   const body = (
     <>
       <dt className="text-sm text-ink-muted">{label}</dt>
-      <dd className="mt-1 text-2xl font-semibold text-navy-900 tabular-nums">{value}</dd>
+      <dd className="mt-1 text-2xl font-semibold text-forest-900 tabular-nums">{value}</dd>
     </>
   );
   return href ? (
-    <div className="relative rounded-sm border border-border bg-white p-4 hover:border-navy-900">
+    <div className="relative rounded-sm border border-border bg-white p-4 hover:border-forest-900">
       <Link href={href} className="absolute inset-0" aria-label={`${label}: ${value}`} />
       {body}
     </div>

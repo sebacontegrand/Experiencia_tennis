@@ -42,10 +42,10 @@ export default async function PlayerPage({ params }: PageProps<"/admin/jugadores
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/admin/jugadores" className="inline-flex min-h-11 items-center gap-2 text-sm text-ink-muted hover:text-navy-900">
+        <Link href="/admin/jugadores" className="inline-flex min-h-11 items-center gap-2 text-sm text-ink-muted hover:text-forest-900">
           <ArrowLeft aria-hidden className="size-4" /> {p.back}
         </Link>
-        <h1 className="mt-4 font-serif text-4xl text-navy-900">
+        <h1 className="mt-4 font-serif text-4xl text-forest-900">
           {player.firstName} {player.lastName}
         </h1>
         <p className="mt-1 text-ink-muted">
@@ -66,7 +66,7 @@ export default async function PlayerPage({ params }: PageProps<"/admin/jugadores
           )}
           <a
             href={`mailto:${player.email}`}
-            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
           >
             <Mail aria-hidden className="size-4" /> {p.email}
           </a>
@@ -82,7 +82,7 @@ export default async function PlayerPage({ params }: PageProps<"/admin/jugadores
               <li key={r.id}>
                 <Link href={`/admin/inscripciones/${r.id}`} className="flex items-center gap-3 p-4 hover:bg-cream">
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-navy-900">{r.experience.title}</p>
+                    <p className="font-semibold text-forest-900">{r.experience.title}</p>
                     <p className="mt-0.5 text-sm text-ink-muted">
                       {formatDateRange(r.experience.startDate, r.experience.endDate)}
                       {r.priceOption && <> · {r.priceOption.label}</>}
@@ -189,7 +189,7 @@ export default async function PlayerPage({ params }: PageProps<"/admin/jugadores
 function Card({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
     <section className="rounded-sm bg-white p-5 sm:p-7">
-      <h2 className="font-serif text-2xl text-navy-900">{title}</h2>
+      <h2 className="font-serif text-2xl text-forest-900">{title}</h2>
       {hint && <p className="mt-1 text-sm text-ink-muted">{hint}</p>}
       <div className="mt-5">{children}</div>
     </section>

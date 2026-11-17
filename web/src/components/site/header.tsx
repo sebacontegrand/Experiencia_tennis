@@ -6,12 +6,12 @@ import { adminLink, headerCta, mainNav } from "@/content/nav";
 
 export function SiteHeader() {
   return (
-    // Fondo sólido a propósito: backdrop-filter convertiría al header en el contenedor
+    // Fondo crema sólido a propósito: backdrop-filter convertiría al header en el contenedor
     // del menú móvil (position: fixed) y lo recortaría.
-    <header className="sticky top-0 z-30 border-b border-gold/25 bg-navy-900">
+    <header className="sticky top-0 z-30 border-b border-forest-900/10 bg-cream">
       <a
         href="#contenido"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-navy-900"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-forest-900 focus:px-3 focus:py-2 focus:text-cream"
       >
         Saltar al contenido
       </a>
@@ -23,7 +23,7 @@ export function SiteHeader() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="inline-flex h-11 items-center text-[0.9375rem] font-medium text-white/85 transition hover:text-gold-light"
+                  className="inline-flex h-11 items-center text-[0.9375rem] font-medium text-forest-900 transition hover:text-clay-deep"
                 >
                   {item.label}
                 </Link>
@@ -32,7 +32,7 @@ export function SiteHeader() {
             <li>
               <Link
                 href={headerCta.href}
-                className="btn-label inline-flex h-11 items-center rounded-sm border border-gold px-5 text-gold-light transition hover:bg-gold hover:text-navy-900"
+                className="btn-label inline-flex h-11 items-center rounded-sm bg-forest-900 px-5 text-cream transition hover:bg-forest-700"
               >
                 {headerCta.label}
               </Link>
@@ -46,7 +46,7 @@ export function SiteHeader() {
             prefetch={false}
             aria-label={adminLink.label}
             title={adminLink.label}
-            className="inline-flex size-11 items-center justify-center rounded-sm text-white/60 transition hover:text-gold-light"
+            className="inline-flex size-11 items-center justify-center rounded-sm text-ink-muted transition hover:text-forest-900"
           >
             <LockKeyhole aria-hidden className="size-[18px]" />
           </Link>

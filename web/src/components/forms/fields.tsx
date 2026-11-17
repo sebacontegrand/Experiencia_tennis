@@ -8,7 +8,7 @@ import { HONEYPOT_FIELD_NAME } from "@/lib/spam-rules";
 import { formCopy } from "@/content/forms";
 
 const controlClass =
-  "h-12 rounded-sm border-input bg-white px-3.5 text-base md:text-base focus-visible:border-gold focus-visible:ring-gold/30";
+  "h-12 rounded-sm border-input bg-white px-3.5 text-base md:text-base focus-visible:border-ball focus-visible:ring-ball/30";
 
 type FieldProps = {
   name: string;
@@ -28,10 +28,10 @@ export function Field({ name, label, required, hint, error, className, children 
   const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <label htmlFor={id} className="text-sm font-medium text-navy-900">
+      <label htmlFor={id} className="text-sm font-medium text-forest-900">
         {label}
         {required && (
-          <span aria-hidden className="ml-0.5 text-gold-deep">
+          <span aria-hidden className="ml-0.5 text-clay-deep">
             *
           </span>
         )}
@@ -170,11 +170,11 @@ export function ConsentField({ error, defaultChecked }: { error?: string; defaul
           defaultChecked={defaultChecked}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? "f-consent-error" : undefined}
-          className="mt-0.5 size-5 shrink-0 accent-navy-900"
+          className="mt-0.5 size-5 shrink-0 accent-forest-900"
         />
         <label htmlFor="f-consent" className="text-sm leading-relaxed text-ink">
           {formCopy.consentLabel}{" "}
-          <Link href="/privacidad" className="text-navy-900 underline underline-offset-2" target="_blank">
+          <Link href="/privacidad" className="text-forest-900 underline underline-offset-2" target="_blank">
             {formCopy.consentLink}
           </Link>
           .
@@ -213,7 +213,7 @@ export function SubmitButton({ pending, children }: { pending: boolean; children
       type="submit"
       disabled={pending}
       aria-disabled={pending}
-      className="btn-label inline-flex h-14 w-full items-center justify-center rounded-sm bg-navy-900 px-8 text-white transition hover:bg-navy-800 disabled:opacity-60 sm:w-auto"
+      className="btn-label inline-flex h-14 w-full items-center justify-center rounded-sm bg-forest-900 px-8 text-white transition hover:bg-forest-800 disabled:opacity-60 sm:w-auto"
     >
       {pending ? formCopy.sending : children}
     </button>

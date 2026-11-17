@@ -12,7 +12,7 @@ export function CheckoutButton({ token, label = paymentCopy.payCta }: { token: s
       <button
         type="submit"
         disabled={pending}
-        className="btn-label inline-flex h-14 w-full items-center justify-center bg-gold px-8 text-navy-900 transition hover:bg-gold-light disabled:opacity-60 sm:w-auto"
+        className="btn-label inline-flex h-14 w-full items-center justify-center bg-ball px-8 text-forest-900 transition hover:bg-ball-light disabled:opacity-60 sm:w-auto"
       >
         {pending ? "Abriendo Mercado Pago…" : label}
       </button>

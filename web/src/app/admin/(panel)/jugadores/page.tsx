@@ -54,9 +54,9 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
+        <h1 className="font-serif text-4xl text-forest-900">{c.title}</h1>
         <p className="mt-2 text-ink-muted">
-          {c.intro} {totalAll > 0 && <span className="font-semibold text-navy-900">{c.total(totalAll)}.</span>}
+          {c.intro} {totalAll > 0 && <span className="font-semibold text-forest-900">{c.total(totalAll)}.</span>}
         </p>
       </div>
 
@@ -74,30 +74,30 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
               <button
                 type="submit"
                 aria-label={c.searchButton}
-                className="inline-flex size-12 shrink-0 items-center justify-center rounded-sm bg-navy-900 text-white hover:bg-navy-800"
+                className="inline-flex size-12 shrink-0 items-center justify-center rounded-sm bg-forest-900 text-white hover:bg-forest-800"
               >
                 <Search aria-hidden className="size-5" />
               </button>
             </div>
 
             <details open={filterCount > 0} className="group rounded-sm border border-border bg-white">
-              <summary className="flex h-12 cursor-pointer list-none items-center gap-2 px-4 text-sm font-semibold text-navy-900 [&::-webkit-details-marker]:hidden">
+              <summary className="flex h-12 cursor-pointer list-none items-center gap-2 px-4 text-sm font-semibold text-forest-900 [&::-webkit-details-marker]:hidden">
                 <SlidersHorizontal aria-hidden className="size-4" />
                 {c.filtersTitle}
                 {filterCount > 0 && (
-                  <span className="inline-flex size-6 items-center justify-center rounded-full bg-navy-900 text-xs text-white">{filterCount}</span>
+                  <span className="inline-flex size-6 items-center justify-center rounded-full bg-forest-900 text-xs text-white">{filterCount}</span>
                 )}
               </summary>
               <div className="grid gap-4 border-t border-border p-4 sm:grid-cols-3">
                 <FilterSelect id="ciudad" label={c.city} value={f.city} options={cities} />
                 <FilterSelect id="club" label={c.club} value={f.club} options={clubs} />
                 <FilterSelect id="nivel" label={c.level} value={f.level} options={levels} />
-                <label className="flex min-h-11 items-center gap-3 text-sm text-navy-900 sm:col-span-3">
-                  <input type="checkbox" name="consentimiento" value="1" defaultChecked={f.consent} className="size-5 accent-navy-900" />
+                <label className="flex min-h-11 items-center gap-3 text-sm text-forest-900 sm:col-span-3">
+                  <input type="checkbox" name="consentimiento" value="1" defaultChecked={f.consent} className="size-5 accent-forest-900" />
                   {c.consentOnly}
                 </label>
                 <div className="flex flex-wrap items-center gap-4 sm:col-span-3">
-                  <button type="submit" className="inline-flex h-12 items-center rounded-sm bg-navy-900 px-6 text-sm font-semibold text-white hover:bg-navy-800">
+                  <button type="submit" className="inline-flex h-12 items-center rounded-sm bg-forest-900 px-6 text-sm font-semibold text-white hover:bg-forest-800">
                     {c.apply}
                   </button>
                 </div>
@@ -108,7 +108,7 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
             <p className="text-ink-muted">{active ? c.total(matching) : c.total(totalAll)}</p>
             {active && (
-              <Link href="/admin/jugadores" className="inline-flex min-h-11 items-center gap-1 text-navy-900 underline underline-offset-4">
+              <Link href="/admin/jugadores" className="inline-flex min-h-11 items-center gap-1 text-forest-900 underline underline-offset-4">
                 <X aria-hidden className="size-4" /> {c.clear}
               </Link>
             )}
@@ -120,7 +120,7 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
               <>
                 <a
                   href={`/admin/jugadores/exportar${qs ? `?${qs}` : ""}`}
-                  className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-navy-900 hover:border-navy-900"
+                  className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
                 >
                   <Download aria-hidden className="size-4" /> {c.exportCsv}
                 </a>
@@ -139,9 +139,9 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
                 const wa = waNumber(p.whatsapp);
                 const meta = [p.city, p.club, p.level].filter(Boolean).join(" · ");
                 return (
-                  <li key={p.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-navy-900">
+                  <li key={p.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-forest-900">
                     <div className="min-w-0 flex-1">
-                      <h2 className="font-semibold text-navy-900">
+                      <h2 className="font-semibold text-forest-900">
                         <Link href={`/admin/jugadores/${p.id}`} className="after:absolute after:inset-0">
                           {p.firstName} {p.lastName}
                         </Link>
@@ -177,7 +177,7 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
               <Link
                 href={`/admin/jugadores?${new URLSearchParams([...new URLSearchParams(qs), ["pagina", String(pages + 1)]])}`}
                 scroll={false}
-                className="inline-flex h-12 items-center rounded-sm border border-navy-900 px-6 text-sm font-semibold text-navy-900 hover:bg-cream"
+                className="inline-flex h-12 items-center rounded-sm border border-forest-900 px-6 text-sm font-semibold text-forest-900 hover:bg-cream"
               >
                 {c.showMore}
               </Link>
@@ -195,7 +195,7 @@ function FilterSelect({ id, label, value, options }: { id: string; label: string
   const selected = all.find((o) => o.toLowerCase() === value.toLowerCase()) ?? "";
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-medium text-navy-900">
+      <label htmlFor={id} className="text-sm font-medium text-forest-900">
         {label}
       </label>
       <select id={id} name={id} defaultValue={selected} className={adminInputClass}>

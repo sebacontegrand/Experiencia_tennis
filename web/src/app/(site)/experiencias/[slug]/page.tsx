@@ -48,7 +48,7 @@ async function Detail({ params }: Pick<PageProps<"/experiencias/[slug]">, "param
 
 function DetailSkeleton() {
   return (
-    <div aria-hidden className="bg-navy-900 px-5 pt-16 pb-20 sm:px-8">
+    <div aria-hidden className="bg-forest-900 px-5 pt-16 pb-20 sm:px-8">
       <div className="mx-auto max-w-6xl animate-pulse space-y-6">
         <div className="h-4 w-40 rounded bg-white/10" />
         <div className="h-14 w-2/3 rounded bg-white/10" />

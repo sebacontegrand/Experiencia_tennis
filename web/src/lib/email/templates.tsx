@@ -1,4 +1,5 @@
 import {
+  Img,
   Body,
   Button,
   Container,
@@ -15,7 +16,7 @@ import { siteConfig, whatsappLink, absoluteUrl } from "@/config/site";
 import { emailCopy } from "@/content/emails";
 import { paymentCopy } from "@/content/payments";
 
-const colors = { navy: "#041224", gold: "#B98C4A", cream: "#F7F3EC", ink: "#1E2A3A" };
+const colors = { forest: "#103C2D", ball: "#D3D93A", clay: "#B6462B", cream: "#EDE9D6", ink: "#1F2A24", muted: "#616160" };
 
 function Layout({ preview, children }: { preview: string; children: ReactNode }) {
   return (
@@ -24,17 +25,19 @@ function Layout({ preview, children }: { preview: string; children: ReactNode })
       <Preview>{preview}</Preview>
       <Body style={{ backgroundColor: colors.cream, fontFamily: "Helvetica, Arial, sans-serif", margin: 0 }}>
         <Container style={{ maxWidth: 560, margin: "0 auto", backgroundColor: "#ffffff" }}>
-          <Section style={{ backgroundColor: colors.navy, padding: "28px 32px", textAlign: "center" }}>
-            <Text
-              style={{ color: colors.gold, letterSpacing: "0.3em", fontSize: 13, margin: 0, textTransform: "uppercase" }}
-            >
-              {siteConfig.name}
-            </Text>
+          <Section style={{ backgroundColor: colors.forest, padding: "24px 32px", textAlign: "center" }}>
+            <Img
+              src={absoluteUrl("/brand/logo-experiencia-tenis-light.png")}
+              alt={siteConfig.name}
+              width="150"
+              height="93"
+              style={{ margin: "0 auto" }}
+            />
           </Section>
           <Section style={{ padding: "32px" }}>{children}</Section>
-          <Hr style={{ borderColor: colors.gold, margin: "0 32px" }} />
+          <Hr style={{ borderColor: colors.clay, margin: "0 32px" }} />
           <Section style={{ padding: "20px 32px 32px" }}>
-            <Text style={{ color: "#5B6573", fontSize: 12, lineHeight: "18px", margin: 0 }}>
+            <Text style={{ color: colors.muted, fontSize: 12, lineHeight: "18px", margin: 0 }}>
               {siteConfig.tagline}
               <br />
               WhatsApp {siteConfig.contact.whatsappDisplay} · {siteConfig.contact.email}
@@ -46,10 +49,10 @@ function Layout({ preview, children }: { preview: string; children: ReactNode })
   );
 }
 
-const h1 = { color: colors.navy, fontFamily: "Georgia, serif", fontSize: 26, fontWeight: 400, margin: "0 0 16px" };
+const h1 = { color: colors.forest, fontFamily: "Georgia, serif", fontSize: 26, fontWeight: 400, margin: "0 0 16px" };
 const p = { color: colors.ink, fontSize: 15, lineHeight: "24px", margin: "0 0 14px" };
 const button = {
-  backgroundColor: colors.navy,
+  backgroundColor: colors.forest,
   color: "#ffffff",
   padding: "12px 22px",
   borderRadius: 6,

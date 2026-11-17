@@ -34,7 +34,7 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
           <EventJsonLd experience={e} />
         </Suspense>
       )}
-      <section className="relative isolate overflow-hidden bg-navy-900 px-5 pt-6 pb-16 text-white sm:px-8 sm:pt-8 sm:pb-20">
+      <section className="relative isolate overflow-hidden bg-forest-900 px-5 pt-6 pb-16 text-white sm:px-8 sm:pt-8 sm:pb-20">
         {/* Foto ilustrativa del formato: franja arriba que se funde en navy donde empieza el título. */}
         <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-80 sm:h-[26rem]">
           <Image
@@ -46,20 +46,20 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
             className="object-cover"
             style={{ objectPosition: cover.position }}
           />
-          <div className="absolute inset-0 bg-linear-to-b from-navy-900/60 via-navy-900/25 via-30% to-navy-900" />
+          <div className="absolute inset-0 bg-linear-to-b from-forest-900/60 via-forest-900/25 via-30% to-forest-900" />
         </div>
         <div className="mx-auto max-w-6xl">
-          <Link href="/calendario" className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-gold-light">
+          <Link href="/calendario" className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-ball-light">
             <ArrowLeft aria-hidden className="size-4" /> {c.back}
           </Link>
-          <p className="eyebrow mt-44 text-gold sm:mt-60">Experiencia {e.format.name}</p>
+          <p className="eyebrow mt-44 text-ball sm:mt-60">Experiencia {e.format.name}</p>
           <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.05] font-medium text-balance sm:text-6xl">{e.title}</h1>
-          <div className="gold-rule mt-6" />
+          <div className="brand-rule mt-6" />
           {e.summary && <p className="mt-6 max-w-2xl text-lg text-white/80">{e.summary}</p>}
           {!preview && experienceFlyers[e.slug] && (
             <Link
               href={`/experiencias/${e.slug}/flyer`}
-              className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-gold-light underline-offset-4 hover:underline"
+              className="mt-5 inline-flex min-h-11 items-center gap-2 font-semibold text-ball-light underline-offset-4 hover:underline"
             >
               <Images aria-hidden className="size-5" /> {flyerCopy.link}
             </Link>
@@ -67,7 +67,7 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
           {!preview && photoCount > 0 && (
             <Link
               href={`/galeria/${e.slug}`}
-              className="mt-5 ml-0 inline-flex min-h-11 items-center gap-2 font-semibold text-gold-light underline-offset-4 hover:underline sm:ml-6"
+              className="mt-5 ml-0 inline-flex min-h-11 items-center gap-2 font-semibold text-ball-light underline-offset-4 hover:underline sm:ml-6"
             >
               <Camera aria-hidden className="size-5" /> {galleryCopy.detailLink(photoCount)}
             </Link>
@@ -105,7 +105,7 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
               href={whatsappLink(c.askMessage(e.title))}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-label inline-flex h-14 items-center justify-center rounded-sm border border-white/30 px-8 text-white transition hover:border-gold-light hover:text-gold-light"
+              className="btn-label inline-flex h-14 items-center justify-center rounded-sm border border-white/30 px-8 text-white transition hover:border-ball-light hover:text-ball-light"
             >
               {c.ask}
             </a>
@@ -127,16 +127,16 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
                 <ol className="mt-8 space-y-10">
                   {itinerary.map((day) => (
                     <li key={day.day}>
-                      <h3 className="font-serif text-2xl text-navy-900">
+                      <h3 className="font-serif text-2xl text-forest-900">
                         {day.day}
                         {day.title && <span className="ml-3 font-sans text-sm text-ink-muted">{day.title}</span>}
                       </h3>
-                      <ul className="mt-4 border-l border-gold/60">
+                      <ul className="mt-4 border-l border-ball/60">
                         {day.items.map((item) => (
                           <li key={item.text} className="relative py-2.5 pl-6 sm:flex sm:gap-6">
-                            <span aria-hidden className="absolute top-[1.15rem] -left-[4px] size-[7px] rounded-full bg-gold" />
+                            <span aria-hidden className="absolute top-[1.15rem] -left-[4px] size-[7px] rounded-full bg-ball" />
                             {item.time && (
-                              <span className="block shrink-0 text-sm font-semibold text-gold-deep sm:w-28">{item.time}</span>
+                              <span className="block shrink-0 text-sm font-semibold text-clay-deep sm:w-28">{item.time}</span>
                             )}
                             <span className="text-ink">{item.text}</span>
                           </li>
@@ -151,7 +151,7 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
             {(e.includes.length > 0 || e.excludes.length > 0) && (
               <div className="grid gap-10 sm:grid-cols-2">
                 {e.includes.length > 0 && (
-                  <List title={c.includes} items={e.includes} icon={<Check className="text-gold-deep" />} />
+                  <List title={c.includes} items={e.includes} icon={<Check className="text-clay-deep" />} />
                 )}
                 {e.excludes.length > 0 && <List title={c.excludes} items={e.excludes} icon={<X className="text-ink-muted" />} />}
               </div>
@@ -159,9 +159,9 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
 
             {e.rainPlan && (
               <div className="flex gap-4 rounded-sm bg-cream p-6">
-                <CloudRain aria-hidden className="size-6 shrink-0 text-gold-deep" />
+                <CloudRain aria-hidden className="size-6 shrink-0 text-clay-deep" />
                 <div>
-                  <h2 className="font-serif text-2xl text-navy-900">{c.rainPlan}</h2>
+                  <h2 className="font-serif text-2xl text-forest-900">{c.rainPlan}</h2>
                   <p className="mt-1 text-ink">{e.rainPlan}</p>
                 </div>
               </div>
@@ -171,14 +171,14 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
           {e.priceOptions.length > 0 && (
             <aside aria-labelledby="precios" className="lg:sticky lg:top-28 lg:self-start">
               <div className="rounded-sm border border-border p-7">
-                <h2 id="precios" className="font-serif text-3xl text-navy-900">
+                <h2 id="precios" className="font-serif text-3xl text-forest-900">
                   {c.prices}
                 </h2>
                 <ul className="mt-6 divide-y divide-border">
                   {e.priceOptions.map((o) => (
                     <li key={o.id} className="flex items-baseline justify-between gap-4 py-3.5">
                       <span className="text-ink">{o.label}</span>
-                      <span className="shrink-0 text-right font-medium text-navy-900">
+                      <span className="shrink-0 text-right font-medium text-forest-900">
                         <Suspense fallback={formatPrice(o.price)}>
                           <LiveOptionPrice optionId={o.id} price={o.price} {...live} />
                         </Suspense>
@@ -213,10 +213,10 @@ function StickyRegisterBar({ experience: e }: { experience: Detail }) {
   return (
     <>
       {/* Espacio para que la barra no tape el final de la página */}
-      <div aria-hidden className="h-24 bg-navy-950 md:hidden" />
+      <div aria-hidden className="h-24 bg-forest-950 md:hidden" />
       <div
         data-sticky-cta
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-gold/30 bg-navy-900 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-white md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-ball/30 bg-forest-900 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] text-white md:hidden"
       >
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
@@ -228,7 +228,7 @@ function StickyRegisterBar({ experience: e }: { experience: Detail }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${c.ask} (se abre en una nueva pestaña)`}
-            className="inline-flex size-12 shrink-0 items-center justify-center rounded-sm border border-white/30 text-gold-light"
+            className="inline-flex size-12 shrink-0 items-center justify-center rounded-sm border border-white/30 text-ball-light"
           >
             <WhatsappIcon size={22} />
           </a>
@@ -248,7 +248,7 @@ function StickyRegisterBar({ experience: e }: { experience: Detail }) {
 }
 
 const barButton =
-  "btn-label inline-flex h-12 shrink-0 items-center justify-center rounded-sm bg-gold px-5 text-navy-900 transition hover:bg-gold-light";
+  "btn-label inline-flex h-12 shrink-0 items-center justify-center rounded-sm bg-ball px-5 text-forest-900 transition hover:bg-ball-light";
 
 async function LiveBarButton({ slug, experienceId }: { slug: string; experienceId: string }) {
   const a = await getLiveAvailability(experienceId);
@@ -263,7 +263,7 @@ type Live = { experienceId: string };
 
 async function SeatsLine({ experienceId }: Live) {
   const a = await getLiveAvailability(experienceId);
-  return <span className="mt-1 block text-sm text-gold-light">{a.isFull ? c.full : c.seatsLeft(a.left)}</span>;
+  return <span className="mt-1 block text-sm text-ball-light">{a.isFull ? c.full : c.seatsLeft(a.left)}</span>;
 }
 
 async function LiveRegisterButton({
@@ -279,7 +279,7 @@ async function LiveRegisterButton({
 function RegisterButton({ slug, label, preview, variant }: { slug: string; label: string; preview?: boolean; variant?: "dark" }) {
   if (preview) {
     return (
-      <span className="btn-label inline-flex h-14 items-center justify-center rounded-sm border border-dashed border-gold px-8 text-gold-light">
+      <span className="btn-label inline-flex h-14 items-center justify-center rounded-sm border border-dashed border-ball px-8 text-ball-light">
         {label} (vista previa)
       </span>
     );
@@ -290,8 +290,8 @@ function RegisterButton({ slug, label, preview, variant }: { slug: string; label
       className={cn(
         "btn-label inline-flex items-center justify-center gap-2 rounded-sm transition",
         variant === "dark"
-          ? "mt-6 flex h-12 bg-navy-900 text-white hover:bg-navy-800"
-          : "h-14 bg-gold px-8 text-navy-900 hover:bg-gold-light",
+          ? "mt-6 flex h-12 bg-forest-900 text-white hover:bg-forest-800"
+          : "h-14 bg-ball px-8 text-forest-900 hover:bg-ball-light",
       )}
     >
       {label} {variant !== "dark" && <ArrowRight aria-hidden className="size-4" />}
@@ -307,7 +307,7 @@ async function LiveOptionPrice({ optionId, price, experienceId }: Live & { optio
 function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: ReactNode }) {
   return (
     <div className="flex gap-4">
-      <span aria-hidden className="mt-0.5 text-gold [&_svg]:size-5">
+      <span aria-hidden className="mt-0.5 text-ball [&_svg]:size-5">
         {icon}
       </span>
       <div>
@@ -321,8 +321,8 @@ function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: R
 function SectionTitle({ children }: { children: ReactNode }) {
   return (
     <>
-      <h2 className="font-serif text-3xl text-navy-900 sm:text-4xl">{children}</h2>
-      <div className="gold-rule mt-4" />
+      <h2 className="font-serif text-3xl text-forest-900 sm:text-4xl">{children}</h2>
+      <div className="brand-rule mt-4" />
     </>
   );
 }

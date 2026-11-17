@@ -19,10 +19,10 @@ export default async function NewExperiencePage() {
   return (
     <div className="space-y-6">
       <div>
-        <Link href="/admin/experiencias" className="inline-flex min-h-11 items-center gap-2 text-sm text-ink-muted hover:text-navy-900">
+        <Link href="/admin/experiencias" className="inline-flex min-h-11 items-center gap-2 text-sm text-ink-muted hover:text-forest-900">
           <ArrowLeft aria-hidden className="size-4" /> {c.back}
         </Link>
-        <h1 className="mt-4 font-serif text-4xl text-navy-900">{c.title}</h1>
+        <h1 className="mt-4 font-serif text-4xl text-forest-900">{c.title}</h1>
         <p className="mt-2 max-w-prose text-ink-muted">{c.intro}</p>
       </div>
 

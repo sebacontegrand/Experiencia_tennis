@@ -79,7 +79,7 @@ export function PhotoUploader({ experienceId, mode }: { experienceId: string; mo
       {mode === "local" && <p className="text-sm text-ink-muted">{c.localNote}</p>}
       <label
         className={cn(
-          "inline-flex h-12 cursor-pointer items-center gap-2 rounded-sm bg-navy-900 px-6 text-sm font-semibold text-white transition hover:bg-navy-800 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-gold",
+          "inline-flex h-12 cursor-pointer items-center gap-2 rounded-sm bg-forest-900 px-6 text-sm font-semibold text-white transition hover:bg-forest-800 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ball",
           busy && "pointer-events-none opacity-60",
         )}
       >

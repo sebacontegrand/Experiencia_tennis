@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type Tone = "light" | "cream" | "navy";
+type Tone = "light" | "cream" | "dark";
 
 const toneClasses: Record<Tone, string> = {
   light: "bg-white text-ink",
   cream: "bg-cream text-ink",
-  navy: "bg-navy-900 text-white",
+  dark: "bg-forest-900 text-white",
 };
 
 export function Section({
@@ -51,20 +51,20 @@ export function SectionHeading({
   align?: "left" | "center";
   as?: "h1" | "h2";
 }) {
-  const dark = tone === "navy";
+  const dark = tone === "dark";
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
-      {eyebrow && <p className={cn("eyebrow", dark ? "text-gold" : "text-gold-deep")}>{eyebrow}</p>}
+      {eyebrow && <p className={cn("eyebrow", dark ? "text-ball" : "text-clay-deep")}>{eyebrow}</p>}
       <Tag
         id={id}
         className={cn(
           "mt-4 font-serif text-4xl leading-[1.08] font-medium text-balance sm:text-5xl",
-          dark ? "text-white" : "text-navy-900",
+          dark ? "text-white" : "text-forest-900",
         )}
       >
         {title}
       </Tag>
-      <div className={cn("gold-rule mt-6", align === "center" && "mx-auto")} />
+      <div className={cn("brand-rule mt-6", align === "center" && "mx-auto")} />
       {lead && (
         <p className={cn("mt-6 text-base leading-relaxed sm:text-lg", dark ? "text-white/80" : "text-ink-muted")}>
           {lead}

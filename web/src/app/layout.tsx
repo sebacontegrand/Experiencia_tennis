@@ -1,19 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Bitter, Hind } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+// Manual de marca: KEFA III (títulos) y SATHU (texto) son fuentes de Apple sin licencia web.
+// Equivalentes libres más cercanas: Bitter (serif de cuña) y Hind (sans humanista).
+const bitter = Bitter({
+  variable: "--font-bitter",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const hind = Hind({
+  variable: "--font-hind",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -36,12 +39,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#041224",
+  themeColor: "#ede9d6",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es-AR" className={`${cormorant.variable} ${montserrat.variable} h-full`}>
+    <html lang="es-AR" className={`${bitter.variable} ${hind.variable} h-full`}>
       <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );

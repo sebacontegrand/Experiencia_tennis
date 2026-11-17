@@ -19,10 +19,10 @@ export const metadata: Metadata = {
 export default function GalleryPage() {
   return (
     <>
-      <section className="bg-navy-900 px-5 pt-16 pb-14 text-white sm:px-8 sm:pt-24 sm:pb-20">
+      <section className="bg-forest-900 px-5 pt-16 pb-14 text-white sm:px-8 sm:pt-24 sm:pb-20">
         <div className="mx-auto max-w-6xl">
           <h1 className="font-serif text-5xl leading-[1.02] font-light sm:text-7xl">{c.title}</h1>
-          <div className="gold-rule mt-6" />
+          <div className="brand-rule mt-6" />
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">{c.lead}</p>
         </div>
       </section>
@@ -45,11 +45,11 @@ async function Albums() {
         </h2>
         {albums.length === 0 ? (
           <div className="max-w-xl">
-            <p className="font-serif text-3xl text-navy-900">{c.empty.title}</p>
+            <p className="font-serif text-3xl text-forest-900">{c.empty.title}</p>
             <p className="mt-3 text-ink-muted">{c.empty.text}</p>
             <Link
               href={c.empty.cta.href}
-              className="btn-label mt-8 inline-flex h-12 items-center gap-2 bg-navy-900 px-6 text-white transition hover:bg-navy-800"
+              className="btn-label mt-8 inline-flex h-12 items-center gap-2 bg-forest-900 px-6 text-white transition hover:bg-forest-800"
             >
               {c.empty.cta.label} <ArrowRight aria-hidden className="size-4" />
             </Link>
@@ -73,10 +73,10 @@ async function Albums() {
                         </div>
                       ))}
                     </div>
-                    <p className="mt-5 text-[0.8125rem] font-medium text-gold-deep">
+                    <p className="mt-5 text-[0.8125rem] font-medium text-clay-deep">
                       {a.format.name} · {formatDateRange(a.startDate, a.endDate)}
                     </p>
-                    <h3 className="mt-1 font-serif text-3xl text-navy-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{a.title}</h3>
+                    <h3 className="mt-1 font-serif text-3xl text-forest-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{a.title}</h3>
                     <p className="mt-1 text-ink-muted">
                       {a.destination} · {c.photos(a._count.gallery)}
                     </p>
@@ -90,10 +90,10 @@ async function Albums() {
 
       {upcoming.length > 0 && (
         <Section tone="cream" labelledBy="proximos-albumes">
-          <h2 id="proximos-albumes" className="font-serif text-4xl text-navy-900">
+          <h2 id="proximos-albumes" className="font-serif text-4xl text-forest-900">
             {c.upcomingTitle}
           </h2>
-          <div className="gold-rule mt-6" />
+          <div className="brand-rule mt-6" />
           <p className="mt-6 max-w-xl text-ink-muted">{c.upcomingLead}</p>
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {upcoming.map((e) => {
@@ -101,15 +101,15 @@ async function Albums() {
               return (
                 <li key={e.slug}>
                   <Link href={`/experiencias/${e.slug}`} className="group block">
-                    <div className="relative aspect-3/2 overflow-hidden bg-navy-900">
+                    <div className="relative aspect-3/2 overflow-hidden bg-forest-900">
                       <Image src={img.src} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover opacity-45 grayscale" style={{ objectPosition: img.position }} />
                       <span className="absolute inset-0 flex items-end p-5">
-                        <span className="inline-flex items-center gap-2 bg-white px-3 py-1.5 text-[0.8125rem] font-semibold text-navy-900">
+                        <span className="inline-flex items-center gap-2 bg-white px-3 py-1.5 text-[0.8125rem] font-semibold text-forest-900">
                           <CalendarDays aria-hidden className="size-4" /> {c.upcomingWhen} {formatDate(e.endDate)}
                         </span>
                       </span>
                     </div>
-                    <h3 className="mt-4 font-serif text-2xl text-navy-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{e.title}</h3>
+                    <h3 className="mt-4 font-serif text-2xl text-forest-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{e.title}</h3>
                     <p className="mt-1 text-sm text-ink-muted">
                       {e.format.name} · {e.destination}
                     </p>

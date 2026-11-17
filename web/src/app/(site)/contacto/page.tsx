@@ -18,41 +18,41 @@ export default function ContactPage({ searchParams }: PageProps<"/contacto">) {
   const instagram = instagramLink();
   return (
     <>
-      <section className="bg-navy-900 px-5 pt-14 pb-16 text-white sm:px-8 sm:pt-20 sm:pb-20">
+      <section className="bg-forest-900 px-5 pt-14 pb-16 text-white sm:px-8 sm:pt-20 sm:pb-20">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading as="h1" tone="navy" eyebrow={c.eyebrow} title={c.title} lead={c.lead} />
+          <SectionHeading as="h1" tone="dark" eyebrow={c.eyebrow} title={c.title} lead={c.lead} />
         </div>
       </section>
       <Section tone="cream" labelledBy="contact-form-title">
         <div className="grid gap-14 lg:grid-cols-[1fr_1.6fr]">
           <div>
-            <h2 className="font-serif text-3xl text-navy-900">{c.channels.title}</h2>
-            <div className="gold-rule mt-4" />
+            <h2 className="font-serif text-3xl text-forest-900">{c.channels.title}</h2>
+            <div className="brand-rule mt-4" />
             <ul className="mt-8 space-y-6">
               <li>
                 <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="group flex items-start gap-4">
-                  <WhatsappIcon size={24} className="mt-0.5 text-gold-deep" />
+                  <WhatsappIcon size={24} className="mt-0.5 text-clay-deep" />
                   <span>
                     <span className="eyebrow block text-ink-muted">{c.channels.whatsapp}</span>
-                    <span className="text-lg text-navy-900 group-hover:underline">{siteConfig.contact.whatsappDisplay}</span>
+                    <span className="text-lg text-forest-900 group-hover:underline">{siteConfig.contact.whatsappDisplay}</span>
                   </span>
                 </a>
               </li>
               <li>
                 <a href={`mailto:${siteConfig.contact.email}`} className="group flex items-start gap-4">
-                  <Mail aria-hidden className="mt-0.5 size-6 text-gold-deep" />
+                  <Mail aria-hidden className="mt-0.5 size-6 text-clay-deep" />
                   <span>
                     <span className="eyebrow block text-ink-muted">{c.channels.email}</span>
-                    <span className="text-lg break-all text-navy-900 group-hover:underline">{siteConfig.contact.email}</span>
+                    <span className="text-lg break-all text-forest-900 group-hover:underline">{siteConfig.contact.email}</span>
                   </span>
                 </a>
               </li>
               <li className="flex items-start gap-4">
-                <InstagramIcon size={24} className="mt-0.5 text-gold-deep" />
+                <InstagramIcon size={24} className="mt-0.5 text-clay-deep" />
                 <span>
                   <span className="eyebrow block text-ink-muted">{c.channels.instagram}</span>
                   {instagram ? (
-                    <a href={instagram} target="_blank" rel="noopener noreferrer" className="text-lg text-navy-900 hover:underline">
+                    <a href={instagram} target="_blank" rel="noopener noreferrer" className="text-lg text-forest-900 hover:underline">
                       @{siteConfig.contact.instagramUser}
                     </a>
                   ) : (
@@ -63,10 +63,10 @@ export default function ContactPage({ searchParams }: PageProps<"/contacto">) {
             </ul>
           </div>
           <div className="rounded-sm bg-white p-6 sm:p-10">
-            <h2 id="contact-form-title" className="font-serif text-3xl text-navy-900">
+            <h2 id="contact-form-title" className="font-serif text-3xl text-forest-900">
               {c.form.title}
             </h2>
-            <div className="gold-rule mt-4 mb-8" />
+            <div className="brand-rule mt-4 mb-8" />
             <Suspense fallback={<ContactForm />}>
               <ContactFormWithTopic searchParams={searchParams} />
             </Suspense>

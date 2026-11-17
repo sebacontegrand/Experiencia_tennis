@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps<"/galeria/[slug]">)
 
 export default function AlbumPage({ params }: PageProps<"/galeria/[slug]">) {
   return (
-    <Suspense fallback={<div className="min-h-[70vh] bg-navy-900" />}>
+    <Suspense fallback={<div className="min-h-[70vh] bg-forest-900" />}>
       <Album params={params} />
     </Suspense>
   );
@@ -48,16 +48,16 @@ async function Album({ params }: Pick<PageProps<"/galeria/[slug]">, "params">) {
 
   return (
     <>
-      <section className="bg-navy-900 px-5 pt-10 pb-12 text-white sm:px-8 sm:pb-16">
+      <section className="bg-forest-900 px-5 pt-10 pb-12 text-white sm:px-8 sm:pb-16">
         <div className="mx-auto max-w-6xl">
-          <Link href="/galeria" className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-gold-light">
+          <Link href="/galeria" className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-ball-light">
             <ArrowLeft aria-hidden className="size-4" /> {c.back}
           </Link>
-          <p className="mt-8 text-[0.8125rem] font-medium text-gold-light">
+          <p className="mt-8 text-[0.8125rem] font-medium text-ball-light">
             {album.format.name} · {formatDateRange(album.startDate, album.endDate)} · {album.destination}
           </p>
           <h1 className="mt-3 max-w-3xl font-serif text-5xl leading-[1.02] font-light text-balance sm:text-6xl">{album.title}</h1>
-          <div className="gold-rule mt-6" />
+          <div className="brand-rule mt-6" />
           <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-white/80">
               {c.photos(album.gallery.length)} · {c.albumLead}
@@ -66,7 +66,7 @@ async function Album({ params }: Pick<PageProps<"/galeria/[slug]">, "params">) {
               href={share}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-label inline-flex h-12 items-center gap-2 self-start px-5 text-white ring-1 ring-white/30 transition ring-inset hover:text-gold-light hover:ring-gold-light"
+              className="btn-label inline-flex h-12 items-center gap-2 self-start px-5 text-white ring-1 ring-white/30 transition ring-inset hover:text-ball-light hover:ring-ball-light"
             >
               <WhatsappIcon size={18} /> {c.share}
             </a>
@@ -74,7 +74,7 @@ async function Album({ params }: Pick<PageProps<"/galeria/[slug]">, "params">) {
         </div>
       </section>
 
-      <section aria-label={album.title} className="bg-navy-900 px-3 pb-16 sm:px-8 sm:pb-24">
+      <section aria-label={album.title} className="bg-forest-900 px-3 pb-16 sm:px-8 sm:pb-24">
         <div className="mx-auto max-w-6xl">
           <PhotoAlbum title={album.title} photos={album.gallery} />
         </div>
@@ -83,14 +83,14 @@ async function Album({ params }: Pick<PageProps<"/galeria/[slug]">, "params">) {
       <section className="border-t border-border bg-cream px-5 py-12 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="font-serif text-2xl text-navy-900">{c.removal.title}</p>
+            <p className="font-serif text-2xl text-forest-900">{c.removal.title}</p>
             <p className="mt-1 text-ink-muted">{c.removal.text}</p>
           </div>
           <a
             href={whatsappLink(c.removal.message(album.title))}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-label inline-flex h-12 items-center gap-2 self-start border border-navy-900 px-6 text-navy-900 transition hover:bg-navy-900 hover:text-white"
+            className="btn-label inline-flex h-12 items-center gap-2 self-start border border-forest-900 px-6 text-forest-900 transition hover:bg-forest-900 hover:text-white"
           >
             <WhatsappIcon size={18} /> {c.removal.cta}
           </a>

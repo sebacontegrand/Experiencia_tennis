@@ -35,7 +35,7 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin/cons
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-serif text-4xl text-navy-900">{c.title}</h1>
+        <h1 className="font-serif text-4xl text-forest-900">{c.title}</h1>
         <p className="mt-2 text-ink-muted">{c.intro}</p>
       </div>
 
@@ -55,7 +55,7 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin/cons
                       aria-current={active ? "page" : undefined}
                       className={cn(
                         "inline-flex h-10 items-center gap-2 rounded-full border px-4 text-sm whitespace-nowrap",
-                        active ? "border-navy-900 bg-navy-900 text-white" : "border-border bg-white text-navy-900 hover:border-navy-900",
+                        active ? "border-forest-900 bg-forest-900 text-white" : "border-border bg-white text-forest-900 hover:border-forest-900",
                       )}
                     >
                       {s ? c.status[s] : c.all}
@@ -79,7 +79,7 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin/cons
                         aria-current={active ? "page" : undefined}
                         className={cn(
                           "inline-flex h-10 items-center rounded-sm border px-3 text-sm whitespace-nowrap",
-                          active ? "border-navy-900 font-semibold text-navy-900" : "border-transparent text-ink-muted hover:text-navy-900",
+                          active ? "border-forest-900 font-semibold text-forest-900" : "border-transparent text-ink-muted hover:text-forest-900",
                         )}
                       >
                         {t ? c.type[t] : c.allTypes}
@@ -98,10 +98,10 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin/cons
               {leads.map((l) => {
                 const wa = waNumber(l.whatsapp);
                 return (
-                  <li key={l.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-navy-900">
+                  <li key={l.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-forest-900">
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h2 className="font-semibold text-navy-900">
+                        <h2 className="font-semibold text-forest-900">
                           <Link href={`/admin/consultas/${l.id}`} className="after:absolute after:inset-0">
                             {l.name}
                           </Link>
