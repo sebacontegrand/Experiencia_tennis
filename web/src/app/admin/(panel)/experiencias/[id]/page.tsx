@@ -5,7 +5,7 @@ import { ArrowLeft, ExternalLink, Eye, Image as ImageIcon, Users } from "lucide-
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
 import { adminCopy } from "@/content/admin";
-import { formatDateRange } from "@/lib/format";
+import { formatDate, formatDateRange } from "@/lib/format";
 import { SEAT_HOLDING_STATUSES } from "@/lib/registration-rules";
 import { StatusBadge } from "@/components/admin/status-badge";
 import { CostsCard } from "@/components/admin/costs-card";
@@ -15,7 +15,7 @@ import { adminInputClass } from "@/components/admin/styles";
 import { ItineraryEditor } from "@/components/admin/itinerary-editor";
 import { dateToInput } from "@/lib/experience-content";
 import { parseItinerary } from "@/lib/itinerary";
-import { addPriceOption, deleteExperience, deletePriceOption, savePriceOption, saveContent, saveItinerary, saveSettings, setPublished } from "../actions";
+import { addPriceOption, deleteExperience, deletePriceOption, savePriceOption, saveContent, saveItinerary, saveSettings, setPublished, sendThankYouAction } from "../actions";
 
 export const metadata: Metadata = { title: "Editar experiencia" };
 const c = adminCopy.edit;
@@ -67,6 +67,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
   const byStatus = await db.registration.groupBy({ by: ["status"], where: { experienceId: e.id }, _count: { _all: true } });
   const n = (s: string) => byStatus.find((r) => r.status === s)?._count._all ?? 0;
   const taken = SEAT_HOLDING_STATUSES.reduce((sum, s) => sum + n(s), 0);
+  const attended = n("SENADA") + n("CONFIRMADA");
   const total = byStatus.reduce((sum, r) => sum + r._count._all, 0);
   const missingPrices = e.priceOptions.filter((o) => o.price == null).length;
   const isVisible = e.status === "PUBLICADA" || e.status === "CUPO_COMPLETO";
@@ -331,6 +332,39 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
         >
           <Users aria-hidden className="size-4" /> {adminCopy.registrations.openList}
         </Link>
+      </Card>
+
+      {/* Agradecimiento post-experiencia */}
+      <Card title={adminCopy.thankYou.title} hint={adminCopy.thankYou.hint}>
+        {e.startDate > new Date() ? (
+          <p className="text-sm text-ink-muted">{adminCopy.thankYou.notStarted}</p>
+        ) : (
+          <div className="space-y-4">
+            <p className="text-sm text-ink">
+              {e.thankYouSentAt ? adminCopy.thankYou.sent(formatDate(e.thankYouSentAt)) : adminCopy.thankYou.recipients(attended)}
+            </p>
+            {!e.thankYouSentAt && photoCount - hiddenPhotos === 0 && (
+              <p className="rounded-sm bg-amber-50 px-4 py-3 text-sm text-amber-900">{adminCopy.thankYou.noPhotos}</p>
+            )}
+            <div className="flex flex-wrap items-start gap-3">
+              <a
+                href={`/admin/experiencias/${e.id}/agradecimiento`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
+              >
+                <Eye aria-hidden className="size-4" /> {adminCopy.thankYou.preview}
+              </a>
+              <ActionForm
+                action={sendThankYouAction.bind(null, e.id)}
+                submitLabel={adminCopy.thankYou.send}
+                pendingLabel="Mandando…"
+                confirm={adminCopy.thankYou.confirm(attended)}
+                disabled={Boolean(e.thankYouSentAt) || attended === 0}
+              />
+            </div>
+          </div>
+        )}
       </Card>
 
       {/* Fotos (galería del sitio) */}

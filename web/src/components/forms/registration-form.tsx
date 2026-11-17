@@ -20,6 +20,7 @@ import {
 } from "@/components/forms/fields";
 import { useFocusFirstError } from "@/components/forms/use-focus-first-error";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics";
 
 const c = experiencesCopy.registration;
 const f = communityCopy.form.fields;
@@ -51,6 +52,7 @@ export function RegistrationForm({
   useFocusFirstError(formRef, state.status === "error" ? state : { status: "idle" });
   useEffect(() => {
     if (state.status === "registered") {
+      track("registration", { status: state.registrationStatus });
       doneRef.current?.focus();
       doneRef.current?.scrollIntoView({ block: "start" });
     }
@@ -218,6 +220,7 @@ export function RegistrationForm({
         <SelectField name="referralSource" label={f.referralSource} placeholder={f.referralPlaceholder} options={toOptions(referralOptions)} defaultValue={values.referralSource} error={errors.referralSource} />
         <TextAreaField name="notes" label={c.fields.notes} hint={c.fields.notesHint} defaultValue={values.notes} error={errors.notes} />
         <ConsentField error={errors.consent} defaultChecked={values.consent === "on"} />
+        {c.photoNotice && <p className="text-sm text-ink-muted">{c.photoNotice}</p>}
       </fieldset>
 
       <Honeypot />

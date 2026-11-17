@@ -16,6 +16,7 @@ import {
   TextField,
 } from "@/components/forms/fields";
 import { useFocusFirstError } from "@/components/forms/use-focus-first-error";
+import { track } from "@/lib/analytics";
 
 /**
  * Formulario de contacto. En /contacto elige el motivo; en las páginas para clubes, hoteles, etc.
@@ -41,7 +42,10 @@ export function ContactForm({
 
   useFocusFirstError(formRef, state);
   useEffect(() => {
-    if (state.status === "success") successRef.current?.focus();
+    if (state.status === "success") {
+      successRef.current?.focus();
+      track("lead");
+    }
   }, [state]);
 
   if (state.status === "success") {

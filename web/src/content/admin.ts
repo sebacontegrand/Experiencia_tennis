@@ -459,4 +459,22 @@ export const adminCopy = {
     deleted: "Foto borrada.",
     invalid: "No pudimos guardar esas fotos.",
   },
+  thankYou: {
+    title: "Agradecimiento post-experiencia",
+    hint: "Un email a quienes fueron (señada o confirmada) con las fotos, el link para dejar su opinión y, a quien aceptó novedades, las próximas fechas. Se manda una sola vez: subí las fotos antes.",
+    recipients: (n: number) => (n === 1 ? "Lo recibe 1 persona." : `Lo reciben ${n} personas.`),
+    noPhotos: "Todavía no hay fotos publicadas en el álbum: el email va a salir sin el botón de fotos.",
+    preview: "Ver cómo queda",
+    send: "Mandar agradecimiento",
+    confirm: (n: number) => `¿Mandar el agradecimiento a ${n} ${n === 1 ? "persona" : "personas"}? Se manda una sola vez.`,
+    sent: (date: string) => `Enviado el ${date}.`,
+    sentOk: (n: number) => `Listo: se está mandando a ${n} ${n === 1 ? "persona" : "personas"}.`,
+    notStarted: "Se habilita cuando empieza la experiencia.",
+    errors: {
+      ALREADY_SENT: "Ya se había mandado.",
+      NOT_STARTED: "La experiencia todavía no empezó.",
+      NO_RECIPIENTS: "No hay inscripciones señadas o confirmadas.",
+      NOT_FOUND: "No encontramos esa experiencia.",
+    },
+  },
 } as const;

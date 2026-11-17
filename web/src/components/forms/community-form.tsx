@@ -9,6 +9,7 @@ import { communityCopy } from "@/content/pages";
 import { formCopy, genderOptions, levelOptions, referralOptions } from "@/content/forms";
 import { ConsentField, FormAlert, Honeypot, SelectField, SubmitButton, TextField } from "@/components/forms/fields";
 import { useFocusFirstError } from "@/components/forms/use-focus-first-error";
+import { track } from "@/lib/analytics";
 
 const toOptions = (values: readonly string[]) => values.map((v) => ({ value: v, label: v }));
 
@@ -20,7 +21,10 @@ export function CommunityForm({ id = "comunidad-form" }: { id?: string }) {
 
   useFocusFirstError(formRef, state);
   useEffect(() => {
-    if (state.status === "success") successRef.current?.focus();
+    if (state.status === "success") {
+      successRef.current?.focus();
+      track("community_signup");
+    }
   }, [state]);
 
   if (state.status === "success") {

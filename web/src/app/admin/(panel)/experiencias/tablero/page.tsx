@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight, Quote } from "lucide-react";
+import { testimonialCopy } from "@/content/testimonials";
 import { AlertTriangle } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/admin";
@@ -33,11 +35,12 @@ export default async function BoardPage() {
 
   const now = new Date();
   const monthAgo = new Date(now.getTime() - 30 * 24 * 3600 * 1000);
-  const [players, newPlayers, consenting, newLeads] = await Promise.all([
+  const [players, newPlayers, consenting, newLeads, pendingTestimonials] = await Promise.all([
     db.player.count(),
     db.player.count({ where: { createdAt: { gte: monthAgo } } }),
     db.player.count({ where: { marketingConsent: true } }),
     db.lead.count({ where: { status: "NUEVO" } }),
+    db.testimonial.count({ where: { isPublic: false } }),
   ]);
   const rows = experiences.map((e) => ({ e, o: experienceOverview(e, now) }));
   const upcoming = rows.filter((r) => r.o.upcoming);
@@ -59,6 +62,16 @@ export default async function BoardPage() {
           <CommunityStat href="/admin/jugadores?consentimiento=1" label={c.consenting} value={consenting} />
           <CommunityStat href="/admin/consultas?estado=NUEVO" label={c.newLeads} value={newLeads} />
         </dl>
+        <Link
+          href="/admin/testimonios"
+          className="mt-3 flex min-h-12 items-center justify-between gap-3 rounded-sm bg-white px-4 text-sm font-semibold text-forest-900 hover:bg-cream-200"
+        >
+          <span className="inline-flex items-center gap-2">
+            <Quote aria-hidden className="size-4 text-clay-deep" />
+            {pendingTestimonials > 0 ? testimonialCopy.admin.boardCard(pendingTestimonials) : testimonialCopy.admin.open}
+          </span>
+          <ArrowRight aria-hidden className="size-4" />
+        </Link>
       </section>
 
       <section aria-labelledby="totales" className="mt-6 rounded-sm bg-forest-900 p-5 text-white sm:p-7">

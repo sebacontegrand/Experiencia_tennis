@@ -163,6 +163,8 @@ model Experience {
   menuOptions          String[]
   // Rentabilidad (interno, solo panel): % de ganancia sobre el precio final y asistencia esperada
   // para repartir los costos grupales (null = usar el cupo).
+  // Email de agradecimiento post-experiencia (fotos, testimonio, próximas fechas): se manda una sola vez.
+  thankYouSentAt       DateTime?
   earningsPercent      Int?
   expectedAttendance   Int?
   createdAt            DateTime         @default(now())
@@ -234,7 +236,8 @@ model Registration {
   priceOptionId String?
   priceOption   PriceOption? @relation(fields: [priceOptionId], references: [id])
 
-  payments Payment[]
+  payments    Payment[]
+  testimonial Testimonial?
 
   @@unique([playerId, experienceId])
   @@index([experienceId, status])
@@ -347,6 +350,9 @@ model Testimonial {
 
   experienceId String?
   experience   Experience? @relation(fields: [experienceId], references: [id], onDelete: SetNull)
+  // Si llegó por el formulario post-experiencia: uno por inscripción (reenviarlo lo actualiza).
+  registrationId String?       @unique
+  registration   Registration? @relation(fields: [registrationId], references: [id], onDelete: SetNull)
 
   @@index([experienceId, isPublic, sortOrder])
 }

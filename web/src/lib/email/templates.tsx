@@ -35,7 +35,7 @@ function Layout({ preview, children }: { preview: string; children: ReactNode })
             />
           </Section>
           <Section style={{ padding: "32px" }}>{children}</Section>
-          <Hr style={{ borderColor: colors.clay, margin: "0 32px" }} />
+          <Hr style={{ borderColor: colors.clay, margin: "0 32px", width: "auto" }} />
           <Section style={{ padding: "20px 32px 32px" }}>
             <Text style={{ color: colors.muted, fontSize: 12, lineHeight: "18px", margin: 0 }}>
               {siteConfig.tagline}
@@ -225,6 +225,66 @@ export function PaymentApprovedEmail({
           {c.cta}
         </Button>
       </Section>
+    </Layout>
+  );
+}
+
+export function ThankYouEmail({
+  firstName,
+  title,
+  albumUrl,
+  testimonialUrl,
+  upcoming,
+  calendarUrl,
+}: {
+  firstName: string;
+  title: string;
+  albumUrl?: string;
+  testimonialUrl?: string;
+  /** Solo para quienes aceptaron novedades. */
+  upcoming: { title: string; dates: string; url: string }[];
+  calendarUrl: string;
+}) {
+  const c = emailCopy.thankYou;
+  return (
+    <Layout preview={c.preview}>
+      <Heading style={h1}>{emailCopy.registration.heading(firstName)}</Heading>
+      <Text style={p}>{c.intro(title)}</Text>
+      {albumUrl && (
+        <Section style={{ margin: "8px 0 20px" }}>
+          <Text style={p}>{c.photos}</Text>
+          <Button href={albumUrl} style={button}>
+            {c.photosCta}
+          </Button>
+        </Section>
+      )}
+      {testimonialUrl && (
+        <Section style={{ margin: "8px 0 20px" }}>
+          <Text style={p}>{c.testimonial}</Text>
+          <Button href={testimonialUrl} style={{ ...button, backgroundColor: colors.clay }}>
+            {c.testimonialCta}
+          </Button>
+        </Section>
+      )}
+      {upcoming.length > 0 && (
+        <Section style={{ backgroundColor: colors.cream, padding: "16px 20px", margin: "8px 0 20px" }}>
+          <Text style={{ ...p, fontWeight: 600, margin: "0 0 8px" }}>{c.upcoming}</Text>
+          {upcoming.map((u) => (
+            <Text key={u.url} style={{ ...p, margin: "0 0 6px" }}>
+              <a href={u.url} style={{ color: colors.forest, fontWeight: 600 }}>
+                {u.title}
+              </a>{" "}
+              · {u.dates}
+            </Text>
+          ))}
+          <Text style={{ ...p, margin: "8px 0 0" }}>
+            <a href={calendarUrl} style={{ color: colors.forest }}>
+              {c.upcomingCta}
+            </a>
+          </Text>
+        </Section>
+      )}
+      <Text style={p}>{c.signature}</Text>
     </Layout>
   );
 }

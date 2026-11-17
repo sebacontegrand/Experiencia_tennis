@@ -11,6 +11,7 @@ import { galleryCopy } from "@/content/gallery";
 import { formatImage, images } from "@/content/images";
 import { getFormats, getPublicPartners, getUpcomingExperiences } from "@/lib/data/public";
 import { ExperienceCard } from "@/components/experiences/experience-card";
+import { Testimonials } from "@/components/site/testimonials";
 
 export default function HomePage() {
   return (
@@ -38,6 +39,9 @@ export default function HomePage() {
       <HowItWorks />
       <Kit />
       <Community />
+      <Suspense fallback={null}>
+        <Testimonials />
+      </Suspense>
       <Suspense fallback={null}>
         <Partners />
       </Suspense>

@@ -44,6 +44,18 @@ export const emailCopy = {
     paymentWithoutAlias: "Te escribimos por WhatsApp con el valor y los datos para la seña.",
     cta: "Escribinos por WhatsApp",
   },
+  thankYou: {
+    subject: (title: string) => `Gracias por venir a ${title}`,
+    preview: "Las fotos, tu opinión y lo que viene.",
+    intro: (title: string) => `Gracias por ser parte de ${title}. Fue un placer compartir la cancha, la mesa y las charlas con vos.`,
+    photos: "Ya están las fotos: buscate, descargalas y compartilas.",
+    photosCta: "Ver las fotos",
+    testimonial: "¿Nos contás cómo la pasaste? Son dos minutos y nos ayuda a seguir mejorando.",
+    testimonialCta: "Dejar mi opinión",
+    upcoming: "Lo que viene",
+    upcomingCta: "Ver todas las fechas",
+    signature: "Gabriela y el equipo de Experiencia Tenis",
+  },
   admin: {
     newRegistration: (status: string, title: string, name: string) =>
       `${status === "LISTA_ESPERA" ? "Lista de espera" : "Nueva inscripción"} · ${title}: ${name}`,

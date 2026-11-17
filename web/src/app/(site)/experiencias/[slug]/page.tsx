@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getAlbumCount } from "@/lib/data/gallery";
+import { Testimonials } from "@/components/site/testimonials";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { connection } from "next/server";
@@ -43,7 +44,12 @@ async function Detail({ params }: Pick<PageProps<"/experiencias/[slug]">, "param
   const { slug } = await params;
   const [experience, photoCount] = await Promise.all([getPublicExperience(slug), getAlbumCount(slug)]);
   if (!experience) notFound();
-  return <ExperienceDetailView experience={experience} photoCount={photoCount} />;
+  return (
+    <>
+      <ExperienceDetailView experience={experience} photoCount={photoCount} />
+      <Testimonials slug={slug} />
+    </>
+  );
 }
 
 function DetailSkeleton() {

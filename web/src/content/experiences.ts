@@ -69,6 +69,9 @@ export const experiencesCopy = {
   },
 
   registration: {
+    // TODO(negocio): aviso legal de uso de imagen (fotos de la galería), PENDIENTES #19.
+    // Mientras sea null no se muestra; el texto lo define Gabriela o su asesoría.
+    photoNotice: null as string | null,
     metaTitle: (title: string) => `Inscripción · ${title}`,
     eyebrow: "Inscripción",
     lead: "Completá tus datos y reservamos tu lugar. Te contactamos para coordinar la seña.",

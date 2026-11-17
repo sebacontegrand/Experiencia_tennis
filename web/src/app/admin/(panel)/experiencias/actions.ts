@@ -1,6 +1,7 @@
 "use server";
 
-import { updateTag } from "next/cache";
+import { refresh, updateTag } from "next/cache";
+import { sendThankYou } from "@/lib/thank-you";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -249,4 +250,14 @@ export async function deleteExperience(experienceId: string, _prev: AdminActionS
   }
   refreshPublic(exp.slug);
   redirect("/admin/experiencias");
+}
+
+/** Email de agradecimiento post-experiencia (una sola vez). */
+export async function sendThankYouAction(experienceId: string, _prev: AdminActionState, _formData: FormData) {
+  void _formData;
+  await requireAdmin();
+  const result = await sendThankYou(experienceId);
+  if (!result.ok) return fail(adminCopy.thankYou.errors[result.reason]);
+  refresh();
+  return ok(adminCopy.thankYou.sentOk(result.count));
 }

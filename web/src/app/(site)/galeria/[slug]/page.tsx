@@ -6,6 +6,7 @@ import { connection } from "next/server";
 import { ArrowLeft } from "lucide-react";
 import { WhatsappIcon } from "@/components/icons/brand-icons";
 import { PhotoAlbum } from "@/components/site/photo-album";
+import { Testimonials } from "@/components/site/testimonials";
 import { galleryCopy as c } from "@/content/gallery";
 import { getAlbum, getAlbumSlugs } from "@/lib/data/gallery";
 import { absoluteUrl, whatsappLink } from "@/config/site";
@@ -79,6 +80,8 @@ async function Album({ params }: Pick<PageProps<"/galeria/[slug]">, "params">) {
           <PhotoAlbum title={album.title} photos={album.gallery} />
         </div>
       </section>
+
+      <Testimonials slug={album.slug} tone="dark" />
 
       <section className="border-t border-border bg-cream px-5 py-12 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
