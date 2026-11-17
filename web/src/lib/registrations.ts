@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { Prisma } from "@/generated/prisma/client";
 import type { ExperienceStatus } from "@/generated/prisma/client";
 import { upsertPlayer } from "@/lib/players";
+import { newPayToken } from "@/lib/pay-token";
 import type { PlayerFields } from "@/lib/player-data";
 import {
   SEAT_HOLDING_STATUSES,
@@ -26,6 +27,7 @@ export type RegistrationResult =
   | {
       ok: true;
       registrationId: string;
+      payToken: string | null;
       status: "PENDIENTE" | "LISTA_ESPERA";
       playerCreated: boolean;
       experience: { id: string; slug: string; title: string; startDate: Date; endDate: Date };
@@ -85,7 +87,7 @@ export async function registerForExperience(req: RegistrationRequest, now = new 
 
       const previous = await tx.registration.findUnique({
         where: { playerId_experienceId: { playerId: player.id, experienceId: exp.id } },
-        select: { id: true, status: true },
+        select: { id: true, status: true, payToken: true },
       });
       if (previous && previous.status !== "CANCELADA") {
         return { ok: false, reason: "DUPLICATE", status: previous.status } as const;
@@ -112,13 +114,14 @@ export async function registerForExperience(req: RegistrationRequest, now = new 
         roommate: req.roommate ?? null,
         menuChoice: req.menuChoice ?? null,
         notes: req.notes ?? null,
+        payToken: previous?.payToken ?? newPayToken(),
       };
       // Una inscripción cancelada se reutiliza (la restricción única es persona + experiencia).
       const registration = previous
-        ? await tx.registration.update({ where: { id: previous.id }, data, select: { id: true } })
+        ? await tx.registration.update({ where: { id: previous.id }, data, select: { id: true, payToken: true } })
         : await tx.registration.create({
             data: { ...data, playerId: player.id, experienceId: exp.id },
-            select: { id: true },
+            select: { id: true, payToken: true },
           });
 
       const filledCapacity = status === "PENDIENTE" && fillsCapacity(taken, exp.capacity);
@@ -129,6 +132,7 @@ export async function registerForExperience(req: RegistrationRequest, now = new 
       return {
         ok: true,
         registrationId: registration.id,
+        payToken: registration.payToken,
         status,
         playerCreated: created,
         experience: { id: exp.id, slug: exp.slug, title: exp.title, startDate: exp.startDate, endDate: exp.endDate },

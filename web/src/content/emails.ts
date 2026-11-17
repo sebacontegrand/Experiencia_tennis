@@ -39,6 +39,7 @@ export const emailCopy = {
     },
     summary: "Resumen",
     rows: { dates: "Fechas", option: "Opción", price: "Valor" },
+    payOnline: "Podés pagar ahora con Mercado Pago (tarjeta, débito o dinero en cuenta):",
     paymentWithAlias: "Para confirmar tu lugar, transferí la seña a:",
     paymentWithoutAlias: "Te escribimos por WhatsApp con el valor y los datos para la seña.",
     cta: "Escribinos por WhatsApp",

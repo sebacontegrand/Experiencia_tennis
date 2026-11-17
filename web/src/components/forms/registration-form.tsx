@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useEffect, useRef } from "react";
 import { CheckCircle2, Hourglass } from "lucide-react";
 import { registerAction, type RegistrationFormState } from "@/app/(site)/experiencias/[slug]/inscripcion/actions";
 import { experiencesCopy } from "@/content/experiences";
 import { communityCopy } from "@/content/pages";
 import { formCopy, genderOptions, levelOptions, referralOptions } from "@/content/forms";
+import { paymentCopy } from "@/content/payments";
 import { siteConfig, whatsappLink } from "@/config/site";
 import {
   ConsentField,
@@ -70,6 +72,14 @@ export function RegistrationForm({
         {!waitlist && (
           <div className="mt-8 rounded-sm bg-cream p-6">
             <h3 className="font-serif text-2xl text-navy-900">{c.payment.title}</h3>
+            {state.payPath && (
+              <Link
+                href={state.payPath}
+                className="btn-label mt-4 mb-2 inline-flex h-14 w-full items-center justify-center bg-gold px-8 text-navy-900 transition hover:bg-gold-light sm:w-auto"
+              >
+                {paymentCopy.payCta}
+              </Link>
+            )}
             {hasTransfer ? (
               <>
                 <p className="mt-2 text-ink">{c.payment.withAlias}</p>

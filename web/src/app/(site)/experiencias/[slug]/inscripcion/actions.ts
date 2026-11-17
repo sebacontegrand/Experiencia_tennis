@@ -13,13 +13,14 @@ import { emailCopy } from "@/content/emails";
 import { experiencesCopy } from "@/content/experiences";
 import { formCopy } from "@/content/forms";
 import { formError, formValues, type FormErrorState } from "@/lib/form-state";
-import { siteConfig, whatsappLink } from "@/config/site";
+import { absoluteUrl, siteConfig, whatsappLink } from "@/config/site";
+import { isMercadoPagoEnabled } from "@/lib/mercadopago";
 import { formatDateRange, formatPrice } from "@/lib/format";
 
 export type RegistrationFormState =
   | { status: "idle" }
   | FormErrorState
-  | { status: "registered"; registrationStatus: "PENDIENTE" | "LISTA_ESPERA"; firstName: string };
+  | { status: "registered"; registrationStatus: "PENDIENTE" | "LISTA_ESPERA"; firstName: string; payPath?: string | null };
 
 const copy = experiencesCopy.registration;
 
@@ -76,6 +77,11 @@ export async function registerAction(
     const fullName = `${player.firstName} ${player.lastName}`;
     const dates = formatDateRange(result.experience.startDate, result.experience.endDate);
     const price = result.priceOption ? formatPrice(result.priceOption.price) : undefined;
+    // Pago online: solo con lugar, con precio cargado y con Mercado Pago configurado.
+    const payPath =
+      result.status === "PENDIENTE" && result.priceOption?.price != null && result.payToken && isMercadoPagoEnabled()
+        ? `/pagar/${result.payToken}`
+        : null;
 
     after(async () => {
       await sendEmail({
@@ -94,6 +100,7 @@ export async function registerAction(
             holder: siteConfig.payments.transferHolder,
           },
           whatsappHref: whatsappLink(copy.payment.whatsappMessage(result.experience.title, fullName)),
+          payUrl: payPath ? absoluteUrl(payPath) : undefined,
         }),
       });
       const admins = adminRecipients();
@@ -129,7 +136,7 @@ export async function registerAction(
       }
     });
 
-    return { status: "registered", registrationStatus: result.status, firstName: player.firstName };
+    return { status: "registered", registrationStatus: result.status, firstName: player.firstName, payPath };
   } catch (err) {
     console.error("[registerAction]", err);
     return formError(formCopy.genericError, values);

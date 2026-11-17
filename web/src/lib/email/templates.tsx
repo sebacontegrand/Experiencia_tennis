@@ -13,6 +13,7 @@ import {
 import type { ReactNode } from "react";
 import { siteConfig, whatsappLink, absoluteUrl } from "@/config/site";
 import { emailCopy } from "@/content/emails";
+import { paymentCopy } from "@/content/payments";
 
 const colors = { navy: "#041224", gold: "#B98C4A", cream: "#F7F3EC", ink: "#1E2A3A" };
 
@@ -118,6 +119,7 @@ export function RegistrationEmail({
   price,
   payment,
   whatsappHref,
+  payUrl,
 }: {
   firstName: string;
   status: "PENDIENTE" | "LISTA_ESPERA";
@@ -127,6 +129,8 @@ export function RegistrationEmail({
   price?: string;
   payment: PaymentInfo;
   whatsappHref: string;
+  /** Link de pago con Mercado Pago (si está habilitado). */
+  payUrl?: string;
 }) {
   const c = emailCopy.registration;
   const hasTransfer = Boolean(payment.alias || payment.cbu);
@@ -150,6 +154,14 @@ export function RegistrationEmail({
           </Text>
         )}
       </Section>
+      {status === "PENDIENTE" && payUrl && (
+        <Section style={{ margin: "8px 0 20px" }}>
+          <Text style={p}>{c.payOnline}</Text>
+          <Button href={payUrl} style={button}>
+            {paymentCopy.payCta}
+          </Button>
+        </Section>
+      )}
       {status === "PENDIENTE" &&
         (hasTransfer ? (
           <>
@@ -163,6 +175,48 @@ export function RegistrationEmail({
         ) : (
           <Text style={p}>{c.paymentWithoutAlias}</Text>
         ))}
+      <Section style={{ margin: "24px 0 8px" }}>
+        <Button href={whatsappHref} style={button}>
+          {c.cta}
+        </Button>
+      </Section>
+    </Layout>
+  );
+}
+
+export function PaymentApprovedEmail({
+  firstName,
+  title,
+  dates,
+  amount,
+  operation,
+  confirmed,
+  whatsappHref,
+}: {
+  firstName: string;
+  title: string;
+  dates: string;
+  amount: string;
+  operation: string;
+  confirmed: boolean;
+  whatsappHref: string;
+}) {
+  const c = paymentCopy.email;
+  return (
+    <Layout preview={c.preview}>
+      <Heading style={h1}>{emailCopy.registration.heading(firstName)}</Heading>
+      <Text style={p}>{confirmed ? c.intro(title) : c.introPartial(title)}</Text>
+      <Section style={{ backgroundColor: colors.cream, padding: "16px 20px", margin: "8px 0 20px" }}>
+        <Text style={{ ...p, margin: "0 0 4px" }}>
+          <strong>{emailCopy.registration.rows.dates}:</strong> {dates}
+        </Text>
+        <Text style={{ ...p, margin: "0 0 4px" }}>
+          <strong>{c.rows.amount}:</strong> {amount}
+        </Text>
+        <Text style={{ ...p, margin: 0 }}>
+          <strong>{c.rows.operation}:</strong> {operation}
+        </Text>
+      </Section>
       <Section style={{ margin: "24px 0 8px" }}>
         <Button href={whatsappHref} style={button}>
           {c.cta}

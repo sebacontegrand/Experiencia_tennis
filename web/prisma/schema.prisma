@@ -222,6 +222,8 @@ model Registration {
   companions      Int                @default(0)
   notes           String?
   internalNotes   String?
+  // Link secreto para pagar online (/pagar/<token>); se crea al inscribirse o desde el panel.
+  payToken        String?            @unique
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
 

@@ -1,0 +1,24 @@
+"use client";
+
+import { useActionState } from "react";
+import { startCheckout, type CheckoutState } from "@/app/(site)/pagar/[token]/actions";
+import { paymentCopy } from "@/content/payments";
+
+/** Botón que crea el pago en el servidor y lleva a Mercado Pago. */
+export function CheckoutButton({ token, label = paymentCopy.payCta }: { token: string; label?: string }) {
+  const [state, action, pending] = useActionState<CheckoutState, FormData>(startCheckout.bind(null, token), null);
+  return (
+    <form action={action} className="flex flex-col gap-3 sm:items-start">
+      <button
+        type="submit"
+        disabled={pending}
+        className="btn-label inline-flex h-14 w-full items-center justify-center bg-gold px-8 text-navy-900 transition hover:bg-gold-light disabled:opacity-60 sm:w-auto"
+      >
+        {pending ? "Abriendo Mercado Pago…" : label}
+      </button>
+      <p aria-live="polite" className="text-sm text-red-300">
+        {state?.error}
+      </p>
+    </form>
+  );
+}

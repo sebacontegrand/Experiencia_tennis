@@ -16,7 +16,7 @@ type Tx = Prisma.TransactionClient;
 type LockedExperience = { id: string; slug: string; status: ExperienceStatus; capacity: number };
 
 /** Bloquea la fila de la experiencia: el mismo candado que usan las inscripciones públicas. */
-async function lockExperience(tx: Tx, experienceId: string) {
+export async function lockExperience(tx: Tx, experienceId: string) {
   const [exp] = await tx.$queryRaw<LockedExperience[]>`
     SELECT id, slug, status, capacity FROM "Experience" WHERE id = ${experienceId} FOR UPDATE`;
   return exp;

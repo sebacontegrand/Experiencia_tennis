@@ -12,6 +12,12 @@ import { ActionForm, AdminField } from "@/components/admin/action-form";
 import { adminInputClass } from "@/components/admin/styles";
 import { StatusActions } from "@/components/admin/status-actions";
 import { addPayment, removePayment, saveRegistrationNotes, setRegistrationStatus } from "../actions";
+import { paymentCopy } from "@/content/payments";
+import { payableAmount } from "@/lib/mercadopago-rules";
+import { ensurePayToken } from "@/lib/online-payments";
+import { isMercadoPagoEnabled } from "@/lib/mercadopago";
+import { absoluteUrl } from "@/config/site";
+import { CopyButton } from "@/components/admin/copy-button";
 
 export const metadata: Metadata = { title: "Inscripción" };
 const c = adminCopy.registration;
@@ -40,6 +46,11 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
   const price = r.priceOption?.price ?? null;
   const balance = balanceDue(price, paid);
   const wa = waNumber(r.player.whatsapp);
+  // Link de pago online: solo si puede pagar algo y Mercado Pago está configurado.
+  const payable = payableAmount(r.status, price, r.payments);
+  const payToken = payable.ok ? await ensurePayToken(r.id) : null;
+  const payUrl = payToken ? absoluteUrl(`/pagar/${payToken}`) : null;
+  const mpEnabled = isMercadoPagoEnabled();
   const waText = encodeURIComponent(c.whatsappGreeting(r.player.firstName, r.experience.title));
 
   return (
@@ -101,6 +112,7 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
                   </p>
                   <p className="text-sm text-ink-muted">
                     {adminCopy.paymentMethod[p.method]} · {formatDate(p.paidAt ?? p.createdAt)}
+                    {p.externalRef && <> · {paymentCopy.panel.mpOperation} #{p.externalRef}</>}
                     {p.notes && <> · {p.notes}</>}
                   </p>
                 </div>
@@ -153,6 +165,29 @@ export default async function RegistrationPage({ params }: PageProps<"/admin/ins
           </ActionForm>
         </div>
       </Card>
+
+      {payUrl && (
+        <Card title={paymentCopy.panel.linkTitle} hint={mpEnabled ? paymentCopy.panel.linkHint : paymentCopy.panel.disabled}>
+          {mpEnabled && (
+            <>
+              <p className="rounded-sm bg-cream px-4 py-3 font-mono text-sm break-all text-ink">{payUrl}</p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <CopyButton text={payUrl} label={paymentCopy.panel.copy} doneLabel={paymentCopy.panel.copied} />
+                {wa && (
+                  <a
+                    href={`https://wa.me/${wa}?text=${encodeURIComponent(paymentCopy.panel.whatsappMessage(r.player.firstName, r.experience.title, payUrl))}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-12 items-center gap-2 rounded-sm bg-navy-900 px-5 text-sm font-semibold text-white hover:bg-navy-800"
+                  >
+                    {paymentCopy.panel.whatsapp}
+                  </a>
+                )}
+              </div>
+            </>
+          )}
+        </Card>
+      )}
 
       <Card title={c.statusTitle} hint={c.statusHint}>
         <StatusActions
