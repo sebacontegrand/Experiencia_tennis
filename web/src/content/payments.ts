@@ -1,10 +1,15 @@
 /** Textos del pago online (Mercado Pago). */
 export const paymentCopy = {
   payCta: "Pagar con Mercado Pago",
+  payInstallment: (next: number, total: number, amount: string) => `Pagar la cuota ${next} de ${total} (${amount})`,
+  payFull: (amount: string) => `Pagar el total (${amount})`,
+  detailInstallments: (total: number, date: string) => `Podés pagarlo en ${total} cuotas iguales con Mercado Pago hasta el ${date}.`,
+  installmentsNote: (total: number, date: string) => `Podés pagar en ${total} cuotas iguales hasta el ${date}. Después de esa fecha se paga el saldo completo.`,
+  deadlinePassed: (date: string) => `El plazo para pagar en cuotas venció el ${date}: queda pagar el saldo completo.`,
   page: {
     title: "Pagá tu lugar",
     lead: "Pagás con Mercado Pago: tarjeta de crédito o débito, dinero en cuenta o efectivo.",
-    rows: { experience: "Experiencia", dates: "Fechas", option: "Opción", price: "Valor", paid: "Ya pagaste", due: "A pagar" },
+    rows: { experience: "Experiencia", dates: "Fechas", option: "Opción", price: "Valor", paid: "Ya pagaste", due: "Saldo", deadline: "Fecha límite de pago" },
     secure: "Te llevamos a Mercado Pago para pagar. No guardamos datos de tu tarjeta.",
     transfer: "¿Preferís transferencia? Escribinos por WhatsApp.",
     transferMessage: (title: string, name: string) => `Hola, soy ${name}. Quiero pagar ${title} por transferencia.`,
@@ -17,6 +22,9 @@ export const paymentCopy = {
   },
   result: {
     approved: { title: "¡Pago aprobado!", text: "Tu lugar está confirmado. Te mandamos un email con el detalle." },
+    approvedPartial: { title: "¡Recibimos tu pago!", text: "Tu lugar está reservado. Te mandamos un email con el detalle." },
+    remaining: (amount: string) => `Saldo pendiente: ${amount}.`,
+    payNext: "Pagar lo que falta",
     pending: { title: "Tu pago está en proceso", text: "Mercado Pago lo está revisando. Te avisamos por email apenas se apruebe." },
     rejected: { title: "El pago no se aprobó", text: "No se hizo ningún cobro. Probá de nuevo con otro medio de pago." },
     unknown: { title: "Estamos esperando la confirmación", text: "Si ya pagaste, en unos minutos se actualiza. Si no, probá de nuevo." },
@@ -31,9 +39,19 @@ export const paymentCopy = {
     subject: (title: string) => `Pago aprobado · ${title}`,
     preview: "Recibimos tu pago. Tu lugar está confirmado.",
     intro: (title: string) => `Recibimos tu pago por Mercado Pago. Tu lugar en ${title} está confirmado.`,
-    introPartial: (title: string) => `Recibimos tu pago por Mercado Pago para ${title}. Te contamos por WhatsApp cómo seguir con el saldo.`,
+    introPartial: (title: string) => `Recibimos tu pago por Mercado Pago para ${title}. Tu lugar está reservado.`,
+    remaining: (amount: string) => `Te queda un saldo de ${amount}. Lo podés pagar desde el mismo link cuando quieras.`,
+    payRest: "Pagar lo que falta",
     rows: { amount: "Monto", operation: "Operación de Mercado Pago" },
     cta: "Escribinos por WhatsApp",
+  },
+  reminder: {
+    subject: (title: string) => `Recordatorio de pago · ${title}`,
+    preview: "Se acerca la fecha límite para completar el pago.",
+    intro: (title: string, date: string) => `Te recordamos que el ${date} vence el plazo para completar el pago de ${title}.`,
+    balance: (amount: string) => `Saldo pendiente: ${amount}.`,
+    cta: "Pagar ahora",
+    help: "Si ya pagaste por transferencia, ignorá este mensaje. Ante cualquier duda, escribinos por WhatsApp.",
   },
   admin: {
     approved: (title: string, name: string) => `Pago aprobado por Mercado Pago · ${title}: ${name}`,

@@ -58,3 +58,44 @@ export function isPublicHttpsUrl(url: string) {
 export function isPayToken(value: string) {
   return /^[A-Za-z0-9_-]{32}$/.test(value);
 }
+
+export const MAX_INSTALLMENTS = 6;
+
+export type InstallmentPlan = {
+  /** Saldo completo (siempre se puede pagar). */
+  balance: number;
+  /** Monto de una cuota, o null si hoy solo se puede pagar el total. */
+  installment: number | null;
+  /** Número de la próxima cuota (1-based) y total de cuotas, para mostrar "Cuota 2 de 3". */
+  next: number;
+  total: number;
+  deadline: Date | null;
+};
+
+/**
+ * Cuotas iguales del precio total hasta la fecha límite. Cada cuota = precio / cuotas (redondeado
+ * hacia arriba al peso). Si el saldo ya es una cuota o menos, o pasó la fecha límite, solo el total.
+ * El saldo y las cuotas se calculan siempre con lo cobrado de verdad (pagos aprobados).
+ */
+export function installmentPlan(args: {
+  price: number;
+  paid: number;
+  installments: number | null | undefined;
+  deadline: Date | null | undefined;
+  now?: Date;
+}): InstallmentPlan {
+  const { price, paid, deadline = null, now = new Date() } = args;
+  const n = Math.min(MAX_INSTALLMENTS, Math.max(1, args.installments ?? 1));
+  const balance = Math.max(0, price - paid);
+  const share = Math.ceil(price / n);
+  const open = n > 1 && deadline != null && now.getTime() <= deadline.getTime();
+  const next = Math.min(n, Math.floor(paid / share) + 1);
+  return { balance, installment: open && balance > share ? share : null, next, total: n, deadline };
+}
+
+/** ¿Toca el recordatorio? Desde 7 días antes de la fecha límite y mientras no haya vencido. */
+export function reminderDue(deadline: Date | null | undefined, now = new Date()) {
+  if (!deadline) return false;
+  const ms = deadline.getTime() - now.getTime();
+  return ms > 0 && ms <= 7 * 24 * 3600_000;
+}

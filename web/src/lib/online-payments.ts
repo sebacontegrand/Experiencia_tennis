@@ -95,7 +95,7 @@ export async function getPayContext(token: string) {
       status: true,
       priceOptionId: true,
       priceOption: { select: { label: true, price: true } },
-      experience: { select: { slug: true, title: true, startDate: true, endDate: true } },
+      experience: { select: { slug: true, title: true, startDate: true, endDate: true, installments: true, paymentDeadline: true } },
       player: { select: { firstName: true, lastName: true, email: true } },
       payments: { select: { amount: true, status: true, method: true, externalRef: true, createdAt: true }, orderBy: { createdAt: "desc" } },
     },

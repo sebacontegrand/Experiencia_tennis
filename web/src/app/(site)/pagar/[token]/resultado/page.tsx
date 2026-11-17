@@ -4,12 +4,12 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { connection } from "next/server";
 import { CheckCircle2, Clock, XCircle } from "lucide-react";
-import { CheckoutButton } from "@/components/forms/checkout-button";
 import { paymentCopy as c } from "@/content/payments";
 import { getPayContext } from "@/lib/online-payments";
 import { isMercadoPagoEnabled } from "@/lib/mercadopago";
 import { syncMercadoPagoPayment } from "@/lib/payment-sync";
 import { isPayToken, payableAmount } from "@/lib/mercadopago-rules";
+import { formatPrice } from "@/lib/format";
 
 // Los tokens son secretos: se prerenderiza solo un casco con un valor de relleno (no es un token válido).
 export function generateStaticParams() {
@@ -52,8 +52,10 @@ async function Result({ params, searchParams }: PageProps<"/pagar/[token]/result
   }
 
   const fresh = (await getPayContext(token)) ?? reg;
-  const stillPayable = isMercadoPagoEnabled() && payableAmount(fresh.status, fresh.priceOption?.price, fresh.payments).ok;
-  const r = c.result[outcome];
+  const due = payableAmount(fresh.status, fresh.priceOption?.price, fresh.payments);
+  const stillPayable = isMercadoPagoEnabled() && due.ok;
+  // Aprobado pero con saldo (cuota o seña): no está confirmado todavía.
+  const r = outcome === "approved" && due.ok ? c.result.approvedPartial : c.result[outcome];
   const Icon = outcome === "approved" ? CheckCircle2 : outcome === "rejected" ? XCircle : Clock;
 
   return (
@@ -64,8 +66,16 @@ async function Result({ params, searchParams }: PageProps<"/pagar/[token]/result
         <div className="brand-rule mt-5" />
         <p className="mt-5 text-lg text-white/80">{r.text}</p>
         <p className="mt-2 text-white/60">{fresh.experience.title}</p>
+        {outcome === "approved" && due.ok && <p className="mt-2 text-white/80">{c.result.remaining(formatPrice(due.amount))}</p>}
         <div className="mt-10 flex flex-col gap-4">
-          {outcome !== "approved" && outcome !== "pending" && stillPayable && <CheckoutButton token={token} label={c.result.retry} />}
+          {outcome !== "pending" && stillPayable && (
+            <Link
+              href={`/pagar/${token}`}
+              className="btn-label inline-flex h-14 w-full items-center justify-center bg-ball px-8 text-forest-900 transition hover:bg-ball-light sm:w-auto sm:self-start"
+            >
+              {outcome === "approved" ? c.result.payNext : c.result.retry}
+            </Link>
+          )}
           <Link href={`/experiencias/${fresh.experience.slug}`} className="inline-flex min-h-11 items-center text-sm text-white/80 underline-offset-4 hover:text-ball-light hover:underline">
             {c.result.back}
           </Link>

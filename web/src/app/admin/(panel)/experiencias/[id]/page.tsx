@@ -315,6 +315,20 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
               <input id="deadline" name="registrationDeadline" type="date" defaultValue={toDateInput(e.registrationDeadline)} className={adminInputClass} />
             </AdminField>
           </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <AdminField label={c.installments} hint={c.installmentsHint} htmlFor="installments">
+              <select id="installments" name="installments" defaultValue={String(e.installments ?? 1)} className={adminInputClass}>
+                {c.installmentsOptions.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
+            </AdminField>
+            <AdminField label={c.paymentDeadline} hint={c.paymentDeadlineHint} htmlFor="paymentDeadline">
+              <input id="paymentDeadline" name="paymentDeadline" type="date" defaultValue={toDateInput(e.paymentDeadline)} className={adminInputClass} />
+            </AdminField>
+          </div>
         </ActionForm>
       </Card>
 

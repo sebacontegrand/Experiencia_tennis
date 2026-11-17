@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isPayToken, isPublicHttpsUrl, mapMercadoPagoStatus, payableAmount, toPesos } from "./mercadopago-rules";
+import { installmentPlan, isPayToken, isPublicHttpsUrl, mapMercadoPagoStatus, payableAmount, reminderDue, toPesos } from "./mercadopago-rules";
 
 describe("mapMercadoPagoStatus", () => {
   it("solo approved cuenta como aprobado", () => {
@@ -48,5 +48,42 @@ describe("helpers", () => {
     expect(isPayToken("a".repeat(32))).toBe(true);
     expect(isPayToken("a".repeat(31))).toBe(false);
     expect(isPayToken("../" + "a".repeat(29))).toBe(false);
+  });
+});
+
+describe("installmentPlan", () => {
+  const deadline = new Date("2026-12-01T23:59:59-03:00");
+  const before = new Date("2026-11-20T12:00:00-03:00");
+  const after = new Date("2026-12-02T12:00:00-03:00");
+  it("3 cuotas iguales: primera, segunda y la última es el saldo", () => {
+    expect(installmentPlan({ price: 600000, paid: 0, installments: 3, deadline, now: before })).toMatchObject({ balance: 600000, installment: 200000, next: 1, total: 3 });
+    expect(installmentPlan({ price: 600000, paid: 200000, installments: 3, deadline, now: before })).toMatchObject({ installment: 200000, next: 2 });
+    // Falta exactamente una cuota: se paga el saldo.
+    expect(installmentPlan({ price: 600000, paid: 400000, installments: 3, deadline, now: before })).toMatchObject({ balance: 200000, installment: null, next: 3 });
+  });
+  it("redondea la cuota hacia arriba y nunca cobra de más", () => {
+    const p = installmentPlan({ price: 614000, paid: 0, installments: 3, deadline, now: before });
+    expect(p.installment).toBe(204667);
+    expect(installmentPlan({ price: 614000, paid: 409334, installments: 3, deadline, now: before })).toMatchObject({ balance: 204666, installment: null });
+  });
+  it("sin cuotas, sin fecha límite o vencida: solo el total", () => {
+    expect(installmentPlan({ price: 50000, paid: 0, installments: null, deadline, now: before }).installment).toBeNull();
+    expect(installmentPlan({ price: 50000, paid: 0, installments: 1, deadline, now: before }).installment).toBeNull();
+    expect(installmentPlan({ price: 600000, paid: 0, installments: 3, deadline: null, now: before }).installment).toBeNull();
+    expect(installmentPlan({ price: 600000, paid: 200000, installments: 3, deadline, now: after })).toMatchObject({ balance: 400000, installment: null });
+  });
+  it("con una seña manual distinta a la cuota sigue contando bien", () => {
+    expect(installmentPlan({ price: 600000, paid: 100000, installments: 3, deadline, now: before })).toMatchObject({ balance: 500000, installment: 200000, next: 1 });
+  });
+});
+
+describe("reminderDue", () => {
+  const deadline = new Date("2026-12-01T23:59:59-03:00");
+  it("desde 7 días antes hasta la fecha límite", () => {
+    expect(reminderDue(deadline, new Date("2026-11-20T12:00:00-03:00"))).toBe(false);
+    expect(reminderDue(deadline, new Date("2026-11-25T12:00:00-03:00"))).toBe(true);
+    expect(reminderDue(deadline, new Date("2026-12-01T20:00:00-03:00"))).toBe(true);
+    expect(reminderDue(deadline, new Date("2026-12-02T08:00:00-03:00"))).toBe(false);
+    expect(reminderDue(null)).toBe(false);
   });
 });

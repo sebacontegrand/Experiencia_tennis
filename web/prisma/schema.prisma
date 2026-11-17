@@ -163,6 +163,9 @@ model Experience {
   menuOptions          String[]
   // Rentabilidad (interno, solo panel): % de ganancia sobre el precio final y asistencia esperada
   // para repartir los costos grupales (null = usar el cupo).
+  // Pago en cuotas iguales (null o 1 = solo pago total) hasta la fecha límite; después, solo el saldo completo.
+  installments         Int?
+  paymentDeadline      DateTime?
   // Email de agradecimiento post-experiencia (fotos, testimonio, próximas fechas): se manda una sola vez.
   thankYouSentAt       DateTime?
   earningsPercent      Int?
@@ -224,6 +227,8 @@ model Registration {
   companions      Int                @default(0)
   notes           String?
   internalNotes   String?
+  // Recordatorio de saldo (7 días antes de la fecha límite de pago): una sola vez.
+  paymentReminderSentAt DateTime?
   // Link secreto para pagar online (/pagar/<token>); se crea al inscribirse o desde el panel.
   payToken        String?            @unique
   createdAt       DateTime           @default(now())

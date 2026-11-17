@@ -10,9 +10,9 @@ import { paymentCopy as c } from "@/content/payments";
 import { getPayContext } from "@/lib/online-payments";
 import { isMercadoPagoEnabled } from "@/lib/mercadopago";
 import { amountPaid } from "@/lib/registration-admin-rules";
-import { isPayToken, payableAmount } from "@/lib/mercadopago-rules";
+import { installmentPlan, isPayToken, payableAmount } from "@/lib/mercadopago-rules";
 import { whatsappLink } from "@/config/site";
-import { formatDateRange, formatPrice } from "@/lib/format";
+import { formatDate, formatDateRange, formatPrice } from "@/lib/format";
 
 // Link personal: no se indexa.
 // Los tokens son secretos: se prerenderiza solo un casco con un valor de relleno (no es un token válido).
@@ -43,6 +43,12 @@ async function Pay({ params }: Pick<PageProps<"/pagar/[token]">, "params">) {
   const enabled = isMercadoPagoEnabled();
   const name = `${reg.player.firstName} ${reg.player.lastName}`;
   const state = !payable.ok ? c.states[payable.reason] : !enabled ? c.states.DISABLED : null;
+  const plan =
+    payable.ok && price != null
+      ? installmentPlan({ price, paid, installments: reg.experience.installments, deadline: reg.experience.paymentDeadline })
+      : null;
+  const hasPlan = (reg.experience.installments ?? 1) > 1 && reg.experience.paymentDeadline;
+  const deadlineText = reg.experience.paymentDeadline ? formatDate(reg.experience.paymentDeadline) : "";
 
   return (
     <section className="bg-forest-900 px-5 pt-10 pb-20 text-white sm:px-8">
@@ -61,7 +67,13 @@ async function Pay({ params }: Pick<PageProps<"/pagar/[token]">, "params">) {
           {price != null && <Row label={c.page.rows.price} value={formatPrice(price)} />}
           {paid > 0 && <Row label={c.page.rows.paid} value={formatPrice(paid)} />}
           {payable.ok && <Row label={c.page.rows.due} value={formatPrice(payable.amount)} strong />}
+          {hasPlan && payable.ok && <Row label={c.page.rows.deadline} value={deadlineText} />}
         </dl>
+        {hasPlan && payable.ok && (
+          <p className="mt-4 text-sm text-white/75">
+            {plan?.installment ? c.installmentsNote(reg.experience.installments ?? 1, deadlineText) : new Date() > reg.experience.paymentDeadline! ? c.deadlinePassed(deadlineText) : null}
+          </p>
+        )}
 
         {state ? (
           <div className="mt-8">
@@ -70,7 +82,14 @@ async function Pay({ params }: Pick<PageProps<"/pagar/[token]">, "params">) {
           </div>
         ) : (
           <div className="mt-8 space-y-4">
-            <CheckoutButton token={token} />
+            {plan?.installment ? (
+              <>
+                <CheckoutButton token={token} mode="installment" label={c.payInstallment(plan.next, plan.total, formatPrice(plan.installment))} />
+                <CheckoutButton token={token} mode="full" variant="secondary" label={c.payFull(formatPrice(plan.balance))} />
+              </>
+            ) : (
+              <CheckoutButton token={token} />
+            )}
             <p className="flex items-center gap-2 text-sm text-white/60">
               <Lock aria-hidden className="size-4" /> {c.page.secure}
             </p>

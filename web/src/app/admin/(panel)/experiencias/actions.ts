@@ -2,6 +2,7 @@
 
 import { refresh, updateTag } from "next/cache";
 import { sendThankYou } from "@/lib/thank-you";
+import { MAX_INSTALLMENTS } from "@/lib/mercadopago-rules";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -44,6 +45,12 @@ export async function saveSettings(experienceId: string, _prev: AdminActionState
   // Fecha del input (YYYY-MM-DD) → fin de ese día en Buenos Aires (UTC-3)
   const registrationDeadline = /^\d{4}-\d{2}-\d{2}$/.test(deadlineRaw) ? new Date(`${deadlineRaw}T23:59:59-03:00`) : null;
 
+  const installmentsRaw = Number(formData.get("installments") ?? 1);
+  const installments = Number.isInteger(installmentsRaw) && installmentsRaw >= 2 && installmentsRaw <= MAX_INSTALLMENTS ? installmentsRaw : null;
+  const payDeadlineRaw = String(formData.get("paymentDeadline") ?? "").trim();
+  const paymentDeadline = /^\d{4}-\d{2}-\d{2}$/.test(payDeadlineRaw) ? new Date(`${payDeadlineRaw}T23:59:59-03:00`) : null;
+  if (installments && !paymentDeadline) return fail(adminCopy.edit.paymentDeadlineMissing);
+
   const taken = await seatsTaken(exp.id);
   if (capacity.data < taken) return fail(m.capacityBelowTaken(taken));
 
@@ -53,6 +60,8 @@ export async function saveSettings(experienceId: string, _prev: AdminActionState
       capacity: capacity.data,
       audience,
       registrationDeadline,
+      installments,
+      paymentDeadline,
       status: statusAfterCapacityChange(exp.status, taken, capacity.data),
     },
   });

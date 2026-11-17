@@ -195,6 +195,8 @@ export function PaymentApprovedEmail({
   operation,
   confirmed,
   whatsappHref,
+  remaining,
+  payUrl,
 }: {
   firstName: string;
   title: string;
@@ -203,6 +205,9 @@ export function PaymentApprovedEmail({
   operation: string;
   confirmed: boolean;
   whatsappHref: string;
+  /** Saldo pendiente (pago en cuotas o seña) y link para pagarlo. */
+  remaining?: string;
+  payUrl?: string;
 }) {
   const c = paymentCopy.email;
   return (
@@ -220,6 +225,16 @@ export function PaymentApprovedEmail({
           <strong>{c.rows.operation}:</strong> {operation}
         </Text>
       </Section>
+      {!confirmed && remaining && (
+        <Section style={{ margin: "8px 0 20px" }}>
+          <Text style={p}>{c.remaining(remaining)}</Text>
+          {payUrl && (
+            <Button href={payUrl} style={{ ...button, backgroundColor: colors.clay }}>
+              {c.payRest}
+            </Button>
+          )}
+        </Section>
+      )}
       <Section style={{ margin: "24px 0 8px" }}>
         <Button href={whatsappHref} style={button}>
           {c.cta}
@@ -285,6 +300,23 @@ export function ThankYouEmail({
         </Section>
       )}
       <Text style={p}>{c.signature}</Text>
+    </Layout>
+  );
+}
+
+export function PaymentReminderEmail({ firstName, title, deadline, balance, payUrl }: { firstName: string; title: string; deadline: string; balance: string; payUrl: string }) {
+  const c = paymentCopy.reminder;
+  return (
+    <Layout preview={c.preview}>
+      <Heading style={h1}>{emailCopy.registration.heading(firstName)}</Heading>
+      <Text style={p}>{c.intro(title, deadline)}</Text>
+      <Text style={{ ...p, fontWeight: 600 }}>{c.balance(balance)}</Text>
+      <Section style={{ margin: "8px 0 20px" }}>
+        <Button href={payUrl} style={button}>
+          {c.cta}
+        </Button>
+      </Section>
+      <Text style={{ ...p, fontSize: 13, color: colors.muted }}>{c.help}</Text>
     </Layout>
   );
 }

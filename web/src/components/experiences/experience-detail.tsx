@@ -10,6 +10,7 @@ import { absoluteUrl, siteConfig, whatsappLink } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { formatImage } from "@/content/images";
 import { galleryCopy } from "@/content/gallery";
+import { paymentCopy } from "@/content/payments";
 import { WhatsappIcon } from "@/components/icons/brand-icons";
 
 const c = experiencesCopy.detail;
@@ -187,6 +188,9 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
                   ))}
                 </ul>
                 <p className="mt-4 text-xs text-ink-muted">{c.pricesNote}</p>
+                {(e.installments ?? 1) > 1 && e.paymentDeadline && (
+                  <p className="mt-2 text-sm font-medium text-forest-900">{paymentCopy.detailInstallments(e.installments ?? 1, formatDate(e.paymentDeadline))}</p>
+                )}
                 {canRegister && !preview && (
                   <Suspense fallback={<RegisterButton slug={e.slug} label={c.register} variant="dark" />}>
                     <LiveRegisterButton slug={e.slug} variant="dark" {...live} />

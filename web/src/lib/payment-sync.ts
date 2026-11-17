@@ -7,7 +7,8 @@ import { adminRecipients, sendEmail } from "@/lib/email/send";
 import { AdminNoticeEmail, PaymentApprovedEmail } from "@/lib/email/templates";
 import { paymentCopy } from "@/content/payments";
 import { experiencesCopy } from "@/content/experiences";
-import { whatsappLink } from "@/config/site";
+import { absoluteUrl, whatsappLink } from "@/config/site";
+import { payableAmount } from "@/lib/mercadopago-rules";
 import { formatDateRange, formatPrice } from "@/lib/format";
 
 /**
@@ -28,12 +29,17 @@ async function notify(result: Extract<ApplyResult, { ok: true }>, operation: str
   const reg = await db.registration.findUnique({
     where: { id: result.registrationId },
     select: {
+      status: true,
+      payToken: true,
+      priceOption: { select: { price: true } },
+      payments: { select: { amount: true, status: true } },
       player: { select: { firstName: true, lastName: true, email: true } },
       experience: { select: { title: true, startDate: true, endDate: true } },
     },
   });
   if (!reg) return;
   const name = `${reg.player.firstName} ${reg.player.lastName}`;
+  const due = payableAmount(reg.status, reg.priceOption?.price, reg.payments);
   const title = reg.experience.title;
 
   if (result.newlyApproved && !result.attention) {
@@ -48,6 +54,8 @@ async function notify(result: Extract<ApplyResult, { ok: true }>, operation: str
         operation,
         confirmed: result.registrationStatus === "CONFIRMADA",
         whatsappHref: whatsappLink(experiencesCopy.registration.payment.whatsappMessage(title, name)),
+        remaining: due.ok ? formatPrice(due.amount) : undefined,
+        payUrl: due.ok && reg.payToken ? absoluteUrl(`/pagar/${reg.payToken}`) : undefined,
       }),
     });
   }

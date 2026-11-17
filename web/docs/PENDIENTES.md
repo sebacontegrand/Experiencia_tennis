@@ -27,3 +27,4 @@ No se inventan: hasta que lleguen, el sitio muestra un marcador neutro o "Consul
 | 20 | Revisar los datos técnicos generales de la raqueta en «Anatomía de una experiencia» (patrón 16 × 19, tensión 22–26 kg, cabeza ~630 cm²) | `src/content/racket.ts` · `/como-se-arma` | Pendiente (Gabriela) |
 | 21 | Mercado Pago: credenciales de prueba (sandbox) para probar y después las de producción de la cuenta de Gabriela; configurar el webhook en la app de Mercado Pago | Variables `MP_ACCESS_TOKEN` y `MP_WEBHOOK_SECRET` (Vercel). URL del webhook: `<sitio>/api/mercadopago/webhook`, evento «Pagos» | Pendiente (Sebastián) |
 | 22 | Licencia web de KEFA III y SATHU (si se quieren en el sitio en lugar de Bitter y Hind) | `src/app/layout.tsx` | Opcional |
+| 23 | `CRON_SECRET` en Vercel (texto largo al azar) para el recordatorio diario de pagos | Variables de Vercel | Pendiente (Sebastián) |
