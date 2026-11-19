@@ -154,24 +154,15 @@
   }
 }
 
-/* Anatomía de la raqueta (home): pieza activa iluminada, el resto en segundo plano. */
-.racket-anatomy .ra-part {
-  transition:
-    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+/* Anatomía de la raqueta (/como-se-arma): la foto se funde con el fondo y el foco se mueve suave. */
+.racket-anatomy .ra-photo {
+  --ra-fade: linear-gradient(to right, transparent, black 4%, black 96%, transparent),
+    linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+  mask-image: var(--ra-fade);
+  mask-composite: intersect;
 }
-.racket-anatomy .ra-part[data-state="off"] {
-  opacity: 0.5;
-}
-.racket-anatomy .ra-part[data-state="on"] {
-  filter: drop-shadow(0 0 14px var(--color-ball-glow));
-}
-@media (prefers-reduced-motion: no-preference) {
-  .racket-anatomy .ra-sweet.is-on {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: ra-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-  }
+.racket-anatomy .ra-dim {
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 @media (prefers-reduced-motion: no-preference) {
   .ra-nudge {
@@ -186,15 +177,6 @@
   }
   30% {
     transform: translateY(3px);
-  }
-}
-@keyframes ra-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.12);
   }
 }
 

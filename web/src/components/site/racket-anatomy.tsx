@@ -1,37 +1,28 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useId, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { racketCopy as c, type RacketPart, type RacketPartId } from "@/content/racket";
 import { cn } from "@/lib/utils";
 
 const parts = c.parts as readonly RacketPart[];
 const N = parts.length;
-/** Tramos del scroll: medio de intro, uno por pieza y uno para volver a armarla. */
+/** Tramos del scroll: medio de intro, uno por pieza y uno para el cierre. */
 const SEGMENTS = N + 1.5;
-/** Cuánto se separa cada pieza (unidades del viewBox). */
-const offsets: Record<RacketPartId, [number, number]> = {
-  strings: [170, -70],
-  sweetspot: [0, 0],
-  frame: [70, 30],
-  throat: [0, 0],
-  grip: [-40, -80],
-  cap: [-120, 0],
-};
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
-const easeOut = (t: number) => 1 - Math.pow(1 - t, 4);
 const pad = (n: number) => String(n).padStart(2, "0");
 const partName = (id: RacketPartId) => parts.find((p) => p.id === id)?.name ?? id;
 
 type Phase = { mode: "static" | "scroll"; active: number; outro: boolean };
-type PartStates = Partial<Record<RacketPartId, "on" | "off">>;
 
 /**
- * La raqueta se desarma pieza por pieza al hacer scroll (panel fijo) y se vuelve a armar al final.
+ * Foto de la raqueta (panel fijo): con el scroll se ilumina una pieza por vez y aparece su primer
+ * plano con lo que aporta al juego y a la experiencia. Al final se ve entera otra vez.
  * Debajo, perfiles de jugador que iluminan las piezas que más le importan a cada uno.
- * Sin JS o con «reducir movimiento» se muestra desarmada y con todas las piezas descritas.
+ * Sin JS o con «reducir movimiento» se muestran todas las piezas con su foto y su texto.
  */
 export function RacketAnatomy() {
   const root = useRef<HTMLDivElement>(null);
@@ -51,13 +42,7 @@ export function RacketAnatomy() {
       const travel = rect.height - (window.innerHeight - header);
       const p = travel > 0 ? clamp((header - rect.top) / travel) : 0;
       const s = p * SEGMENTS - 0.5;
-      const assemble = easeOut(clamp((s - N) / 0.6));
       el.style.setProperty("--p", p.toFixed(4));
-      el.style.setProperty("--assembled", assemble.toFixed(4));
-      parts.forEach((part, i) => {
-        const e = easeOut(clamp((s - i) / 0.55)) * (1 - assemble);
-        el.style.setProperty(`--f-${part.id}`, e.toFixed(4));
-      });
       const active = s < 0 || s >= N ? -1 : Math.floor(s);
       const outro = s >= N;
       setPhase((prev) => (prev.active === active && prev.outro === outro && prev.mode === "scroll" ? prev : { mode: "scroll", active, outro }));
@@ -80,22 +65,20 @@ export function RacketAnatomy() {
     };
   }, []);
 
-  /** Lleva el scroll al punto en que la pieza `i` ya se separó. */
+  /** Lleva el scroll al tramo de la pieza `i`. */
   const goTo = useCallback((i: number) => {
     const el = root.current;
     if (!el) return;
     const header = document.querySelector("header")?.offsetHeight ?? 64;
     const travel = el.offsetHeight - (window.innerHeight - header);
-    const p = (i + 0.7 + 0.5) / SEGMENTS;
+    const p = (i + 0.5 + 0.5) / SEGMENTS;
     const top = el.getBoundingClientRect().top + window.scrollY - header + travel * p;
     window.scrollTo({ top, behavior: "smooth" });
   }, []);
 
   const scroll = phase.mode === "scroll";
   const { active, outro } = phase;
-  const activeId = scroll && active >= 0 ? parts[active].id : null;
-  const states: PartStates = {};
-  if (activeId) for (const p of parts) states[p.id] = p.id === activeId ? "on" : "off";
+  const focus: RacketPartId[] = scroll && active >= 0 ? [parts[active].id] : [];
 
   return (
     <section id="anatomia" aria-labelledby="anatomia-title" className="racket-anatomy relative bg-forest-950 text-white">
@@ -130,19 +113,13 @@ export function RacketAnatomy() {
                 scroll ? "lg:self-center" : "lg:sticky lg:top-40 lg:self-start",
               )}
             >
-              <RacketSvg states={states} label={`${c.title}: raqueta separada en ${N} piezas`} />
-              {scroll && active >= 0 && (
-                <ActivePanel
-                  key={active}
-                  part={parts[active]}
-                  index={active}
-                />
-              )}
+              <RacketPhoto focus={focus} label={c.photo.alt} onPick={scroll ? goTo : undefined} priority />
+              {scroll && active >= 0 && <ActivePanel key={active} part={parts[active]} index={active} />}
               {scroll && (
                 <p
                   aria-hidden
                   className={cn(
-                    "pointer-events-none absolute inset-x-0 -bottom-2 flex items-center justify-center gap-2 text-sm text-white/60 transition-opacity duration-500",
+                    "pointer-events-none absolute inset-x-0 -bottom-6 flex items-center justify-center gap-2 text-sm text-white/60 transition-opacity duration-500",
                     active === -1 && !outro ? "opacity-100" : "opacity-0",
                   )}
                 >
@@ -187,7 +164,7 @@ export function RacketAnatomy() {
                             <span className="font-serif text-2xl">{part.name}</span>
                           </p>
                         )}
-                        <PartDetail part={part} className={cn(scroll && "sr-only")} />
+                        <PartDetail part={part} className={cn(scroll && "sr-only")} withImage={!scroll} />
                       </li>
                     );
                   })}
@@ -227,9 +204,10 @@ function TraitList({ traits, tone = "dim" }: { traits: readonly string[]; tone?:
   );
 }
 
-function PartDetail({ part, className }: { part: RacketPart; className?: string }) {
+function PartDetail({ part, className, withImage = false }: { part: RacketPart; className?: string; withImage?: boolean }) {
   return (
     <div className={cn("pl-11", className)}>
+      {withImage && <CloseUp part={part} sizes="(min-width: 640px) 22rem, 90vw" className="mt-3 mb-4 max-w-sm" />}
       <p className="mt-1 text-[0.8125rem] font-medium text-white/60">{part.spec}</p>
       <div className="mt-3">
         <TraitList traits={part.traits} />
@@ -250,11 +228,12 @@ function ActivePanel({ part, index }: { part: RacketPart; index: number }) {
   return (
     <div
       aria-hidden
-      className="mt-4 grid gap-x-10 gap-y-4 px-3 sm:mt-6 sm:grid-cols-2 sm:px-0 lg:pr-12 xl:pr-24 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500"
+      className="mt-4 grid grid-cols-[6.5rem_1fr] gap-x-4 gap-y-4 px-3 sm:mt-6 sm:grid-cols-[11rem_1fr_1fr] sm:gap-x-8 sm:px-0 lg:pr-8 xl:pr-16 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-500"
     >
+      <CloseUp part={part} sizes="(min-width: 640px) 11rem, 6.5rem" className="self-start" />
       <div>
         <p className="flex items-baseline gap-3">
-          <span className="font-sans text-xs font-semibold text-ball-light tabular-nums">
+          <span className="font-sans text-xs font-semibold text-ball-light whitespace-nowrap tabular-nums">
             {pad(index + 1)} / {pad(N)}
           </span>
           <span className="font-serif text-3xl">{part.name}</span>
@@ -265,7 +244,7 @@ function ActivePanel({ part, index }: { part: RacketPart; index: number }) {
         </div>
         <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/85">{part.play}</p>
       </div>
-      <div className="border-t border-white/10 pt-4 sm:border-t-0 sm:border-l sm:pt-0 sm:pl-10">
+      <div className="col-span-2 border-t border-white/10 pt-4 sm:col-span-1 sm:border-t-0 sm:border-l sm:pt-0 sm:pl-8">
         <p className="text-[0.8125rem] text-white/60">{c.inExperience}</p>
         <p className="mt-1 font-serif text-2xl text-ball-light italic">{part.title}</p>
         <p className="mt-2 text-[0.9375rem] leading-relaxed text-white/75">{part.text}</p>
@@ -279,13 +258,9 @@ function Profiles() {
   const p = c.profiles;
   const [selected, setSelected] = useState<string>(p.items[0].id);
   const profile = p.items.find((i) => i.id === selected) ?? p.items[0];
-  const states: PartStates = {};
-  for (const part of parts) states[part.id] = (profile.parts as readonly RacketPartId[]).includes(part.id) ? "on" : "off";
-  // Piezas separadas, sin importar en qué punto del scroll quedó la raqueta de arriba.
-  const exploded = Object.fromEntries(parts.map((part) => [`--f-${part.id}`, 1])) as CSSProperties;
 
   return (
-    <div className="relative border-t border-white/10 px-5 py-20 sm:px-8 sm:py-24" style={exploded}>
+    <div className="relative border-t border-white/10 px-5 py-20 sm:px-8 sm:py-24">
       <div className="mx-auto grid max-w-6xl gap-x-12 gap-y-10 lg:grid-cols-[22rem_1fr]">
         <div>
           <h2 className="font-serif text-3xl font-light text-balance sm:text-4xl">{p.title}</h2>
@@ -315,7 +290,7 @@ function Profiles() {
 
         <div className="lg:pt-4">
           <div className="-mx-3 sm:mx-0 lg:-mr-8 xl:-mr-16">
-            <RacketSvg states={states} label={`${profile.label}: ${profile.parts.map(partName).join(", ")}`} />
+            <RacketPhoto focus={profile.parts} label={`${profile.label}: ${profile.parts.map(partName).join(", ")}`} />
           </div>
           <div key={profile.id} aria-live="polite" className="mt-6 max-w-xl motion-safe:animate-in motion-safe:fade-in motion-safe:duration-500">
             <div className="flex flex-wrap items-center gap-3">
@@ -326,6 +301,7 @@ function Profiles() {
             <p className="mt-3 text-sm text-white/60">{profile.parts.map(partName).join(", ")}</p>
           </div>
           <p className="mt-10 max-w-xl border-t border-white/10 pt-5 font-serif text-xl text-white/85 italic">{p.closing}</p>
+          <p className="mt-6 text-xs text-white/50">{c.aiNote}</p>
         </div>
       </div>
     </div>
@@ -356,130 +332,82 @@ function Backdrop() {
   );
 }
 
-/** Traslación de una pieza según su variable de avance (1 = separada). */
-function move(id: RacketPartId): CSSProperties {
-  const [dx, dy] = offsets[id];
-  return {
-    transform: `translate(calc(var(--f-${id}, 1) * ${dx}px), calc(var(--f-${id}, 1) * ${dy}px))`,
-  };
-}
+/**
+ * Dónde está cada pieza en la foto (en % del ancho y alto): `pin` = marcador numerado,
+ * `light` = centro y radio (en % del ancho) del foco que la ilumina.
+ */
+const PHOTO_RATIO = c.photo.width / c.photo.height;
+const spots: Record<RacketPartId, { pin: [number, number]; light: [number, number, number] }> = {
+  strings: { pin: [78, 31], light: [71.2, 51, 19] },
+  sweetspot: { pin: [69, 52], light: [69, 52, 7.5] },
+  frame: { pin: [93.6, 49], light: [71.2, 51, 24.5] },
+  throat: { pin: [40, 49], light: [40, 49, 10] },
+  grip: { pin: [25.5, 49.6], light: [19, 49.6, 14] },
+  cap: { pin: [6.2, 49.6], light: [6.2, 49.6, 4.5] },
+};
 
-// Cuerdas: 16 principales (a lo largo) y 19 cruzadas, dentro del aro interior (rx 212, ry 154).
-const mains = Array.from({ length: 16 }, (_, k) => 146 + (308 / 17) * (k + 1));
-const crosses = Array.from({ length: 19 }, (_, k) => 768 + (424 / 20) * (k + 1));
-
-function RacketSvg({ states, label }: { states: PartStates; label: string }) {
-  const uid = useId().replace(/:/g, "");
-  const id = (name: string) => `${uid}-${name}`;
-  const url = (name: string) => `url(#${id(name)})`;
-  // El punto dulce vive en el encordado: si está activo, se ilumina ese grupo.
-  const stringsState = states.sweetspot === "on" ? "on" : states.strings;
+/** Foto de la raqueta con un marcador por pieza; `focus` ilumina esas piezas y oscurece el resto. */
+function RacketPhoto({
+  focus,
+  label,
+  onPick,
+  priority = false,
+}: {
+  focus: readonly RacketPartId[];
+  label: string;
+  onPick?: (i: number) => void;
+  priority?: boolean;
+}) {
+  // Un foco elíptico por pieza (la imagen no es cuadrada: el alto se corrige con PHOTO_RATIO).
+  const mask = focus
+    .map((id) => {
+      const [x, y, r] = spots[id].light;
+      return `radial-gradient(${r}% ${r * PHOTO_RATIO}% at ${x}% ${y}%, transparent 55%, black 100%)`;
+    })
+    .join(", ");
+  const dim: CSSProperties = focus.length
+    ? { maskImage: mask, WebkitMaskImage: mask, maskComposite: "intersect", WebkitMaskComposite: "source-in" }
+    : { opacity: 0 };
 
   return (
-    <svg viewBox="40 60 1350 520" role="img" aria-label={label} className="h-auto w-full overflow-visible">
-      <defs>
-        <linearGradient id={id("frame")} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#4c8a6f" />
-          <stop offset="0.45" stopColor="#1c5440" />
-          <stop offset="1" stopColor="#0b2a20" />
-        </linearGradient>
-        <linearGradient id={id("core")} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#447c64" />
-          <stop offset="1" stopColor="#153b2d" />
-        </linearGradient>
-        <radialGradient id={id("sweet")}>
-          <stop offset="0" stopColor="#e3e77d" stopOpacity="0.75" />
-          <stop offset="0.6" stopColor="#d3d93a" stopOpacity="0.2" />
-          <stop offset="1" stopColor="#d3d93a" stopOpacity="0" />
-        </radialGradient>
-        <pattern id={id("wrap")} width="18" height="60" patternUnits="userSpaceOnUse" patternTransform="skewX(-38)">
-          <rect width="18" height="60" fill="#0b2419" />
-          <rect width="2.5" height="60" fill="#21503f" />
-        </pattern>
-        <clipPath id={id("bed")}>
-          <ellipse cx="980" cy="300" rx="212" ry="154" />
-        </clipPath>
-      </defs>
+    <figure className="relative" style={{ aspectRatio: `${c.photo.width} / ${c.photo.height}` }}>
+      {/* Foto y velo en una capa que se funde con el fondo; los marcadores quedan afuera para no desvanecerse. */}
+      <div className="ra-photo absolute inset-0">
+        <Image src={c.photo.src} alt={label} fill loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : "auto"} sizes="(min-width: 1024px) 50vw, 100vw" className="object-contain" />
+        <div aria-hidden className="ra-dim pointer-events-none absolute inset-0 bg-forest-950/75" style={dim} />
+      </div>
+      <div aria-hidden className="absolute inset-0">
+        {parts.map((part, i) => {
+          const on = focus.includes(part.id);
+          const [x, y] = spots[part.id].pin;
+          const Tag = onPick ? "button" : "span";
+          return (
+            <Tag
+              key={part.id}
+              {...(onPick ? { type: "button" as const, tabIndex: -1, onClick: () => onPick(i) } : {})}
+              className={cn(
+                "absolute inline-flex size-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-sans text-[0.6875rem] font-semibold tabular-nums transition-[background-color,color,box-shadow] duration-300 sm:size-8 sm:text-xs",
+                on
+                  ? "bg-ball text-forest-900 shadow-[0_0_0_6px_var(--color-ball-glow)]"
+                  : "bg-forest-950/80 text-white/80 ring-1 ring-white/40",
+                onPick && "cursor-pointer hover:bg-ball hover:text-forest-900",
+              )}
+              style={{ left: `${x}%`, top: `${y}%` }}
+            >
+              {pad(i + 1)}
+            </Tag>
+          );
+        })}
+      </div>
+    </figure>
+  );
+}
 
-      {/* Medida total: aparece cuando la raqueta se vuelve a armar */}
-      <g style={{ opacity: "var(--assembled, 0)" }}>
-        <path
-          d="M184 548 H1220"
-          stroke="#e3e77d"
-          strokeWidth="1.5"
-          pathLength={1}
-          strokeDasharray="1"
-          style={{ strokeDashoffset: "calc(1 - var(--assembled, 0))" }}
-        />
-        <path d="M184 534 V562 M1220 534 V562" stroke="#e3e77d" strokeWidth="1.5" />
-        <rect x="642" y="530" width="120" height="36" fill="#06180f" />
-        <text x="702" y="556" textAnchor="middle" fill="#e3e77d" fontSize="24" fontFamily="var(--font-hind)" fontWeight="600">
-          {c.lengthLabel}
-        </text>
-      </g>
-
-      {/* Tapón */}
-      <g className="ra-part" data-state={states.cap} style={move("cap")}>
-        <rect x="184" y="274" width="32" height="52" rx="9" fill={url("core")} />
-        <rect x="207" y="275" width="5" height="50" fill="#d3d93a" />
-      </g>
-
-      {/* Garganta + varilla + alma del mango */}
-      <g className="ra-part" data-state={states.throat} style={move("throat")}>
-        <rect x="212" y="281" width="296" height="38" rx="3" fill={url("core")} />
-        <path d="M214 290 H506 M214 310 H506" stroke="#62a083" strokeOpacity="0.5" strokeWidth="1.5" />
-        <path d="M500 283 L604 281 L604 319 L500 317 Z" fill={url("frame")} />
-        <path d="M794 188 C720 224 662 268 590 284 L590 299 C668 286 726 254 770 232 Z" fill={url("frame")} />
-        <path d="M794 412 C720 376 662 332 590 316 L590 301 C668 314 726 346 770 368 Z" fill={url("frame")} />
-        <path d="M794 190 C722 226 664 269 592 285" fill="none" stroke="#8ab9a2" strokeOpacity="0.45" strokeWidth="1.5" />
-      </g>
-
-      {/* Empuñadura (cubregrip) */}
-      <g className="ra-part" data-state={states.grip} style={move("grip")}>
-        <rect x="216" y="277" width="286" height="46" rx="7" fill={url("wrap")} />
-        <rect x="216" y="277" width="286" height="46" rx="7" fill="none" stroke="#2a5a47" strokeWidth="1.5" />
-        <rect x="486" y="275" width="20" height="50" rx="2" fill="#d3d93a" />
-      </g>
-
-      {/* Marco */}
-      <g className="ra-part" data-state={states.frame} style={move("frame")}>
-        <path
-          fillRule="evenodd"
-          fill={url("frame")}
-          d="M740 300 a240 182 0 1 0 480 0 a240 182 0 1 0 -480 0 Z M768 300 a212 154 0 1 0 424 0 a212 154 0 1 0 -424 0 Z"
-        />
-        <ellipse cx="980" cy="300" rx="226" ry="168" fill="none" stroke="#d3d93a" strokeWidth="28" strokeDasharray="0 200 26 804 26 188" />
-        <ellipse cx="980" cy="300" rx="226" ry="168" fill="none" stroke="#06180f" strokeOpacity="0.8" strokeWidth="3" strokeDasharray="2 13" />
-        <ellipse cx="980" cy="300" rx="238" ry="180" fill="none" stroke="#9cc5b1" strokeOpacity="0.45" strokeWidth="1.5" />
-      </g>
-
-      {/* Encordado y punto dulce */}
-      <g className="ra-part" data-state={stringsState} style={move("strings")}>
-        <ellipse
-          cx="980"
-          cy="300"
-          rx="212"
-          ry="154"
-          fill="#06180f"
-          fillOpacity="0.35"
-          stroke="#ede9d6"
-          strokeWidth="1.5"
-          style={{ strokeOpacity: "calc(var(--f-strings, 1) * 0.35)" }}
-        />
-        <g clipPath={url("bed")} stroke="#ede9d6" strokeOpacity="0.78" strokeWidth="1.6">
-          {mains.map((y) => (
-            <line key={`m${y}`} x1="760" x2="1200" y1={y} y2={y} />
-          ))}
-          {crosses.map((x) => (
-            <line key={`c${x}`} y1="140" y2="460" x1={x} x2={x} />
-          ))}
-        </g>
-        <g className={cn("ra-sweet", states.sweetspot === "on" && "is-on")} style={{ opacity: "var(--f-sweetspot, 1)" }}>
-          <circle cx="955" cy="300" r="70" fill={url("sweet")} />
-          <circle cx="955" cy="300" r="46" fill="none" stroke="#e3e77d" strokeWidth="1.5" strokeDasharray="4 6" />
-          <circle cx="955" cy="300" r="5" fill="#e3e77d" />
-        </g>
-      </g>
-    </svg>
+/** Primer plano de una pieza, con el mismo tratamiento de la foto grande. */
+function CloseUp({ part, className, sizes }: { part: RacketPart; className?: string; sizes: string }) {
+  return (
+    <div className={cn("relative aspect-[4/3] overflow-hidden bg-forest-900 ring-1 ring-white/10", className)}>
+      <Image src={part.image.src} alt={part.image.alt} fill sizes={sizes} className="object-cover" />
+    </div>
   );
 }
