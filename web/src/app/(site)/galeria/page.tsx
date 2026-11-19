@@ -26,7 +26,7 @@ export default function GalleryPage() {
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80">{c.lead}</p>
         </div>
       </section>
-      <Suspense fallback={<div className="min-h-[50vh] bg-white" />}>
+      <Suspense fallback={<div className="min-h-[50vh] bg-paper" />}>
         <Albums />
       </Suspense>
     </>
@@ -64,7 +64,7 @@ async function Albums() {
                     <div className="grid aspect-4/3 grid-cols-3 grid-rows-2 gap-1.5 overflow-hidden">
                       {first && (
                         <div className={`relative overflow-hidden bg-cream ${rest.length ? "col-span-2 row-span-2" : "col-span-3 row-span-2"}`}>
-                          <Image src={first.url} alt="" fill sizes="(min-width: 768px) 33vw, 66vw" className="object-cover transition duration-700 ease-out group-hover:scale-[1.03] motion-reduce:transition-none" />
+                          <Image src={first.url} alt="" fill sizes="(min-width: 768px) 33vw, 66vw" className="object-cover transition-opacity duration-300 ease-out group-hover:opacity-85" />
                         </div>
                       )}
                       {rest.map((p, i) => (
@@ -74,11 +74,11 @@ async function Albums() {
                       ))}
                     </div>
                     <p className="mt-5 text-[0.8125rem] font-medium text-clay-deep">
-                      {a.format.name} · {formatDateRange(a.startDate, a.endDate)}
+                      Experiencia {a.format.name}, {formatDateRange(a.startDate, a.endDate)}
                     </p>
                     <h3 className="mt-1 font-serif text-3xl text-forest-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{a.title}</h3>
                     <p className="mt-1 text-ink-muted">
-                      {a.destination} · {c.photos(a._count.gallery)}
+                      {a.destination}. {c.photos(a._count.gallery)}
                     </p>
                   </Link>
                 </li>
@@ -104,14 +104,14 @@ async function Albums() {
                     <div className="relative aspect-3/2 overflow-hidden bg-forest-900">
                       <Image src={img.src} alt="" fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover opacity-45 grayscale" style={{ objectPosition: img.position }} />
                       <span className="absolute inset-0 flex items-end p-5">
-                        <span className="inline-flex items-center gap-2 bg-white px-3 py-1.5 text-[0.8125rem] font-semibold text-forest-900">
+                        <span className="inline-flex items-center gap-2 bg-paper px-3 py-1.5 text-[0.8125rem] font-semibold text-forest-900">
                           <CalendarDays aria-hidden className="size-4" /> {c.upcomingWhen} {formatDate(e.endDate)}
                         </span>
                       </span>
                     </div>
                     <h3 className="mt-4 font-serif text-2xl text-forest-900 group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{e.title}</h3>
                     <p className="mt-1 text-sm text-ink-muted">
-                      {e.format.name} · {e.destination}
+                      Experiencia {e.format.name}, {e.destination}
                     </p>
                   </Link>
                 </li>

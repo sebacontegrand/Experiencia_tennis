@@ -22,7 +22,7 @@ export default async function ExperiencesPage() {
     <>
       <section className="bg-forest-900 px-5 pt-14 pb-16 text-white sm:px-8 sm:pt-20 sm:pb-20">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading as="h1" tone="dark" eyebrow={c.eyebrow} title={c.title} lead={c.lead} />
+          <SectionHeading as="h1" tone="dark" title={c.title} lead={c.lead} />
         </div>
       </section>
 
@@ -31,7 +31,7 @@ export default async function ExperiencesPage() {
           {formats.map((f) => {
             const img = formatImage(f.slug);
             return (
-              <li key={f.id} id={f.slug} className="scroll-mt-24 overflow-hidden rounded-sm border border-border bg-white">
+              <li key={f.id} id={f.slug} className="scroll-mt-24 overflow-hidden rounded-sm border border-border bg-paper">
                 <Image
                   src={img.src}
                   alt=""
@@ -42,8 +42,7 @@ export default async function ExperiencesPage() {
                   style={{ objectPosition: img.position }}
                 />
                 <div className="p-8">
-                  <p className="eyebrow text-clay-deep">Experiencia</p>
-                  <h2 className="mt-2 font-serif text-4xl text-forest-900">{f.name}</h2>
+                  <h2 className="font-serif text-4xl text-forest-900">{f.name}</h2>
                   <p className="mt-3 font-serif text-xl text-ink italic">{f.tagline}</p>
                   <p className="mt-4 leading-relaxed text-ink-muted">{f.description}</p>
                   <ul className="mt-6 space-y-2.5 text-sm">

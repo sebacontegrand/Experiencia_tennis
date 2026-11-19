@@ -1,7 +1,6 @@
 /** Textos de la home. Los formatos y las experiencias vienen de la base. */
 export const homeCopy = {
   hero: {
-    eyebrow: "Experiencia Tenis · Gabriela Bruno",
     title: "El tenis nos reúne.",
     titleAccent: "La experiencia nos conecta.",
     lead:
@@ -67,7 +66,7 @@ export const homeCopy = {
 
   community: {
     eyebrow: "Comunidad",
-    title: "Jugá · Conectá · Viví",
+    title: "Jugá, conectá, viví.",
     text:
       "Experiencia Tenis es, antes que nada, una comunidad de jugadoras y jugadores que buscan algo más que competir. Grupos de amigos, parejas de dobles, compañeras de club y profes que quieren compartir el tenis de otra manera.",
     // TODO(negocio): fotos y testimonios reales después de cada experiencia (Fase 6)

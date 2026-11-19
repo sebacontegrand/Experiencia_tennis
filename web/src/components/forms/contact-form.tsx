@@ -50,7 +50,7 @@ export function ContactForm({
 
   if (state.status === "success") {
     return (
-      <div ref={successRef} tabIndex={-1} role="status" className="rounded-sm border border-ball/50 bg-white p-8 text-center outline-none">
+      <div ref={successRef} tabIndex={-1} role="status" className="rounded-sm border border-ball/50 bg-paper p-8 text-center outline-none">
         <CheckCircle2 aria-hidden className="mx-auto size-10 text-clay-deep" />
         <h3 className="mt-4 font-serif text-3xl text-forest-900">{contactCopy.form.successTitle}</h3>
         <p className="mx-auto mt-3 max-w-md text-ink-muted">{contactCopy.form.successText}</p>

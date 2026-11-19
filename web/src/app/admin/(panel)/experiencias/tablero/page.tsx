@@ -64,7 +64,7 @@ export default async function BoardPage() {
         </dl>
         <Link
           href="/admin/testimonios"
-          className="mt-3 flex min-h-12 items-center justify-between gap-3 rounded-sm bg-white px-4 text-sm font-semibold text-forest-900 hover:bg-cream-200"
+          className="mt-3 flex min-h-12 items-center justify-between gap-3 rounded-sm bg-paper px-4 text-sm font-semibold text-forest-900 hover:bg-cream-200"
         >
           <span className="inline-flex items-center gap-2">
             <Quote aria-hidden className="size-4 text-clay-deep" />
@@ -120,9 +120,9 @@ type Row = { id: string; title: string; status: string; startDate: Date; endDate
 
 function ExperienceRow({ e, o }: { e: Row; o: Overview }) {
   return (
-    <li className="rounded-sm border border-border bg-white p-5">
+    <li className="rounded-sm border border-border bg-paper p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs font-semibold tracking-widest text-clay-deep uppercase">{e.format.name}</p>
+        <p className="meta-label text-clay-deep">{e.format.name}</p>
         <StatusBadge status={e.status} />
       </div>
       <h3 className="mt-2 font-serif text-2xl text-forest-900">
@@ -138,7 +138,7 @@ function ExperienceRow({ e, o }: { e: Row; o: Overview }) {
       {o.alerts.length > 0 && (
         <ul className="mt-4 space-y-1.5">
           {o.alerts.map((a) => (
-            <li key={a.kind} className={cn("flex items-start gap-2 text-sm", a.kind === "losing" ? "text-destructive" : "text-amber-900")}>
+            <li key={a.kind} className={cn("flex items-start gap-2 text-sm", a.kind === "losing" ? "text-destructive" : "text-clay-deep")}>
               <AlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0" />
               {alertText(a)}
             </li>
@@ -152,7 +152,7 @@ function ExperienceRow({ e, o }: { e: Row; o: Overview }) {
           <span className="font-semibold text-forest-900">
             {c.people}: {c.seats(o.taken, o.capacity)}
           </span>
-          {o.waitlist > 0 && <span className="text-violet-900">{c.waitlist}: {o.waitlist}</span>}
+          {o.waitlist > 0 && <span className="text-clay-deep">{c.waitlist}: {o.waitlist}</span>}
         </div>
         <div
           role="progressbar"
@@ -219,7 +219,7 @@ function Figure({ label, value, tone }: { label: string; value: string; tone?: "
       <dd
         className={cn(
           "mt-1 font-semibold text-forest-900",
-          tone === "good" && "text-emerald-800",
+          tone === "good" && "text-forest-700",
           tone === "bad" && "text-destructive",
         )}
       >
@@ -237,11 +237,11 @@ function CommunityStat({ label, value, href }: { label: string; value: number; h
     </>
   );
   return href ? (
-    <div className="relative rounded-sm border border-border bg-white p-4 hover:border-forest-900">
+    <div className="relative rounded-sm border border-border bg-paper p-4 hover:border-forest-900">
       <Link href={href} className="absolute inset-0" aria-label={`${label}: ${value}`} />
       {body}
     </div>
   ) : (
-    <div className="rounded-sm border border-border bg-white p-4">{body}</div>
+    <div className="rounded-sm border border-border bg-paper p-4">{body}</div>
   );
 }

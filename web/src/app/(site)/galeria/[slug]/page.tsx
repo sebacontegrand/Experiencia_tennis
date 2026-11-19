@@ -55,13 +55,13 @@ async function Album({ params }: Pick<PageProps<"/galeria/[slug]">, "params">) {
             <ArrowLeft aria-hidden className="size-4" /> {c.back}
           </Link>
           <p className="mt-8 text-[0.8125rem] font-medium text-ball-light">
-            {album.format.name} · {formatDateRange(album.startDate, album.endDate)} · {album.destination}
+            Experiencia {album.format.name}, {formatDateRange(album.startDate, album.endDate)}, {album.destination}
           </p>
           <h1 className="mt-3 max-w-3xl font-serif text-5xl leading-[1.02] font-light text-balance sm:text-6xl">{album.title}</h1>
           <div className="brand-rule mt-6" />
           <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-white/80">
-              {c.photos(album.gallery.length)} · {c.albumLead}
+              {c.photos(album.gallery.length)}. {c.albumLead}
             </p>
             <a
               href={share}

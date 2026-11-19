@@ -61,7 +61,7 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
       </div>
 
       {totalAll === 0 ? (
-        <p className="rounded-sm bg-white p-5 text-ink-muted">{c.none}</p>
+        <p className="rounded-sm bg-paper p-5 text-ink-muted">{c.none}</p>
       ) : (
         <>
           {/* Un solo formulario GET: búsqueda + filtros en la URL. */}
@@ -80,7 +80,7 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
               </button>
             </div>
 
-            <details open={filterCount > 0} className="group rounded-sm border border-border bg-white">
+            <details open={filterCount > 0} className="group rounded-sm border border-border bg-paper">
               <summary className="flex h-12 cursor-pointer list-none items-center gap-2 px-4 text-sm font-semibold text-forest-900 [&::-webkit-details-marker]:hidden">
                 <SlidersHorizontal aria-hidden className="size-4" />
                 {c.filtersTitle}
@@ -115,12 +115,12 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
           </div>
 
           {/* Export: solo con consentimiento de comunicaciones. */}
-          <div className="rounded-sm bg-white p-4">
+          <div className="rounded-sm bg-paper p-4">
             {consenting > 0 ? (
               <>
                 <a
                   href={`/admin/jugadores/exportar${qs ? `?${qs}` : ""}`}
-                  className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
+                  className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-paper px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
                 >
                   <Download aria-hidden className="size-4" /> {c.exportCsv}
                 </a>
@@ -139,7 +139,7 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
                 const wa = waNumber(p.whatsapp);
                 const meta = [p.city, p.club, p.level].filter(Boolean).join(" · ");
                 return (
-                  <li key={p.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-forest-900">
+                  <li key={p.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-paper p-4 hover:border-forest-900">
                     <div className="min-w-0 flex-1">
                       <h2 className="font-semibold text-forest-900">
                         <Link href={`/admin/jugadores/${p.id}`} className="after:absolute after:inset-0">
@@ -149,7 +149,7 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
                       {meta && <p className="mt-1 truncate text-sm text-ink">{meta}</p>}
                       <p className="mt-1 flex flex-wrap gap-x-3 text-sm text-ink-muted">
                         <span>{c.experiences(p._count.registrations)}</span>
-                        <span className={cn(p.marketingConsent ? "text-emerald-800" : "text-ink-muted")}>
+                        <span className={cn(p.marketingConsent ? "text-forest-700" : "text-ink-muted")}>
                           {p.marketingConsent ? c.consentYes : c.consentNo}
                         </span>
                       </p>
@@ -160,7 +160,7 @@ export default async function PlayersPage({ searchParams }: PageProps<"/admin/ju
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`WhatsApp a ${p.firstName}`}
-                        className="relative z-10 inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+                        className="relative z-10 inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-forest-600/10 text-forest-700 hover:bg-forest-600/20"
                       >
                         <MessageCircle aria-hidden className="size-5" />
                       </a>

@@ -33,7 +33,7 @@ export function CommunityForm({ id = "comunidad-form" }: { id?: string }) {
         ref={successRef}
         tabIndex={-1}
         role="status"
-        className="rounded-sm border border-ball/50 bg-white p-8 text-center outline-none"
+        className="rounded-sm border border-ball/50 bg-paper p-8 text-center outline-none"
       >
         <CheckCircle2 aria-hidden className="mx-auto size-10 text-clay-deep" />
         <h3 className="mt-4 font-serif text-3xl text-forest-900">{communityCopy.form.successTitle}</h3>

@@ -54,6 +54,8 @@ export const experiencesCopy = {
     rainPlan: "Plan de lluvia",
     prices: "Opciones y valores",
     pricesNote: "Valores por persona, en pesos argentinos.",
+    // Mientras ninguna opción tiene precio cargado: una sola nota en vez de "Consultar" en cada fila.
+    pricesPending: "Valores por persona, a consultar.",
     optionFull: "Completa",
     deadline: (date: string) => `Inscripción hasta el ${date}`,
     register: "Inscribirme",

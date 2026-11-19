@@ -56,7 +56,7 @@ export function ActionForm({
         >
           {pending ? pendingLabel : submitLabel}
         </button>
-        <p aria-live="polite" className={cn("text-sm", state?.ok ? "text-emerald-700" : "text-destructive")}>
+        <p aria-live="polite" className={cn("text-sm", state?.ok ? "text-forest-700" : "text-destructive")}>
           {!pending && state?.message}
         </p>
       </div>

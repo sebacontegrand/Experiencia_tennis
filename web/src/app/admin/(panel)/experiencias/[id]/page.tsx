@@ -78,7 +78,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
         <Link href="/admin/experiencias" className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-forest-900">
           <ArrowLeft aria-hidden className="size-4" /> {c.back}
         </Link>
-        <p className="mt-6 text-xs font-semibold tracking-widest text-clay-deep uppercase">{e.format.name}</p>
+        <p className="mt-6 meta-label text-clay-deep">{e.format.name}</p>
         <h1 className="mt-1 font-serif text-4xl text-forest-900">{e.title}</h1>
         <p className="mt-1 text-ink-muted">{formatDateRange(e.startDate, e.endDate)}</p>
       </div>
@@ -92,7 +92,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
           </p>
         </div>
         {missingPrices > 0 && (
-          <p className="mt-4 rounded-sm bg-amber-50 px-4 py-3 text-sm text-amber-900">{c.missingPrices(missingPrices)}</p>
+          <p className="mt-4 rounded-sm bg-ball/25 px-4 py-3 text-sm text-forest-900">{c.missingPrices(missingPrices)}</p>
         )}
         <div className="mt-5 flex flex-wrap items-start gap-3">
           {(e.status === "BORRADOR" || isVisible) && (
@@ -108,7 +108,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
           )}
           <Link
             href={`/admin/experiencias/${e.id}/vista-previa`}
-            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
+            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-paper px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
           >
             <Eye aria-hidden className="size-4" /> {c.preview}
           </Link>
@@ -117,7 +117,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
               href={`/experiencias/${e.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
+              className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-paper px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
             >
               <ExternalLink aria-hidden className="size-4" /> {c.viewLive}
             </a>
@@ -358,14 +358,14 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
               {e.thankYouSentAt ? adminCopy.thankYou.sent(formatDate(e.thankYouSentAt)) : adminCopy.thankYou.recipients(attended)}
             </p>
             {!e.thankYouSentAt && photoCount - hiddenPhotos === 0 && (
-              <p className="rounded-sm bg-amber-50 px-4 py-3 text-sm text-amber-900">{adminCopy.thankYou.noPhotos}</p>
+              <p className="rounded-sm bg-ball/25 px-4 py-3 text-sm text-forest-900">{adminCopy.thankYou.noPhotos}</p>
             )}
             <div className="flex flex-wrap items-start gap-3">
               <a
                 href={`/admin/experiencias/${e.id}/agradecimiento`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
+                className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-paper px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
               >
                 <Eye aria-hidden className="size-4" /> {adminCopy.thankYou.preview}
               </a>
@@ -393,7 +393,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
       </Card>
 
       {/* Eliminar: al final y separado, para no tocarlo sin querer. */}
-      <section aria-labelledby="eliminar" className="rounded-sm border border-destructive/30 bg-white p-5 sm:p-7">
+      <section aria-labelledby="eliminar" className="rounded-sm border border-destructive/30 bg-paper p-5 sm:p-7">
         <h2 id="eliminar" className="font-serif text-2xl text-forest-900">
           {c.deleteTitle}
         </h2>
@@ -414,7 +414,7 @@ export default async function EditExperiencePage({ params }: PageProps<"/admin/e
 
 function Card({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-sm bg-white p-5 sm:p-7">
+    <section className="rounded-sm bg-paper p-5 sm:p-7">
       <h2 className="font-serif text-2xl text-forest-900">{title}</h2>
       {hint && <p className="mt-1 text-sm text-ink-muted">{hint}</p>}
       <div className="mt-5">{children}</div>

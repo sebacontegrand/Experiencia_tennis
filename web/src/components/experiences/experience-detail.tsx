@@ -22,7 +22,15 @@ const c = experiencesCopy.detail;
  * El contenido viene cacheado; lo que depende de los cupos (lugares, botón, opciones completas)
  * se renderiza en vivo dentro de <Suspense> con getLiveAvailability.
  */
-export function ExperienceDetailView({ experience: e, preview = false, photoCount = 0 }: { experience: Detail; preview?: boolean; photoCount?: number }) {
+export function ExperienceDetailView({
+  experience: e,
+  preview = false,
+  photoCount = 0,
+}: {
+  experience: Detail;
+  preview?: boolean;
+  photoCount?: number;
+}) {
   const canRegister = !e.closedReason;
   const itinerary = parseItinerary(e.itinerary);
   const live = { experienceId: e.id };
@@ -38,22 +46,14 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
       <section className="relative isolate overflow-hidden bg-forest-900 px-5 pt-6 pb-16 text-white sm:px-8 sm:pt-8 sm:pb-20">
         {/* Foto ilustrativa del formato: franja arriba que se funde en navy donde empieza el título. */}
         <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-80 sm:h-[26rem]">
-          <Image
-            src={cover.src}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-            style={{ objectPosition: cover.position }}
-          />
+          <Image src={cover.src} alt="" fill priority sizes="100vw" className="object-cover" style={{ objectPosition: cover.position }} />
           <div className="absolute inset-0 bg-linear-to-b from-forest-900/60 via-forest-900/25 via-30% to-forest-900" />
         </div>
         <div className="mx-auto max-w-6xl">
           <Link href="/calendario" className="inline-flex min-h-11 items-center gap-2 text-sm text-white hover:text-ball-light">
             <ArrowLeft aria-hidden className="size-4" /> {c.back}
           </Link>
-          <p className="eyebrow mt-44 text-ball sm:mt-60">Experiencia {e.format.name}</p>
+          <p className="meta-label mt-44 text-ball sm:mt-60">Experiencia {e.format.name}</p>
           <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.05] font-medium text-balance sm:text-6xl">{e.title}</h1>
           <div className="brand-rule mt-6" />
           {e.summary && <p className="mt-6 max-w-2xl text-lg text-white/80">{e.summary}</p>}
@@ -85,7 +85,7 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
               value={
                 <>
                   {c.capacityValue(e.capacity)}
-                  {e.audience && <> · {experiencesCopy.audience[e.audience]}</>}
+                  {e.audience && <>, {experiencesCopy.audience[e.audience].toLowerCase()}</>}
                   <Suspense fallback={<span className="mt-1 block h-5" />}>
                     <SeatsLine {...live} />
                   </Suspense>
@@ -111,13 +111,11 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
               {c.ask}
             </a>
           </div>
-          {e.registrationDeadline && canRegister && (
-            <p className="mt-4 text-sm text-white/70">{c.deadline(formatDate(e.registrationDeadline))}</p>
-          )}
+          {e.registrationDeadline && canRegister && <p className="mt-4 text-sm text-white/70">{c.deadline(formatDate(e.registrationDeadline))}</p>}
         </div>
       </section>
 
-      <section className="bg-white px-5 py-16 sm:px-8 sm:py-20">
+      <section className="bg-paper px-5 py-16 sm:px-8 sm:py-20">
         <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-[1.5fr_1fr]">
           <div className="space-y-16">
             <p className="text-lg leading-relaxed text-ink">{e.description}</p>
@@ -136,9 +134,7 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
                         {day.items.map((item) => (
                           <li key={item.text} className="relative py-2.5 pl-6 sm:flex sm:gap-6">
                             <span aria-hidden className="absolute top-[1.15rem] -left-[4px] size-[7px] rounded-full bg-ball" />
-                            {item.time && (
-                              <span className="block shrink-0 text-sm font-semibold text-clay-deep sm:w-28">{item.time}</span>
-                            )}
+                            {item.time && <span className="block shrink-0 text-sm font-semibold text-clay-deep sm:w-28">{item.time}</span>}
                             <span className="text-ink">{item.text}</span>
                           </li>
                         ))}
@@ -151,9 +147,7 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
 
             {(e.includes.length > 0 || e.excludes.length > 0) && (
               <div className="grid gap-10 sm:grid-cols-2">
-                {e.includes.length > 0 && (
-                  <List title={c.includes} items={e.includes} icon={<Check className="text-clay-deep" />} />
-                )}
+                {e.includes.length > 0 && <List title={c.includes} items={e.includes} icon={<Check className="text-clay-deep" />} />}
                 {e.excludes.length > 0 && <List title={c.excludes} items={e.excludes} icon={<X className="text-ink-muted" />} />}
               </div>
             )}
@@ -169,36 +163,42 @@ export function ExperienceDetailView({ experience: e, preview = false, photoCoun
             )}
           </div>
 
-          {e.priceOptions.length > 0 && (
-            <aside aria-labelledby="precios" className="lg:sticky lg:top-28 lg:self-start">
-              <div className="rounded-sm border border-border p-7">
-                <h2 id="precios" className="font-serif text-3xl text-forest-900">
-                  {c.prices}
-                </h2>
-                <ul className="mt-6 divide-y divide-border">
-                  {e.priceOptions.map((o) => (
-                    <li key={o.id} className="flex items-baseline justify-between gap-4 py-3.5">
-                      <span className="text-ink">{o.label}</span>
-                      <span className="shrink-0 text-right font-medium text-forest-900">
-                        <Suspense fallback={formatPrice(o.price)}>
-                          <LiveOptionPrice optionId={o.id} price={o.price} {...live} />
-                        </Suspense>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-4 text-xs text-ink-muted">{c.pricesNote}</p>
-                {(e.installments ?? 1) > 1 && e.paymentDeadline && (
-                  <p className="mt-2 text-sm font-medium text-forest-900">{paymentCopy.detailInstallments(e.installments ?? 1, formatDate(e.paymentDeadline))}</p>
-                )}
-                {canRegister && !preview && (
-                  <Suspense fallback={<RegisterButton slug={e.slug} label={c.register} variant="dark" />}>
-                    <LiveRegisterButton slug={e.slug} variant="dark" {...live} />
-                  </Suspense>
-                )}
-              </div>
-            </aside>
-          )}
+          {e.priceOptions.length > 0 &&
+            (() => {
+              const unpriced = e.priceOptions.every((o) => o.price == null);
+              return (
+                <aside aria-labelledby="precios" className="lg:sticky lg:top-28 lg:self-start">
+                  <div className="rounded-sm border border-border p-7">
+                    <h2 id="precios" className="font-serif text-3xl text-forest-900">
+                      {c.prices}
+                    </h2>
+                    <ul className="mt-6 divide-y divide-border">
+                      {e.priceOptions.map((o) => (
+                        <li key={o.id} className="flex items-baseline justify-between gap-4 py-3.5">
+                          <span className="text-ink">{o.label}</span>
+                          <span className="shrink-0 text-right font-medium text-forest-900">
+                            <Suspense fallback={unpriced ? null : formatPrice(o.price)}>
+                              <LiveOptionPrice optionId={o.id} price={o.price} hidePrice={unpriced} {...live} />
+                            </Suspense>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-4 text-sm text-ink-muted">{unpriced ? c.pricesPending : c.pricesNote}</p>
+                    {(e.installments ?? 1) > 1 && e.paymentDeadline && (
+                      <p className="mt-2 text-sm font-medium text-forest-900">
+                        {paymentCopy.detailInstallments(e.installments ?? 1, formatDate(e.paymentDeadline))}
+                      </p>
+                    )}
+                    {canRegister && !preview && (
+                      <Suspense fallback={<RegisterButton slug={e.slug} label={c.register} variant="dark" />}>
+                        <LiveRegisterButton slug={e.slug} variant="dark" {...live} />
+                      </Suspense>
+                    )}
+                  </div>
+                </aside>
+              );
+            })()}
         </div>
       </section>
 
@@ -270,12 +270,7 @@ async function SeatsLine({ experienceId }: Live) {
   return <span className="mt-1 block text-sm text-ball-light">{a.isFull ? c.full : c.seatsLeft(a.left)}</span>;
 }
 
-async function LiveRegisterButton({
-  slug,
-  experienceId,
-  preview,
-  variant,
-}: Live & { slug: string; preview?: boolean; variant?: "dark" }) {
+async function LiveRegisterButton({ slug, experienceId, preview, variant }: Live & { slug: string; preview?: boolean; variant?: "dark" }) {
   const a = await getLiveAvailability(experienceId);
   return <RegisterButton slug={slug} label={a.isFull ? c.waitlist : c.register} preview={preview} variant={variant} />;
 }
@@ -293,9 +288,7 @@ function RegisterButton({ slug, label, preview, variant }: { slug: string; label
       href={`/experiencias/${slug}/inscripcion`}
       className={cn(
         "btn-label inline-flex items-center justify-center gap-2 rounded-sm transition",
-        variant === "dark"
-          ? "mt-6 flex h-12 bg-forest-900 text-white hover:bg-forest-800"
-          : "h-14 bg-ball px-8 text-forest-900 hover:bg-ball-light",
+        variant === "dark" ? "mt-6 flex h-12 bg-forest-900 text-white hover:bg-forest-800" : "h-14 bg-ball px-8 text-forest-900 hover:bg-ball-light",
       )}
     >
       {label} {variant !== "dark" && <ArrowRight aria-hidden className="size-4" />}
@@ -303,9 +296,15 @@ function RegisterButton({ slug, label, preview, variant }: { slug: string; label
   );
 }
 
-async function LiveOptionPrice({ optionId, price, experienceId }: Live & { optionId: string; price: number | null }) {
+async function LiveOptionPrice({
+  optionId,
+  price,
+  hidePrice = false,
+  experienceId,
+}: Live & { optionId: string; price: number | null; hidePrice?: boolean }) {
   const a = await getLiveAvailability(experienceId);
-  return a.fullOptionIds.includes(optionId) ? <span className="text-ink-muted">{c.optionFull}</span> : <>{formatPrice(price)}</>;
+  if (a.fullOptionIds.includes(optionId)) return <span className="text-ink-muted">{c.optionFull}</span>;
+  return hidePrice ? null : <>{formatPrice(price)}</>;
 }
 
 function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: ReactNode }) {
@@ -315,7 +314,7 @@ function Fact({ icon, label, value }: { icon: ReactNode; label: string; value: R
         {icon}
       </span>
       <div>
-        <dt className="eyebrow text-white/60">{label}</dt>
+        <dt className="meta-label text-white/60">{label}</dt>
         <dd className="mt-1.5 text-lg text-white">{value}</dd>
       </div>
     </div>
@@ -379,8 +378,7 @@ async function EventJsonLd({ experience: e }: { experience: Detail }) {
         price: o.price,
         priceCurrency: o.currency,
         url,
-        availability:
-          isFull || a.fullOptionIds.includes(o.id) ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+        availability: isFull || a.fullOptionIds.includes(o.id) ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
       })),
     }),
   };

@@ -15,7 +15,7 @@ export default function CommunityPage() {
     <>
       <section className="bg-forest-900 px-5 pt-14 pb-16 text-white sm:px-8 sm:pt-20 sm:pb-20">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading as="h1" tone="dark" eyebrow={c.eyebrow} title={c.title} lead={c.lead} />
+          <SectionHeading as="h1" tone="dark" title={c.title} lead={c.lead} />
           <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {c.reasons.map((r) => (
               <li key={r.title} className="border-t border-ball/50 pt-5">

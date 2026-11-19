@@ -10,9 +10,8 @@ const c = adminCopy.login;
 export default function LoginPage({ searchParams }: PageProps<"/admin/ingresar">) {
   return (
     <main className="flex flex-1 items-center justify-center px-4 py-16">
-      <div className="w-full max-w-sm rounded-sm bg-white p-8 text-center shadow-sm">
-        <p className="eyebrow text-clay-deep">Experiencia Tenis</p>
-        <h1 className="mt-3 font-serif text-4xl text-forest-900">{c.title}</h1>
+      <div className="w-full max-w-sm rounded-sm bg-paper p-8 text-center shadow-sm">
+        <h1 className="font-serif text-4xl text-forest-900">{c.title}</h1>
         <p className="mt-3 text-sm text-ink-muted">{c.text}</p>
         <Suspense fallback={null}>
           <LoginError searchParams={searchParams} />

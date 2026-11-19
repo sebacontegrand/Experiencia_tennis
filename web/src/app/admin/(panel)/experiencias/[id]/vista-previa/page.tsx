@@ -17,7 +17,7 @@ export default async function PreviewPage({ params }: PageProps<"/admin/experien
   if (!row || !experience) notFound();
   return (
     <div className="-mx-4 -my-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-ball/25 px-4 py-3 text-sm text-forest-900">
         <span className="flex items-center gap-2">
           Vista previa: así se va a ver en el sitio. <StatusBadge status={row.status} />
         </span>

@@ -84,7 +84,7 @@ export function AdminNavView({ variant, pathname, badges = {} }: { variant: "top
   return (
     <nav
       aria-label={c.label}
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-white pb-[env(safe-area-inset-bottom)] md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-paper pb-[env(safe-area-inset-bottom)] md:hidden"
     >
       <ul className="grid grid-cols-5">
         {items.map((it) => {

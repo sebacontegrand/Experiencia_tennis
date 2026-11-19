@@ -114,7 +114,7 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
       {/* Precio sugerido por opción */}
       <h3 className="mt-10 text-lg font-semibold text-forest-900">{c.optionsTitle}</h3>
       <p className="mt-1 text-sm text-ink-muted">{c.optionsHint}</p>
-      {e.earningsPercent == null && <p className="mt-4 rounded-sm bg-amber-50 px-4 py-3 text-sm text-amber-900">{c.noPercent}</p>}
+      {e.earningsPercent == null && <p className="mt-4 rounded-sm bg-ball/25 px-4 py-3 text-sm text-forest-900">{c.noPercent}</p>}
       <ul className="mt-4 space-y-3">
         {e.priceOptions.map((o) => {
           const total = shared + (o.cost ?? 0);
@@ -165,7 +165,7 @@ export function CostsCard({ data: e }: { data: CostsCardData }) {
         <Stat label={c.result} value={formatPrice(Math.round(result.earnings))} tone={result.earnings < 0 ? "bad" : "good"} />
         <Stat label={c.collected} value={formatPrice(e.collected)} />
       </dl>
-      {result.missingPrices > 0 && <p className="mt-3 text-sm text-amber-900">{c.missingPrices(result.missingPrices)}</p>}
+      {result.missingPrices > 0 && <p className="mt-3 text-sm text-clay-deep">{c.missingPrices(result.missingPrices)}</p>}
     </CollapsibleCard>
   );
 }
@@ -226,7 +226,7 @@ function Figure({ label, value, strong, tone }: { label: string; value: string; 
         className={cn(
           "mt-0.5 text-forest-900",
           strong && "text-base font-semibold",
-          tone === "good" && "text-emerald-800",
+          tone === "good" && "text-forest-700",
           tone === "bad" && "font-semibold text-destructive",
         )}
       >
@@ -243,7 +243,7 @@ function Stat({ label, value, tone }: { label: string; value: string; tone?: "go
       <dd
         className={cn(
           "mt-1 text-lg font-semibold text-forest-900",
-          tone === "good" && "text-emerald-800",
+          tone === "good" && "text-forest-700",
           tone === "bad" && "text-destructive",
         )}
       >

@@ -13,11 +13,11 @@ export function SiteFooter() {
         <div>
           <Logo variant="lockup" tone="light" />
           <p className="mt-6 max-w-sm font-serif text-2xl leading-snug text-white">{siteConfig.tagline}</p>
-          <p className="eyebrow mt-4 text-ball">{siteConfig.secondaryTagline}</p>
+          <p className="meta-label mt-4 text-ball">{siteConfig.secondaryTagline}</p>
         </div>
 
         <nav aria-label="Pie de página">
-          <p className="eyebrow text-ball">Sitio</p>
+          <p className="meta-label text-ball">Sitio</p>
           <ul className="mt-3 text-[0.9375rem]">
             {footerLinks.map((l) => (
               <li key={l.href}>
@@ -30,7 +30,7 @@ export function SiteFooter() {
         </nav>
 
         <div>
-          <p className="eyebrow text-ball">Contacto</p>
+          <p className="meta-label text-ball">Contacto</p>
           <ul className="mt-3 text-[0.9375rem]">
             <li>
               <a
@@ -66,7 +66,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="mx-auto mt-14 max-w-6xl border-t border-white/10 pt-6 text-xs text-white/60">
-        {siteConfig.name} · por {siteConfig.brand}
+        {siteConfig.name}, por {siteConfig.brand}
       </div>
     </footer>
   );

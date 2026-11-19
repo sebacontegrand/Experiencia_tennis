@@ -22,11 +22,11 @@ export function ExperienceCard({ experience: e, tone = "light" }: { experience: 
     <article
       className={cn(
         "group relative flex h-full flex-col rounded-sm border p-7 transition sm:p-8",
-        dark ? "border-ball/40 text-white hover:border-ball" : "border-border bg-white hover:border-clay-deep",
+        dark ? "border-ball/40 text-white hover:border-ball" : "border-border bg-paper hover:border-clay-deep",
       )}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className={cn("eyebrow", dark ? "text-ball" : "text-clay-deep")}>Experiencia {e.format.name}</p>
+        <p className={cn("meta-label", dark ? "text-ball" : "text-clay-deep")}>Experiencia {e.format.name}</p>
         {statusLabel && (
           <span
             className={cn(

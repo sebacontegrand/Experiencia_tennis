@@ -40,7 +40,7 @@ export function Logo({
       <Image src={f[tone]} alt="" width={f.width} height={f.height} priority={priority} className="h-8 w-auto sm:h-10" />
       <span className={cn("flex flex-col leading-none", tone === "dark" ? "text-forest-900" : "text-cream")}>
         <span className="font-serif text-[0.9375rem] font-medium tracking-[0.08em] uppercase sm:text-lg">{siteConfig.name}</span>
-        <span className={cn("mt-1 text-[0.6875rem] tracking-[0.04em] sm:text-xs", tone === "dark" ? "text-ink-muted" : "text-cream/70")}>
+        <span className={cn("mt-1 text-xs", tone === "dark" ? "text-ink-muted" : "text-cream/70")}>
           por {siteConfig.brand}
         </span>
       </span>

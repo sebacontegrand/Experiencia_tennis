@@ -48,14 +48,14 @@ export default async function LeadPage({ params }: PageProps<"/admin/consultas/[
               href={`https://wa.me/${wa}?text=${waText}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-12 items-center gap-2 rounded-sm bg-emerald-700 px-5 text-sm font-semibold text-white hover:bg-emerald-800"
+              className="inline-flex h-12 items-center gap-2 rounded-sm bg-forest-700 px-5 text-sm font-semibold text-white hover:bg-forest-800"
             >
               <MessageCircle aria-hidden className="size-4" /> {c.whatsapp}
             </a>
           )}
           <a
             href={mailto}
-            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
+            className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-paper px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
           >
             <Mail aria-hidden className="size-4" /> {c.email}
           </a>
@@ -107,7 +107,7 @@ export default async function LeadPage({ params }: PageProps<"/admin/consultas/[
 
 function Card({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-sm bg-white p-5 sm:p-7">
+    <section className="rounded-sm bg-paper p-5 sm:p-7">
       <h2 className="font-serif text-2xl text-forest-900">{title}</h2>
       {hint && <p className="mt-1 text-sm text-ink-muted">{hint}</p>}
       <div className="mt-5">{children}</div>

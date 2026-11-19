@@ -54,17 +54,17 @@ async function Registration({ params }: Pick<PageProps<"/experiencias/[slug]/ins
           <Link href={`/experiencias/${e.slug}`} className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-ball-light">
             <ArrowLeft aria-hidden className="size-4" /> {e.title}
           </Link>
-          <p className="eyebrow mt-8 text-ball">{c.eyebrow}</p>
+          <p className="meta-label mt-8 text-ball">{c.eyebrow}</p>
           <h1 className="mt-4 font-serif text-4xl font-medium sm:text-5xl">{e.title}</h1>
           <p className="mt-3 text-white/80">
-            {formatDateRange(e.startDate, e.endDate)} · {e.destination}
+            {formatDateRange(e.startDate, e.endDate)}, {e.destination}
           </p>
           <div className="brand-rule mt-6" />
           <p className="mt-6 max-w-2xl text-white/85">{isFull ? c.waitlistLead : c.lead}</p>
         </div>
       </section>
       <section className="bg-cream px-5 py-14 sm:px-8 sm:py-16">
-        <div className="mx-auto max-w-3xl rounded-sm bg-white p-6 sm:p-10">
+        <div className="mx-auto max-w-3xl rounded-sm bg-paper p-6 sm:p-10">
           {e.closedReason ? (
             <p role="status" className="text-lg text-ink">
               {c.errors[e.closedReason]}

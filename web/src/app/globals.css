@@ -24,7 +24,13 @@
   --color-cream: #ede9d6;
   --color-cream-200: #e2dcc3;
   --color-ink: #1f2a24;
-  --color-ink-muted: #616160; /* gris de la marca: 6,2:1 sobre blanco, 5,1:1 sobre crema */
+  --color-ink-muted: #616160; /* gris de la marca: 5,9:1 sobre paper, 5,1:1 sobre crema */
+  /* Papel: blanco apenas teñido de crema, para que las superficies claras no salten a blanco puro */
+  --color-paper: #fbfaf4;
+  /* Brillo del amarillo pelota y luz del verde (raqueta de /como-se-arma) */
+  --color-ball-glow: rgb(211 217 58 / 0.55);
+  --color-forest-glow: rgb(24 80 61 / 0.55);
+  --color-grid-line: rgb(255 255 255 / 0.035);
 
   /* Tipografías (next/font). Manual: KEFA III y SATHU (fuentes de Apple, sin licencia web):
      en la web se usan Bitter y Hind, las más parecidas. */
@@ -58,14 +64,14 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: #fbfaf4;
   --foreground: #1f2a24;
-  --card: #ffffff;
+  --card: #fbfaf4;
   --card-foreground: #1f2a24;
-  --popover: #ffffff;
+  --popover: #fbfaf4;
   --popover-foreground: #1f2a24;
   --primary: #103c2d;
-  --primary-foreground: #ffffff;
+  --primary-foreground: #fbfaf4;
   --secondary: #ede9d6;
   --secondary-foreground: #103c2d;
   --muted: #ede9d6;
@@ -87,8 +93,25 @@
     @apply font-sans;
     scroll-behavior: smooth;
   }
+  /* clip (no hidden): corta cualquier desborde horizontal sin romper position: sticky */
+  html,
+  body {
+    overflow-x: clip;
+  }
   body {
     @apply bg-background text-foreground antialiased;
+  }
+  ::selection {
+    background-color: var(--color-ball);
+    color: var(--color-forest-900);
+  }
+  html {
+    scrollbar-color: var(--color-forest-700) var(--color-cream);
+  }
+  /* Respuesta al tocar (móvil): botones y links se hunden un poco, sin mover el layout */
+  a:active,
+  button:not(:disabled):active {
+    opacity: 0.85;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -112,9 +135,9 @@
 }
 
 @layer components {
-  /* Rótulo: sans en mayúsculas espaciadas */
-  .eyebrow {
-    @apply font-sans text-xs font-semibold tracking-[0.28em] uppercase;
+  /* Rótulo de datos (Fechas, Destino, Para hoteles): texto normal, un paso más chico, sin mayúsculas espaciadas */
+  .meta-label {
+    @apply font-sans text-sm font-semibold;
   }
   /* Texto de botones y llamados a la acción: legible (no en mayúsculas espaciadas) */
   .btn-label {
@@ -141,13 +164,28 @@
   opacity: 0.5;
 }
 .racket-anatomy .ra-part[data-state="on"] {
-  filter: drop-shadow(0 0 14px rgb(211 217 58 / 0.55));
+  filter: drop-shadow(0 0 14px var(--color-ball-glow));
 }
 @media (prefers-reduced-motion: no-preference) {
   .racket-anatomy .ra-sweet.is-on {
     transform-box: fill-box;
     transform-origin: center;
     animation: ra-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ra-nudge {
+    animation: ra-nudge 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+}
+@keyframes ra-nudge {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(3px);
   }
 }
 @keyframes ra-pulse {
@@ -163,7 +201,10 @@
 /* En el celular, si la página tiene barra fija de inscripción, el WhatsApp va dentro de la barra.
    Fuera de las capas a propósito: tiene que ganarle a la utilidad inline-flex del botón. */
 @media (width < 48rem) {
-  body:has([data-sticky-cta]) [data-whatsapp-fab] {
+  /* También en páginas con formulario: el botón flotante tapaba el borde de los campos
+     (el WhatsApp sigue en el menú, el pie y la página de contacto). */
+  body:has([data-sticky-cta]) [data-whatsapp-fab],
+  body:has(#contenido form) [data-whatsapp-fab] {
     display: none;
   }
 }

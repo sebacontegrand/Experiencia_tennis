@@ -21,7 +21,7 @@ export function B2BPage({ copy: c, extra }: { copy: B2BPageCopy; extra?: ReactNo
           <div className="absolute inset-0 bg-linear-to-b from-forest-900/30 via-forest-900/40 via-35% to-forest-900" />
         </div>
         <div className="mx-auto max-w-6xl">
-          <p className="eyebrow text-ball">{c.eyebrow}</p>
+          <p className="meta-label text-ball">{c.eyebrow}</p>
           <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.05] font-medium text-balance sm:text-6xl">{c.title}</h1>
           <div className="brand-rule mt-6" />
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">{c.lead}</p>
@@ -140,7 +140,7 @@ export function B2BPage({ copy: c, extra }: { copy: B2BPageCopy; extra?: ReactNo
               </span>
             </a>
           </div>
-          <div className="rounded-sm bg-white p-6 sm:p-10">
+          <div className="rounded-sm bg-paper p-6 sm:p-10">
             <ContactForm
               topics={c.form.topics}
               submitLabel={c.form.submit}
@@ -151,7 +151,7 @@ export function B2BPage({ copy: c, extra }: { copy: B2BPageCopy; extra?: ReactNo
         </div>
       </Section>
 
-      <nav aria-label={ui.otherLinksLabel} className="border-t border-border bg-white px-5 py-10 sm:px-8">
+      <nav aria-label={ui.otherLinksLabel} className="border-t border-border bg-paper px-5 py-10 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-8 gap-y-3">
           <p className="text-sm text-ink-muted">{ui.otherLinks}</p>
           {b2bLinks

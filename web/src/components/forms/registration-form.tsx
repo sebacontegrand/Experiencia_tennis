@@ -170,7 +170,7 @@ export function RegistrationForm({
                 <label
                   key={o.id}
                   className={cn(
-                    "flex cursor-pointer items-start gap-3 rounded-sm border bg-white p-4 transition has-[:checked]:border-forest-900 has-[:checked]:bg-cream has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ball/40",
+                    "flex cursor-pointer items-start gap-3 rounded-sm border bg-paper p-4 transition has-[:checked]:border-forest-900 has-[:checked]:bg-cream has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ball/40",
                     optionError ? "border-destructive" : "border-input",
                   )}
                 >

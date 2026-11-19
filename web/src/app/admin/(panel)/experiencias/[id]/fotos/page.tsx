@@ -47,7 +47,7 @@ export default async function PhotosPage({ params }: PageProps<"/admin/experienc
         </p>
       </div>
 
-      <section className="space-y-4 rounded-sm bg-white p-5 sm:p-7">
+      <section className="space-y-4 rounded-sm bg-paper p-5 sm:p-7">
         <p className="text-sm text-ink-muted">{c.lead}</p>
         <PhotoUploader experienceId={e.id} mode={galleryStorageMode()} />
         <div className="border-t border-border pt-4 text-sm">
@@ -66,7 +66,7 @@ export default async function PhotosPage({ params }: PageProps<"/admin/experienc
         </div>
       </section>
 
-      <section aria-label={c.title} className="rounded-sm bg-white p-5 sm:p-7">
+      <section aria-label={c.title} className="rounded-sm bg-paper p-5 sm:p-7">
         <p className="text-sm text-ink-muted">{c.cardSummary(e.gallery.length, e.gallery.length - shown)}</p>
         {e.gallery.length === 0 ? (
           <p className="mt-4 text-ink">{c.empty}</p>

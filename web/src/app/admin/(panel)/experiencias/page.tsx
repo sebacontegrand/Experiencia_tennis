@@ -43,10 +43,10 @@ export default async function AdminExperiencesPage() {
               <li key={e.id}>
                 <Link
                   href={`/admin/experiencias/${e.id}`}
-                  className="block rounded-sm border border-border bg-white p-5 transition hover:border-forest-900"
+                  className="block rounded-sm border border-border bg-paper p-5 transition hover:border-forest-900"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="text-xs font-semibold tracking-widest text-clay-deep uppercase">{e.format.name}</p>
+                    <p className="meta-label text-clay-deep">{e.format.name}</p>
                     <StatusBadge status={e.status} />
                   </div>
                   <h2 className="mt-2 font-serif text-2xl text-forest-900">{e.title}</h2>

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 type Tone = "light" | "cream" | "dark";
 
 const toneClasses: Record<Tone, string> = {
-  light: "bg-white text-ink",
+  light: "bg-paper text-ink",
   cream: "bg-cream text-ink",
   dark: "bg-forest-900 text-white",
 };
@@ -33,10 +33,9 @@ export function Section({
   );
 }
 
-/** Rótulo + título + bajada, con línea dorada. */
+/** Título + bajada, con la línea de marca. */
 export function SectionHeading({
   id,
-  eyebrow,
   title,
   lead,
   tone = "light",
@@ -44,7 +43,6 @@ export function SectionHeading({
   as: Tag = "h2",
 }: {
   id?: string;
-  eyebrow?: string;
   title: ReactNode;
   lead?: ReactNode;
   tone?: Tone;
@@ -54,11 +52,10 @@ export function SectionHeading({
   const dark = tone === "dark";
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center")}>
-      {eyebrow && <p className={cn("eyebrow", dark ? "text-ball" : "text-clay-deep")}>{eyebrow}</p>}
       <Tag
         id={id}
         className={cn(
-          "mt-4 font-serif text-4xl leading-[1.08] font-medium text-balance sm:text-5xl",
+          "font-serif text-4xl leading-[1.08] font-medium text-balance sm:text-5xl",
           dark ? "text-white" : "text-forest-900",
         )}
       >

@@ -40,7 +40,7 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin/cons
       </div>
 
       {total === 0 ? (
-        <p className="rounded-sm bg-white p-5 text-ink-muted">{c.none}</p>
+        <p className="rounded-sm bg-paper p-5 text-ink-muted">{c.none}</p>
       ) : (
         <>
           {/* Estados: links, así funcionan sin JavaScript y se pueden compartir. */}
@@ -55,7 +55,7 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin/cons
                       aria-current={active ? "page" : undefined}
                       className={cn(
                         "inline-flex h-10 items-center gap-2 rounded-full border px-4 text-sm whitespace-nowrap",
-                        active ? "border-forest-900 bg-forest-900 text-white" : "border-border bg-white text-forest-900 hover:border-forest-900",
+                        active ? "border-forest-900 bg-forest-900 text-white" : "border-border bg-paper text-forest-900 hover:border-forest-900",
                       )}
                     >
                       {s ? c.status[s] : c.all}
@@ -98,7 +98,7 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin/cons
               {leads.map((l) => {
                 const wa = waNumber(l.whatsapp);
                 return (
-                  <li key={l.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-forest-900">
+                  <li key={l.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-paper p-4 hover:border-forest-900">
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <h2 className="font-semibold text-forest-900">
@@ -121,7 +121,7 @@ export default async function LeadsPage({ searchParams }: PageProps<"/admin/cons
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`WhatsApp a ${l.name}`}
-                        className="relative z-10 inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+                        className="relative z-10 inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-forest-600/10 text-forest-700 hover:bg-forest-600/20"
                       >
                         <MessageCircle aria-hidden className="size-5" />
                       </a>

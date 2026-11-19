@@ -48,7 +48,7 @@ export function PhotoUploader({ experienceId, mode }: { experienceId: string; mo
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<{ ok: boolean; text: string } | null>(null);
 
-  if (mode === "off") return <p className="rounded-sm bg-amber-50 px-4 py-3 text-sm text-amber-900">{c.off}</p>;
+  if (mode === "off") return <p className="rounded-sm bg-ball/25 px-4 py-3 text-sm text-forest-900">{c.off}</p>;
 
   async function onFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
@@ -86,7 +86,7 @@ export function PhotoUploader({ experienceId, mode }: { experienceId: string; mo
         <ImagePlus aria-hidden className="size-4" /> {c.pick}
         <input ref={input} type="file" accept="image/*" multiple disabled={busy} className="sr-only" onChange={(e) => onFiles(e.target.files)} />
       </label>
-      <p aria-live="polite" className={cn("text-sm", status?.ok === false ? "text-destructive" : "text-emerald-700")}>
+      <p aria-live="polite" className={cn("text-sm", status?.ok === false ? "text-destructive" : "text-forest-700")}>
         {status?.text}
       </p>
     </div>

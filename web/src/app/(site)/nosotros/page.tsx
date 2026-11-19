@@ -21,8 +21,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-linear-to-b from-forest-900/30 via-forest-900/40 via-35% to-forest-900" />
         </div>
         <div className="mx-auto max-w-6xl">
-          <p className="eyebrow text-ball">{c.eyebrow}</p>
-          <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.05] font-medium text-balance sm:text-6xl">{c.title}</h1>
+          <h1 className="max-w-3xl font-serif text-5xl leading-[1.05] font-medium text-balance sm:text-6xl">{c.title}</h1>
           <div className="brand-rule mt-6" />
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">{c.lead}</p>
         </div>

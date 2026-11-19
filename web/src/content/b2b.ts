@@ -178,7 +178,7 @@ export const companiesCopy: B2BPageCopy = {
     description: "Experiencias de tenis para equipos, clientes y eventos de empresa. Próximamente.",
   },
   image: images.table,
-  eyebrow: "Para empresas · Próximamente",
+  eyebrow: "Para empresas (próximamente)",
   title: "Tenis para tu equipo",
   lead: "Estamos preparando experiencias corporativas: una jornada de tenis por nivel, encuentro y buena mesa, para equipos, clientes o un cierre de año distinto. Si te interesa, contanos y te escribimos primero.",
   form: {

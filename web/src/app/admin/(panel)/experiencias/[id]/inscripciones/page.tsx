@@ -75,7 +75,7 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
       </div>
 
       {suggestion && (
-        <div className="flex flex-col gap-3 rounded-sm bg-violet-50 p-4 text-sm text-violet-950 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 rounded-sm bg-clay/10 p-4 text-sm text-ink sm:flex-row sm:items-center sm:justify-between">
           <p>{c.waitlistBanner(suggestion.free, `${suggestion.first.player.firstName} ${suggestion.first.player.lastName}`)}</p>
           <Link href={`/admin/inscripciones/${suggestion.first.id}`} className="shrink-0 font-semibold underline underline-offset-4">
             {c.waitlistCta}
@@ -86,7 +86,7 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
       {total > 0 && (
         <a
           href={`/admin/experiencias/${exp.id}/nomina`}
-          className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-white px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
+          className="inline-flex h-12 items-center gap-2 rounded-sm border border-border bg-paper px-5 text-sm font-semibold text-forest-900 hover:border-forest-900"
         >
           <Download aria-hidden className="size-4" /> {c.exportCsv}
         </a>
@@ -105,7 +105,7 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
                   aria-current={active ? "page" : undefined}
                   className={cn(
                     "inline-flex h-10 items-center gap-2 rounded-full border px-4 text-sm whitespace-nowrap",
-                    active ? "border-forest-900 bg-forest-900 text-white" : "border-border bg-white text-forest-900 hover:border-forest-900",
+                    active ? "border-forest-900 bg-forest-900 text-white" : "border-border bg-paper text-forest-900 hover:border-forest-900",
                   )}
                 >
                   {s ? adminCopy.registrationStatus[s] : c.all}
@@ -145,7 +145,7 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
             const wa = waNumber(r.player.whatsapp);
             const price = r.priceOption?.price;
             return (
-              <li key={r.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-white p-4 hover:border-forest-900">
+              <li key={r.id} className="relative flex items-start gap-3 rounded-sm border border-border bg-paper p-4 hover:border-forest-900">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="font-semibold text-forest-900">
@@ -166,7 +166,7 @@ export default async function RegistrationsPage({ params, searchParams }: PagePr
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`WhatsApp a ${r.player.firstName}`}
-                    className="relative z-10 inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+                    className="relative z-10 inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-forest-600/10 text-forest-700 hover:bg-forest-600/20"
                   >
                     <MessageCircle aria-hidden className="size-5" />
                   </a>

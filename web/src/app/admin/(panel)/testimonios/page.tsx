@@ -56,7 +56,7 @@ export default async function TestimonialsPage({ searchParams }: PageProps<"/adm
             aria-current={tab === t ? "page" : undefined}
             className={cn(
               "inline-flex h-11 shrink-0 items-center rounded-sm border px-4 text-sm font-semibold",
-              tab === t ? "border-forest-900 bg-forest-900 text-white" : "border-border bg-white text-forest-900 hover:border-forest-900",
+              tab === t ? "border-forest-900 bg-forest-900 text-white" : "border-border bg-paper text-forest-900 hover:border-forest-900",
             )}
           >
             {c.tabs[t]}
@@ -68,11 +68,11 @@ export default async function TestimonialsPage({ searchParams }: PageProps<"/adm
       </nav>
 
       {items.length === 0 ? (
-        <p className="rounded-sm bg-white p-6 text-ink-muted">{c.empty}</p>
+        <p className="rounded-sm bg-paper p-6 text-ink-muted">{c.empty}</p>
       ) : (
         <ul className="space-y-4">
           {items.map((t) => (
-            <li key={t.id} className="rounded-sm bg-white p-5 sm:p-7">
+            <li key={t.id} className="rounded-sm bg-paper p-5 sm:p-7">
               <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
                 <span className={cn("rounded-full px-2.5 py-1", t.isPublic ? "bg-forest-900 text-white" : "bg-cream-200 text-forest-900")}>
                   {t.isPublic ? c.published : c.hidden}
@@ -105,7 +105,7 @@ export default async function TestimonialsPage({ searchParams }: PageProps<"/adm
         </ul>
       )}
 
-      <section className="rounded-sm bg-white p-5 sm:p-7">
+      <section className="rounded-sm bg-paper p-5 sm:p-7">
         <h2 className="font-serif text-2xl text-forest-900">{c.newTitle}</h2>
         <p className="mt-1 text-sm text-ink-muted">{c.newHint}</p>
         <ActionForm action={addTestimonial} submitLabel={c.add} className="mt-5">

@@ -20,7 +20,7 @@ export default async function CalendarPage() {
     <>
       <section className="bg-forest-900 px-5 pt-14 pb-16 text-white sm:px-8 sm:pt-20 sm:pb-20">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading as="h1" tone="dark" eyebrow={c.eyebrow} title={c.title} />
+          <SectionHeading as="h1" tone="dark" title={c.title} />
           {upcoming.length === 0 ? (
             <div className="mt-12 rounded-sm border border-ball/40 p-8 sm:p-12">
               <p className="max-w-xl text-lg text-white/85">{c.empty}</p>

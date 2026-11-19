@@ -25,10 +25,9 @@ function Responsible() {
 
 export default function PrivacyPage() {
   return (
-    <article className="bg-white px-5 py-16 sm:px-8 sm:py-24">
+    <article className="bg-paper px-5 py-16 sm:px-8 sm:py-24">
       <div className="mx-auto max-w-3xl">
-        <p className="eyebrow text-clay-deep">Legal</p>
-        <h1 className="mt-4 font-serif text-5xl text-forest-900">{c.title}</h1>
+        <h1 className="font-serif text-5xl text-forest-900">{c.title}</h1>
         <div className="brand-rule mt-6" />
         <p className="mt-6 text-sm text-ink-muted">{c.updated}</p>
         <div className="mt-12 space-y-12">

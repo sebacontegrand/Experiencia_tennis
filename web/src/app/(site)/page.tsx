@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ArrowRight, GlassWater, Mail, Nut, ShoppingBag } from "lucide-react";
+import { GlassWater, Mail, Nut, ShoppingBag } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Section, SectionHeading } from "@/components/site/section";
-import { CommunityForm } from "@/components/forms/community-form";
 import { TennisBallIcon } from "@/components/icons/brand-icons";
 import { homeCopy as c } from "@/content/home";
 import { galleryCopy } from "@/content/gallery";
@@ -33,25 +32,15 @@ export default function HomePage() {
           href={c.formats.cta.href}
           className="btn-label mt-10 inline-flex h-12 items-center gap-2 rounded-sm border border-forest-900 px-6 text-forest-900 transition hover:bg-forest-900 hover:text-white"
         >
-          {c.formats.cta.label} <ArrowRight aria-hidden className="size-4" />
+          {c.formats.cta.label}
         </Link>
       </Section>
       <HowItWorks />
-      <Kit />
       <Community />
       <Suspense fallback={null}>
         <Testimonials />
       </Suspense>
-      <Suspense fallback={null}>
-        <Partners />
-      </Suspense>
       <B2B />
-      <Section id="sumate" tone="cream" labelledBy="sumate-title">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
-          <SectionHeading id="sumate-title" title={c.join.title} lead={c.join.text} />
-          <CommunityForm id="home-comunidad-form" />
-        </div>
-      </Section>
     </>
   );
 }
@@ -78,7 +67,6 @@ function Hero() {
         className="absolute inset-0 -z-10 bg-linear-to-t from-forest-900 from-55% via-forest-900/50 via-75% to-forest-900/0 sm:from-forest-900 sm:from-0% sm:via-forest-900/60 sm:via-45% lg:bg-linear-to-r lg:from-forest-900/95 lg:via-forest-900/55 lg:via-55% lg:to-forest-900/0"
       />
       <div className="mx-auto w-full max-w-6xl px-5 pt-32 pb-12 sm:px-8 sm:pb-20 lg:pb-24">
-        <p className="eyebrow text-ball-light">{c.hero.eyebrow}</p>
         <h1 className="mt-5 max-w-4xl font-serif text-[3.25rem] leading-[0.98] font-light tracking-[-0.01em] text-balance sm:text-7xl lg:text-[5.5rem]">
           {c.hero.title}
           <span className="mt-1 block text-ball-light italic">{c.hero.titleAccent}</span>
@@ -93,9 +81,9 @@ function Hero() {
           </Link>
           <Link
             href={c.hero.secondaryCta.href}
-            className="btn-label inline-flex h-14 items-center justify-center gap-2 bg-white/10 px-8 text-white ring-1 ring-white/35 transition ring-inset hover:bg-white hover:text-forest-900"
+            className="btn-label inline-flex h-14 items-center justify-center gap-2 bg-white/10 px-8 text-white ring-1 ring-white/35 transition ring-inset hover:bg-paper hover:text-forest-900"
           >
-            {c.hero.secondaryCta.label} <ArrowRight aria-hidden className="size-4" />
+            {c.hero.secondaryCta.label}
           </Link>
         </div>
       </div>
@@ -129,7 +117,7 @@ function About() {
             href="/como-se-arma"
             className="btn-label mt-10 inline-flex h-12 items-center gap-2 border border-forest-900 px-6 text-forest-900 transition hover:bg-forest-900 hover:text-white"
           >
-            {c.about.cta} <ArrowRight aria-hidden className="size-4" />
+            {c.about.cta}
           </Link>
         </div>
       </div>
@@ -150,7 +138,7 @@ async function Formats() {
             className={
               featured
                 ? "flex flex-col overflow-hidden rounded-sm border border-ball/60 bg-forest-900 text-white"
-                : "flex flex-col overflow-hidden rounded-sm border border-border bg-white"
+                : "flex flex-col overflow-hidden rounded-sm border border-border bg-paper"
             }
           >
             <Image
@@ -163,7 +151,6 @@ async function Formats() {
               style={{ objectPosition: img.position }}
             />
             <div className="flex flex-1 flex-col p-7">
-              <p className={featured ? "eyebrow text-ball" : "eyebrow text-clay-deep"}>Experiencia</p>
               <h3 className={featured ? "mt-2 font-serif text-4xl text-white" : "mt-2 font-serif text-4xl text-forest-900"}>{format.name}</h3>
               <p className={featured ? "mt-3 text-white/80" : "mt-3 text-ink-muted"}>{format.tagline}</p>
               <ul className="mt-6 space-y-2.5 text-sm">
@@ -194,7 +181,7 @@ async function UpcomingExperiences() {
       href={c.next.allCta.href}
       className="btn-label mt-10 inline-flex h-12 items-center gap-2 border border-forest-900 px-6 text-forest-900 transition hover:bg-forest-900 hover:text-white"
     >
-      {c.next.allCta.label} <ArrowRight aria-hidden className="size-4" />
+      {c.next.allCta.label}
     </Link>
   );
 
@@ -202,7 +189,7 @@ async function UpcomingExperiences() {
     return (
       <div className="mt-12 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
         <UpcomingPhoto count={0} className="aspect-4/3 lg:aspect-auto lg:min-h-[26rem]" />
-        <div className="flex flex-col justify-center rounded-sm border border-border bg-white p-8 sm:p-12">
+        <div className="flex flex-col justify-center rounded-sm border border-border bg-paper p-8 sm:p-12">
           <h3 className="font-serif text-3xl text-forest-900">{c.next.empty.title}</h3>
           <p className="mt-4 max-w-xl text-ink-muted">{c.next.empty.text}</p>
           <Link
@@ -290,6 +277,7 @@ function HowItWorks() {
           </li>
         ))}
       </ol>
+      <KitGrid />
     </Section>
   );
 }
@@ -313,24 +301,27 @@ function TowelIcon(props: { className?: string }) {
   );
 }
 
-function Kit() {
+function KitGrid() {
   return (
-    <Section tone="cream" labelledBy="kit-title">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
-        <SectionHeading id="kit-title" title={c.kit.title} lead={c.kit.lead} />
-        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-          {c.kit.items.map((item) => {
-            const Icon = kitIcons[item.icon];
-            return (
-              <li key={item.label} className="flex flex-col items-center gap-3 rounded-sm bg-white px-4 py-7 text-center">
-                <Icon className="size-8 text-clay-deep" />
-                <span className="text-sm font-medium text-forest-900">{item.label}</span>
-              </li>
-            );
-          })}
-        </ul>
+    <div className="mt-20 grid gap-10 border-t border-border pt-16 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+      <div>
+        <h3 id="kit-title" className="font-serif text-3xl leading-tight text-balance text-forest-900 sm:text-4xl">
+          {c.kit.title}
+        </h3>
+        <p className="mt-4 text-base leading-relaxed text-ink-muted sm:text-lg">{c.kit.lead}</p>
       </div>
-    </Section>
+      <ul className="grid border-t border-border sm:grid-cols-2 sm:gap-x-10">
+        {c.kit.items.map((item) => {
+          const Icon = kitIcons[item.icon];
+          return (
+            <li key={item.label} className="flex items-center gap-4 border-b border-border py-4">
+              <Icon className="size-6 shrink-0 text-clay-deep" />
+              <span className="text-base text-forest-900">{item.label}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 
@@ -344,7 +335,7 @@ function Community() {
             href="/comunidad"
             className="btn-label mt-10 inline-flex h-12 items-center gap-2 rounded-sm border border-ball px-6 text-ball-light transition hover:bg-ball hover:text-forest-900"
           >
-            Sumate <ArrowRight aria-hidden className="size-4" />
+            Sumate a la comunidad
           </Link>
         </div>
         <figure>
@@ -359,7 +350,7 @@ function Community() {
           <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-sm text-white/60">
             {c.community.photosSoon}
             <Link href="/galeria" className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-ball-light hover:underline">
-              {galleryCopy.homeLink} <ArrowRight aria-hidden className="size-4" />
+              {galleryCopy.homeLink}
             </Link>
           </figcaption>
         </figure>
@@ -372,8 +363,8 @@ async function Partners() {
   const partners = await getPublicPartners();
   if (partners.length === 0) return null;
   return (
-    <Section labelledBy="aliados-title" className="py-14 sm:py-16">
-      <p id="aliados-title" className="eyebrow text-center text-clay-deep">
+    <div className="mb-16">
+      <p id="aliados-title" className="text-center text-sm font-semibold text-clay-deep">
         {c.partners.eyebrow}
       </p>
       <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-14 gap-y-6">
@@ -388,13 +379,16 @@ async function Partners() {
         ))}
       </ul>
       <p className="mt-6 text-center text-sm text-ink-muted">{c.partners.wilsonNote}</p>
-    </Section>
+    </div>
   );
 }
 
 function B2B() {
   return (
     <Section tone="light" labelledBy="b2b-title" className="border-t border-border">
+      <Suspense fallback={null}>
+        <Partners />
+      </Suspense>
       <div className="grid items-end gap-10 lg:grid-cols-[1.4fr_1fr]">
         <SectionHeading id="b2b-title" title={c.b2b.title} lead={c.b2b.text} />
         <div className="flex flex-col gap-4">
@@ -404,7 +398,7 @@ function B2B() {
               href={cta.href}
               className="btn-label inline-flex h-14 items-center justify-between rounded-sm border border-forest-900 px-6 text-forest-900 transition hover:bg-forest-900 hover:text-white"
             >
-              {cta.label} <ArrowRight aria-hidden className="size-4" />
+              {cta.label}
             </Link>
           ))}
         </div>
@@ -417,7 +411,7 @@ function CardsSkeleton({ count, dark = false }: { count: number; dark?: boolean 
   return (
     <div className={`mt-12 grid gap-6 ${count > 1 ? "md:grid-cols-3" : ""}`} aria-hidden>
       {Array.from({ length: count }, (_, i) => (
-        <div key={i} className={`h-80 animate-pulse rounded-sm ${dark ? "bg-white/5" : "bg-white"}`} />
+        <div key={i} className={`h-80 animate-pulse rounded-sm ${dark ? "bg-white/5" : "bg-paper"}`} />
       ))}
     </div>
   );

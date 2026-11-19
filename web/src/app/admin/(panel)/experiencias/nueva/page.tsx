@@ -26,7 +26,7 @@ export default async function NewExperiencePage() {
         <p className="mt-2 max-w-prose text-ink-muted">{c.intro}</p>
       </div>
 
-      <section className="rounded-sm bg-white p-5 sm:p-7">
+      <section className="rounded-sm bg-paper p-5 sm:p-7">
         <ActionForm action={createExperience} submitLabel={c.submit} pendingLabel={c.pending}>
           <AdminField label={e.titleField} htmlFor="title">
             <input id="title" name="title" required maxLength={120} placeholder="Ej.: Experiencia Tenis Pilar" className={adminInputClass} />

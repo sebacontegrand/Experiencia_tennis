@@ -24,7 +24,7 @@ export const siteConfig = {
   url: siteUrl,
   locale: "es_AR",
   tagline: "El tenis nos reúne. La experiencia nos conecta.",
-  secondaryTagline: "Jugá · Conectá · Viví",
+  secondaryTagline: "Jugá, conectá, viví.",
   description:
     "Experiencias de tenis organizadas: competencia, encuentro social, gastronomía y bienestar. Vos jugás, nosotros nos ocupamos de todo.",
 

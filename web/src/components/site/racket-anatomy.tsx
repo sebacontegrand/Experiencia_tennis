@@ -126,7 +126,7 @@ export function RacketAnatomy() {
 
             <div
               className={cn(
-                "relative -mx-3 sm:mx-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:-mr-12 xl:-mr-24",
+                "relative -mx-3 sm:mx-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:-mr-8 xl:-mr-16",
                 scroll ? "lg:self-center" : "lg:sticky lg:top-40 lg:self-start",
               )}
             >
@@ -146,7 +146,7 @@ export function RacketAnatomy() {
                     active === -1 && !outro ? "opacity-100" : "opacity-0",
                   )}
                 >
-                  {c.scrollHint} <ChevronDown className="size-4 motion-safe:animate-bounce" />
+                  {c.scrollHint} <ChevronDown aria-hidden className="ra-nudge size-4" />
                 </p>
               )}
             </div>
@@ -177,7 +177,7 @@ export function RacketAnatomy() {
                               {part.name}
                               <span className="sr-only">
                                 {" "}
-                                · {c.stepLabel} {i + 1} {c.of} {N}
+                                ({c.stepLabel} {i + 1} {c.of} {N})
                               </span>
                             </span>
                           </button>
@@ -302,7 +302,7 @@ function Profiles() {
                   onClick={() => setSelected(item.id)}
                   className={cn(
                     "flex min-h-12 items-center justify-between gap-3 px-4 text-left text-[0.9375rem] font-medium transition-colors",
-                    on ? "bg-white text-forest-900" : "text-white/80 ring-1 ring-white/20 ring-inset hover:bg-white/5 hover:text-white",
+                    on ? "bg-paper text-forest-900" : "text-white/80 ring-1 ring-white/20 ring-inset hover:bg-white/5 hover:text-white",
                   )}
                 >
                   {item.label}
@@ -314,7 +314,7 @@ function Profiles() {
         </div>
 
         <div className="lg:pt-4">
-          <div className="-mx-3 sm:mx-0 lg:-mr-12 xl:-mr-24">
+          <div className="-mx-3 sm:mx-0 lg:-mr-8 xl:-mr-16">
             <RacketSvg states={states} label={`${profile.label}: ${profile.parts.map(partName).join(", ")}`} />
           </div>
           <div key={profile.id} aria-live="polite" className="mt-6 max-w-xl motion-safe:animate-in motion-safe:fade-in motion-safe:duration-500">
@@ -323,7 +323,7 @@ function Profiles() {
               <TraitList traits={profile.wants} tone="gold" />
             </div>
             <p className="mt-4 text-lg leading-relaxed text-white/85">{profile.text}</p>
-            <p className="mt-3 text-sm text-white/60">{profile.parts.map(partName).join(" · ")}</p>
+            <p className="mt-3 text-sm text-white/60">{profile.parts.map(partName).join(", ")}</p>
           </div>
           <p className="mt-10 max-w-xl border-t border-white/10 pt-5 font-serif text-xl text-white/85 italic">{p.closing}</p>
         </div>
@@ -350,8 +350,8 @@ function Outro() {
 function Backdrop() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0">
-      <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_68%_50%,rgb(24_80_61/0.55),transparent_70%)]" />
-      <div className="absolute inset-0 [background-image:linear-gradient(rgb(255_255_255/0.035)_1px,transparent_1px),linear-gradient(90deg,rgb(255_255_255/0.035)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(70%_70%_at_60%_50%,black,transparent)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_68%_50%,var(--color-forest-glow),transparent_70%)]" />
+      <div className="absolute inset-0 [background-image:linear-gradient(var(--color-grid-line)_1px,transparent_1px),linear-gradient(90deg,var(--color-grid-line)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(70%_70%_at_60%_50%,black,transparent)]" />
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { HONEYPOT_FIELD_NAME } from "@/lib/spam-rules";
 import { formCopy } from "@/content/forms";
 
 const controlClass =
-  "h-12 rounded-sm border-input bg-white px-3.5 text-base md:text-base focus-visible:border-ball focus-visible:ring-ball/30";
+  "h-12 rounded-sm border-input bg-paper px-3.5 text-base md:text-base focus-visible:border-ball focus-visible:ring-ball/30";
 
 type FieldProps = {
   name: string;

@@ -41,7 +41,7 @@ async function Opinar({ params }: Pick<PageProps<"/opinar/[token]">, "params">) 
         ) : (
           <>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink">{c.form.lead(reg.experience.title)}</p>
-            <div className="mt-10 rounded-sm bg-white p-6 sm:p-10">
+            <div className="mt-10 rounded-sm bg-paper p-6 sm:p-10">
               <TestimonialForm
                 token={token}
                 defaults={{

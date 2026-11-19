@@ -61,7 +61,7 @@ export function PhotoAlbum({ title, photos }: { title: string; photos: Photo[] }
                 width={p.width ?? 1200}
                 height={p.height ?? 800}
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-                className="h-auto w-full transition duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
+                className="h-auto w-full transition-opacity duration-300 ease-out group-hover:opacity-85"
               />
             </a>
           </li>

@@ -12,7 +12,7 @@ export async function Testimonials({ slug, tone = "light" }: { slug?: string; to
   if (items.length === 0) return null;
   const dark = tone === "dark";
   return (
-    <section aria-labelledby="testimonios" className={cn("px-5 py-20 sm:px-8 sm:py-24", dark ? "bg-forest-900 text-white" : "bg-white text-ink")}>
+    <section aria-labelledby="testimonios" className={cn("px-5 py-20 sm:px-8 sm:py-24", dark ? "bg-forest-900 text-white" : "bg-paper text-ink")}>
       <div className="mx-auto max-w-6xl">
         <h2 id="testimonios" className={cn("max-w-2xl font-serif text-4xl text-balance sm:text-5xl", dark ? "text-white" : "text-forest-900")}>
           {slug ? c.section.fromExperience : c.section.title}
@@ -28,7 +28,7 @@ export async function Testimonials({ slug, tone = "light" }: { slug?: string; to
                 </blockquote>
                 <figcaption className={cn("mt-6 text-sm", dark ? "text-white/70" : "text-ink-muted")}>
                   <span className={cn("font-semibold", dark ? "text-white" : "text-forest-900")}>{t.authorName}</span>
-                  {t.authorInfo && <> · {t.authorInfo}</>}
+                  {t.authorInfo && <>, {t.authorInfo}</>}
                   {!slug && t.experience && <span className="block">{t.experience.title}</span>}
                 </figcaption>
               </figure>
